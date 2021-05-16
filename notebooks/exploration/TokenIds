@@ -1,0 +1,252 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "id": "assumed-ethics",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from collections import Counter\n",
+    "from transformers import BertTokenizer"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "violent-retail",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "9563087edebc402486cfcf57c65bf3a2",
+       "version_major": 2,
+       "version_minor": 0
+      },
+      "text/plain": [
+       "HBox(children=(FloatProgress(value=0.0, description='Downloading', max=213450.0, style=ProgressStyle(descripti…"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "tokenizer = BertTokenizer.from_pretrained(\"bert-base-cased\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "id": "dynamic-cartoon",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# sequence = \"A Titan RTX has 24GB of VRAM\"\n",
+    "sequence = \"\"\"\n",
+    "genuinely destabilizing to be on the receiving end of a live at confident I even checked to make sure \\\n",
+    "that no one even accidentally invited him and of course they haven't even sure he knows he's lying \\\n",
+    "I think he just doesn't care about what the truth is Donald Trump gives the truth like this if I can sing \\\n",
+    "I don't care about that in anyway please golf I have a banana\n",
+    "\"\"\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "id": "korean-minister",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\n",
+      "genuinely destabilizing to be on the receiving end of a live at confident I even checked to make sure that no one even accidentally invited him and of course they haven't even sure he knows he's lying I think he just doesn't care about what the truth is Donald Trump gives the truth like this if I can sing I don't care about that in anyway please golf I have a banana\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(sequence)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "id": "interracial-penetration",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "['genuinely', 'des', '##ta', '##bil', '##izing', 'to', 'be', 'on', 'the', 'receiving', 'end', 'of', 'a', 'live', 'at', 'confident', 'I', 'even', 'checked', 'to', 'make', 'sure', 'that', 'no', 'one', 'even', 'accidentally', 'invited', 'him', 'and', 'of', 'course', 'they', 'haven', \"'\", 't', 'even', 'sure', 'he', 'knows', 'he', \"'\", 's', 'lying', 'I', 'think', 'he', 'just', 'doesn', \"'\", 't', 'care', 'about', 'what', 'the', 'truth', 'is', 'Donald', 'Trump', 'gives', 'the', 'truth', 'like', 'this', 'if', 'I', 'can', 'sing', 'I', 'don', \"'\", 't', 'care', 'about', 'that', 'in', 'anyway', 'please', 'golf', 'I', 'have', 'a', 'banana']\n"
+     ]
+    }
+   ],
+   "source": [
+    "tokenized_sequence = tokenizer.tokenize(sequence)\n",
+    "print(tokenized_sequence)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 45,
+   "id": "center-prayer",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "input_ids = tokenizer.encode(sequence, add_special_tokens=False)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 52,
+   "id": "rational-toner",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[('I', 5),\n",
+       " (\"'\", 4),\n",
+       " ('the', 3),\n",
+       " ('even', 3),\n",
+       " ('t', 3),\n",
+       " ('he', 3),\n",
+       " ('to', 2),\n",
+       " ('of', 2),\n",
+       " ('a', 2),\n",
+       " ('sure', 2)]"
+      ]
+     },
+     "execution_count": 52,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "word_piece_counter = Counter(tokenized_sequence)\n",
+    "most_common_words = [word for word, _ in word_piece_counter.most_common(n=10)]\n",
+    "word_piece_counter.most_common(n=10)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 53,
+   "id": "satellite-grass",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[(146, 5),\n",
+       " (112, 4),\n",
+       " (1103, 3),\n",
+       " (1256, 3),\n",
+       " (189, 3),\n",
+       " (1119, 3),\n",
+       " (1106, 2),\n",
+       " (1104, 2),\n",
+       " (170, 2),\n",
+       " (1612, 2)]"
+      ]
+     },
+     "execution_count": 53,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "input_ids_counter = Counter(input_ids)\n",
+    "input_ids_counter.most_common(n=10)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 55,
+   "id": "rental-lingerie",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "to 1106\n",
+      "the 1103\n",
+      "of 1104\n",
+      "a 170\n",
+      "I 146\n",
+      "even 1256\n",
+      "to 1106\n",
+      "sure 1612\n",
+      "even 1256\n",
+      "of 1104\n",
+      "' 112\n",
+      "t 189\n",
+      "even 1256\n",
+      "sure 1612\n",
+      "he 1119\n",
+      "he 1119\n",
+      "' 112\n",
+      "I 146\n",
+      "he 1119\n",
+      "' 112\n",
+      "t 189\n",
+      "the 1103\n",
+      "the 1103\n",
+      "I 146\n",
+      "I 146\n",
+      "' 112\n",
+      "t 189\n",
+      "I 146\n",
+      "a 170\n"
+     ]
+    }
+   ],
+   "source": [
+    "for token, input_id in zip(tokenized_sequence, input_ids):\n",
+    "    if token in most_common_words:\n",
+    "        print(token, input_id)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "infrared-width",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
