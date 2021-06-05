@@ -17,6 +17,7 @@ VIDEO_ID_LEN = 11
 
 FRAME_RATE = 15
 
+FRAME_EXTENSION = 'jpg'
 # COLS_VIEW = [
 #     'speaker', 'interval_id',
 #     'duration', 'start_time_string', 'end_time_string',
