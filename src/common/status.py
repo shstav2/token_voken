@@ -6,6 +6,7 @@ DETECTED_FACES_COUNTER_THRESHOLD = 10
 FRAMES_DIR_SIZE_THRESHOLD = 100
 FRAME_RATE = 15
 
+# ----------- Utils
 
 def get_number_of_directories(path):
     dir_count = 0
@@ -22,9 +23,17 @@ def status_detected_faces_directories_exist(df_intervals, interval_id):
            DETECTED_FACES_COUNTER_THRESHOLD < get_number_of_directories(interval_face_annot_224)
 
 
+# ------- Video (mp4)
+
+def status_video_downloaded(video_id):
+    video_path = resolve_video_file_path(video_id)
+    return os.path.exists(video_path)
+
+
 def status_interval_video_downloaded(df_intervals, interval_id):
     video_path = resolve_interval_video_path(df_intervals, interval_id)
     return os.path.exists(video_path)
+
 
 
 def status_frames_dir_content_size(df_intervals, interval_id):

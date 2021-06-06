@@ -2,6 +2,7 @@ import os
 import pandas as pd
 
 from common.constants import *
+from common.constants import PATS_SPEAKER_VIZ_DIR
 
 VIDEO_FRAMES_DIR_NAME = 'frames'
 FACE_IMAGE_DIR_NAME = 'face_annot_224'
@@ -22,9 +23,21 @@ def get_duration(df_intervals, interval_id):
 def get_frame_count(interval_id):
     return read_text(interval_id).iloc[-1].end_frame
 
+# ------- Video (mp4)
+
+def resolve_video_dir_path(video_id):
+    video_dir = os.path.join(PATS_SPEAKER_VIZ_DIR, SPEAKER_NAME, video_id)
+    interval_path = os.path.join(video_dir, f'{video_id}.mp4')
+    return interval_path
+
+def resolve_video_file_path(video_id):
+    video_dir = os.path.join(PATS_SPEAKER_VIZ_DIR, video_id)
+    interval_path = os.path.join(video_dir, f'{video_id}.mp4')
+    return interval_path
+
 def resolve_interval_video_path(df_intervals, interval_id):
     video_id = get_video_id(df_intervals, interval_id)
-    video_dir = os.path.join(PATS_DATA_ROOT, 'Youtube', SPEAKER_NAME, video_id)
+    video_dir = os.path.join(PATS_SPEAKER_VIZ_DIR, SPEAKER_NAME, video_id)
     interval_path = os.path.join(video_dir, interval_id, f'{interval_id}.mp4')
     return interval_path
 
