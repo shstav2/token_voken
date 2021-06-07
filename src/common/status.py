@@ -1,6 +1,16 @@
-import os
+import logging
+
+from common.debug import one_percent_chance
+from common.display_utils import bool_to_symbol
+
+logging.basicConfig(
+    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+    datefmt='%H:%M:%S',
+    level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 from src.common.path_resolvers import *
+
 
 DETECTED_FACES_COUNTER_THRESHOLD = 10
 FRAMES_DIR_SIZE_THRESHOLD = 100
@@ -32,8 +42,11 @@ def status_video_downloaded(video_id):
 
 def status_interval_video_downloaded(df_intervals, interval_id):
     video_path = resolve_interval_video_path(df_intervals, interval_id)
-    return os.path.exists(video_path)
-
+    interval_video_exists = os.path.exists(video_path)
+    if one_percent_chance():
+        symbol = bool_to_symbol(interval_video_exists)
+        logger.info(f'\t[Status] {symbol} Interval video {video_path}')
+    return interval_video_exists
 
 
 def status_frames_dir_content_size(df_intervals, interval_id):

@@ -54,3 +54,7 @@ def display_df_info(df_intervals):
     print(f'{LIST_BULLET}Total Duration: {total_duration_string} ({int(total_duration):,} seconds)')
     all_youtube = df_intervals['video_link'].str.contains('youtube').all()
     print(f'{LIST_BULLET}All are Youtube videos: {all_youtube}')
+
+
+def bool_to_symbol(bool_val):
+    return '✅ ' if bool_val else '❌'

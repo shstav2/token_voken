@@ -1,10 +1,9 @@
 import numpy as np
-import pandas as pd
 import logging
 
-from common.status import status_interval_video_downloaded, status_video_downloaded
-from pipeline._1_data_loader import load_intervals
-from pipeline._2_video_downloader import youtube_downloader
+from common.status import status_video_downloaded
+from components._1_data_loader import load_intervals, load_videos
+from components._2_video_downloader import youtube_downloader
 
 CHUNK_SIZE = 5
 
@@ -16,10 +15,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def video_status_and_download(df_intervals):
+def video_status_and_download(df_videos, df_intervals):
     logging.info('-------- Video Download -----------')
     # Video download status
-    df_videos = pd.DataFrame({'video_id': df_intervals['video_id'].unique()})
     df_videos['status_download'] = df_videos['video_id'].apply(status_video_downloaded)
     logger.info('[Status] Video download:')
     logger.info(df_videos['status_download'].value_counts())
@@ -32,17 +30,10 @@ def video_status_and_download(df_intervals):
             youtube_downloader(video_id)
 
 def run():
-    df_intervals = load_intervals()
-    video_status_and_download(df_intervals)
     # Video mp4 file
-
-
-    # # Interval video mp4 file
-    # df_intervals['status_interval_video_downloaded'] = df_intervals['interval_id'].apply(lambda video_id:\
-    #     status_interval_video_downloaded(df_intervals, video_id)
-    # )
-    # logger.info('[Status] Interval video download:')
-    # logger.info(df_intervals['status_interval_video_downloaded'].value_counts())
+    df_intervals = load_intervals()
+    df_videos = load_videos(df_intervals)
+    video_status_and_download(df_videos, df_intervals)
 
 
 if __name__ == '__main__':

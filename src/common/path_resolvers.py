@@ -26,18 +26,17 @@ def get_frame_count(interval_id):
 # ------- Video (mp4)
 
 def resolve_video_dir_path(video_id):
-    video_dir = os.path.join(PATS_SPEAKER_VIZ_DIR, SPEAKER_NAME, video_id)
-    interval_path = os.path.join(video_dir, f'{video_id}.mp4')
-    return interval_path
+    video_dir = os.path.join(PATS_SPEAKER_VIZ_DIR, video_id)
+    return video_dir
 
 def resolve_video_file_path(video_id):
-    video_dir = os.path.join(PATS_SPEAKER_VIZ_DIR, video_id)
+    video_dir = resolve_video_dir_path(video_id)
     interval_path = os.path.join(video_dir, f'{video_id}.mp4')
     return interval_path
 
 def resolve_interval_video_path(df_intervals, interval_id):
     video_id = get_video_id(df_intervals, interval_id)
-    video_dir = os.path.join(PATS_SPEAKER_VIZ_DIR, SPEAKER_NAME, video_id)
+    video_dir = resolve_video_dir_path(video_id)
     interval_path = os.path.join(video_dir, interval_id, f'{interval_id}.mp4')
     return interval_path
 
