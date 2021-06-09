@@ -25,20 +25,15 @@ def get_number_of_directories(path):
     return dir_count
 
 
-def status_detected_faces_directories_exist(df_intervals, interval_id):
-    # /vokens/face_annot_224/  ({000}/detected_face.png)
-    interval_face_annot_224 = resolve_interval_face_annot_224_dir(df_intervals, interval_id, create=False)
-    interval_face_annot_224_exists = os.path.exists(interval_face_annot_224)
-    return interval_face_annot_224_exists and \
-           DETECTED_FACES_COUNTER_THRESHOLD < get_number_of_directories(interval_face_annot_224)
 
-
-# ------- Video (mp4)
+# ------- Step 2 Full Video (mp4)
 
 def status_video_downloaded(video_id):
     video_path = resolve_video_file_path(video_id)
     return os.path.exists(video_path)
 
+
+# ------- Step 3 Cropped Interval Videos (mp4)
 
 def status_interval_video_downloaded(df_intervals, interval_id):
     video_path = resolve_interval_video_path(df_intervals, interval_id)
@@ -49,11 +44,17 @@ def status_interval_video_downloaded(df_intervals, interval_id):
     return interval_video_exists
 
 
-def status_frames_dir_content_size(df_intervals, interval_id):
+# ------- Step 4 Interval Videos → Frames(jpg)
+
+def status_interval_video_frames_dir(df_intervals, interval_id):
     interval_frames_dir = resolve_interval_frames_dir(df_intervals, interval_id, create=False)
     interval_frames_dir_exists = os.path.exists(interval_frames_dir)
+    interval_frames_dir_size = os.path.getsize(interval_frames_dir) if interval_frames_dir_exists else -1
+    if one_percent_chance():
+        symbol = bool_to_symbol(interval_frames_dir_exists)
+        logger.info(f'\t[Status] {symbol} Interval video {interval_frames_dir} (size: {interval_frames_dir_size})')
     return interval_frames_dir_exists and \
-        FRAMES_DIR_SIZE_THRESHOLD < os.path.getsize(interval_frames_dir)
+        FRAMES_DIR_SIZE_THRESHOLD < interval_frames_dir_size
 
 
 def status_frames(df_intervals):
@@ -73,3 +74,10 @@ def status_frames(df_intervals):
     df_intervals['has_detected_faces'] = df_intervals['interval_id'].apply(
         lambda i: status_detected_faces_directories_exist(df_intervals, i))
     df_intervals['need_to_extract_frames'] = (~df_intervals['has_completed_frames']) & (~df_intervals['has_detected_faces'])
+
+def status_detected_faces_directories_exist(df_intervals, interval_id):
+    # /vokens/face_annot_224/  ({000}/detected_face.png)
+    interval_face_annot_224 = resolve_interval_face_annot_224_dir(df_intervals, interval_id, create=False)
+    interval_face_annot_224_exists = os.path.exists(interval_face_annot_224)
+    return interval_face_annot_224_exists and \
+           DETECTED_FACES_COUNTER_THRESHOLD < get_number_of_directories(interval_face_annot_224)

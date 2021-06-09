@@ -2,10 +2,16 @@ import pathlib
 import os
 from common.conf import STAV_ROOT
 
-# PATS related
+# ------ PATS Related
+# Base
 PATS_DATA_ROOT = os.path.join(STAV_ROOT, 'PATS_DATA')
 SPEAKER_NAME = 'oliver'
-PATS_SPEAKER_VIZ_DIR = os.path.join(PATS_DATA_ROOT, f'Videos/{SPEAKER_NAME}')
+# Sources
+VIDEOS = 'Videos'
+VIDEO_FRAMES_DIR_NAME = 'Frames'
+# FACE_IMAGE_DIR_NAME = 'face_annot_224'
+
+PATS_SPEAKER_VIZ_DIR = os.path.join(PATS_DATA_ROOT, f'{VIDEOS}/{SPEAKER_NAME}')
 PATS_SPEAKER_DATASET_DIR = os.path.join(PATS_DATA_ROOT, f'Datasets/{SPEAKER_NAME}')
 PATS_SPEAKER_DATA_DIR = os.path.join(PATS_DATA_ROOT, f'Processed/{SPEAKER_NAME}/data')
 PATS_SPEAKER_INTERVAL_DIR = os.path.join(PATS_SPEAKER_DATA_DIR, 'processed', SPEAKER_NAME)

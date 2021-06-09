@@ -1,5 +1,4 @@
 import os
-import shutil
 from src.common.commands import run_command
 from src.common.constants import FRAME_RATE, FRAME_EXTENSION
 

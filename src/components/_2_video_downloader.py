@@ -1,6 +1,6 @@
 import os
 
-from common.path_resolvers import resolve_video_dir_path, resolve_video_file_path
+from src.common.path_resolvers import resolve_video_dir_path, resolve_video_file_path
 from src.common.commands import run_command
 
 
