@@ -36,6 +36,7 @@ def interval_video_status_and_crop(df_intervals):
 def run():
     # Interval video mp4 file
     df_intervals = load_valid_intervals()
+    logger.info(f'Fetch intervals, {df_intervals.shape} shape dataframe.')
     interval_video_status_and_crop(df_intervals)
 
 

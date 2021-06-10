@@ -25,7 +25,6 @@ def get_number_of_directories(path):
     return dir_count
 
 
-
 # ------- Step 2 Full Video (mp4)
 
 def status_video_downloaded(video_id):

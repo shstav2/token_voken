@@ -28,7 +28,7 @@ def extract_interval_video_to_frames(df_intervals):
     logger.info('Extract interval frames...:')
     df_intervals_pending = df_intervals[~df_intervals['status_interval_frames_dir']]
     df_intervals_pending.sort_values(by=['video_id', 'interval_id'], inplace=True)
-    for i, chunk in enumerate(np.array_split(df_intervals_pending.head(), NUMBER_OF_BATCHES), 1):
+    for i, chunk in enumerate(np.array_split(df_intervals_pending, NUMBER_OF_BATCHES), 1):
         logger.info(f'\tExtract interval video frame, batch #{i} sized {chunk.shape}...:')
         for _, row in chunk.iterrows():
             interval_id = row['interval_id']
