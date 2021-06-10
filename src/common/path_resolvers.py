@@ -67,6 +67,18 @@ def resolve_interval_frames_dir(df_intervals, interval_id, create=False):
         os.makedirs(inetrval_frames_dir)
     return inetrval_frames_dir
 
+
+# ------- 5) Faces
+
+def resolve_interval_face_annot_224_dir(df_intervals, interval_id, create=False):
+    interval_video_path = resolve_interval_video_path(df_intervals, interval_id)
+    interval_video_dir = os.path.dirname(interval_video_path)
+    inetrval_face_annot_dir = os.path.join(interval_video_dir, FACE_IMAGE_DIR_NAME)
+    if create and not os.path.exists(inetrval_face_annot_dir):
+        os.makedirs(inetrval_face_annot_dir)
+    return inetrval_face_annot_dir
+
+
 def resolve_speaker_intervals_text_dir():
     # '/Users/staveshemesh/Projects/PATS_DATA/Processed/oliver/data/', 'processed/oliver'
     return os.path.join(PATS_SPEAKER_DATA_DIR, 'processed', SPEAKER_NAME)
@@ -86,13 +98,6 @@ def read_text(interval_id, debug=False):
     df_token_frames_interval['frames_count'] = df_token_frames_interval['end_frame'] - df_token_frames_interval['start_frame']
     return df_token_frames_interval
 
-def resolve_interval_face_annot_224_dir(df_intervals, interval_id, create=False):
-    interval_video_path = resolve_interval_video_path(df_intervals, interval_id)
-    interval_video_dir = os.path.dirname(interval_video_path)
-    inetrval_face_annot_dir = os.path.join(interval_video_dir, FACE_IMAGE_DIR_NAME)
-    if create and not os.path.exists(inetrval_face_annot_dir):
-        os.makedirs(inetrval_face_annot_dir)
-    return inetrval_face_annot_dir
 
 def resolve_224_voken_path(df_intervals, interval_id, frame_id):
     single_frame_face_annot_dir = resolve_interval_face_annot_224_dir(df_intervals, interval_id, frame_id)

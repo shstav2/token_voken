@@ -17,10 +17,10 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def extract_interval_video_to_frames(df_intervals):
+def detect_faces_in_frames(df_intervals):
     # Interval video frames status
-    logging.info('-------- Interval Video ➜ Frames -----------')
-    df_intervals['status_interval_frames_dir'] = df_intervals['interval_id'].apply(lambda interval_id:\
+    logging.info('-------- Frames ➜ Faces -----------')
+    df_intervals['status_interval_faces_dir'] = df_intervals['interval_id'].apply(lambda interval_id:\
         status_interval_video_frames_dir(df_intervals, interval_id))
     logger.info('[Status] Interval video frames:\n' \
                 f"{df_intervals['status_interval_frames_dir'].value_counts()}")
@@ -34,14 +34,12 @@ def extract_interval_video_to_frames(df_intervals):
             interval_id = row['interval_id']
             interval_video_path = resolve_interval_video_path(df_intervals, interval_id)
             interval_frames_dir = resolve_interval_frames_dir(df_intervals, interval_id)
-            if i == 1:
-                logger.info(f'\t{interval_video_path} → {interval_frames_dir}')
             video_to_frames(interval_video_path, interval_frames_dir)
 
 def run():
     # Interval video into jpg frames
     df_intervals = load_valid_intervals()
-    extract_interval_video_to_frames(df_intervals)
+    detect_faces_in_frames(df_intervals)
 
 
 if __name__ == '__main__':
