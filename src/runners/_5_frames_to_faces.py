@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 def detect_faces_in_frames(df_intervals):
-    # Interval video frames status
+    # Interval faces
     logging.info('-------- Frames ➜ Faces -----------')
     df_intervals['status_interval_faces_dir'] = df_intervals['interval_id'].apply(lambda interval_id:\
         status_interval_video_frames_dir(df_intervals, interval_id))

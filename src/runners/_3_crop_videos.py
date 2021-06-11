@@ -1,3 +1,4 @@
+import math
 import numpy as np
 import logging
 
@@ -6,7 +7,7 @@ from src.components._1_data_loader import load_valid_intervals
 from src.components._3_video_crop import crop_tool
 
 
-NUMBER_OF_BATCHES = 43
+BATCH_SIZE = 20
 
 
 logging.basicConfig(
@@ -25,10 +26,12 @@ def interval_video_status_and_crop(df_intervals):
     logger.info('[Status] Interval video download:\n' \
                 f"{df_intervals['status_interval_video_file'].value_counts()}")
     # Crop videos in batches
-    logger.info('Crop interval videos...:')
     df_intervals_pending = df_intervals[~df_intervals['status_interval_video_file']]
     df_intervals_pending.sort_values(by='video_id', inplace=True)
-    for i, chunk in enumerate(np.array_split(df_intervals_pending, NUMBER_OF_BATCHES), 1):
+    pending_count = df_intervals_pending.shape[0]
+    logger.info(f'Crop {pending_count} interval videos...:')
+    number_of_batches = math.ceil(pending_count / BATCH_SIZE)
+    for i, chunk in enumerate(np.array_split(df_intervals_pending, number_of_batches), 1):
         logger.info(f'\tDownloading videos batch #{i} sized {chunk.shape}...:')
         for _, row in chunk.iterrows():
             crop_tool(row)

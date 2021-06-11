@@ -3,7 +3,7 @@ import logging
 from pathlib import Path
 
 from src.common.path_resolvers import resolve_video_file_path, \
-    resolve_interval_video_path, resolve_interval_frames_dir
+    resolve_interval_video_path, resolve_interval_frames_dir, resolve_interval_faces_dir
 from src.common.debug import one_percent_chance
 from src.common.display_utils import bool_to_symbol
 
@@ -15,6 +15,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+# Interval Video
+VIDEO_FILE_SIZE_THRESHOLD = 9999
+# Frames
 SINGLE_FRAME_SIZE_APPROX_BYTES = 130 * 1000 # 130K
 FRAMES_DIR_SIZE_THRESHOLD =  3 * SINGLE_FRAME_SIZE_APPROX_BYTES
 # DETECTED_FACES_COUNTER_THRESHOLD_BYTES = 3 * IMAGE_SIZE_APPROX_BYTES
@@ -47,10 +50,13 @@ def status_video_downloaded(video_id):
 def status_interval_video_downloaded(df_intervals, interval_id):
     video_path = resolve_interval_video_path(df_intervals, interval_id)
     interval_video_exists = os.path.exists(video_path)
+    video_size_kilobytes = os.path.getsize(video_path)
+    valid_video_size = VIDEO_FILE_SIZE_THRESHOLD < video_size_kilobytes
+    video_status_ok = interval_video_exists and valid_video_size
     if one_percent_chance():
-        symbol = bool_to_symbol(interval_video_exists)
-        logger.info(f'\t[Status] {symbol} Interval video {video_path}')
-    return interval_video_exists
+        symbol = bool_to_symbol(video_status_ok)
+        logger.info(f'\t[Status] {symbol} Interval video {video_path} (size: {video_size_kilobytes:,} KB)')
+    return video_status_ok
 
 
 # ------- Step 4 Interval Videos → Frames(jpg)
@@ -71,12 +77,15 @@ def status_interval_video_frames_dir(df_intervals, interval_id):
 
 # ------- Step 5 Frames → Faces
 
-# def status_detected_faces_directories_exist(df_intervals, interval_id):
-#     # /vokens/face_annot_224/  ({000}/detected_face.png)
-#     interval_face_annot_224 = resolve_interval_face_annot_224_dir(df_intervals, interval_id, create=False)
-#     interval_face_annot_224_exists = os.path.exists(interval_face_annot_224)
-#     return interval_face_annot_224_exists and \
-#            DETECTED_FACES_COUNTER_THRESHOLD_BYTES < get_number_of_directories(interval_face_annot_224)
+def status_detected_faces_directories_exist(df_intervals, interval_id):
+    interval_faces_dir = resolve_interval_faces_dir(df_intervals, interval_id, create=False)
+    interval_faces_dir_exists = os.path.exists(interval_faces_dir)
+    if one_percent_chance():
+        symbol = bool_to_symbol(interval_faces_dir_exists)
+        logger.info(f'\t[Status] {symbol} Interval faces {interval_faces_dir_exists}')
+    return interval_faces_dir
+    # and \
+    #        DETECTED_FACES_COUNTER_THRESHOLD_BYTES < get_number_of_directories(interval_face_annot_224)
 #
 
 

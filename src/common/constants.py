@@ -9,7 +9,8 @@ SPEAKER_NAME = 'oliver'
 # Sources
 VIDEOS = 'Videos'
 VIDEO_FRAMES_DIR_NAME = 'Frames'
-# FACE_IMAGE_DIR_NAME = 'face_annot_224'
+ALL_FACES_IMAGE_DIR_NAME = 'FacesAll'
+FACES_IMAGE_DIR_NAME = 'Faces'
 
 PATS_SPEAKER_VIZ_DIR = os.path.join(PATS_DATA_ROOT, f'{VIDEOS}/{SPEAKER_NAME}')
 PATS_SPEAKER_DATASET_DIR = os.path.join(PATS_DATA_ROOT, f'Datasets/{SPEAKER_NAME}')
