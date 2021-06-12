@@ -3,8 +3,8 @@ import numpy as np
 import logging
 
 from src.common.status import status_interval_video_downloaded
-from src.components._1_data_loader import load_valid_intervals
-from src.components._3_video_crop import crop_tool
+from src.common.data_loader import load_valid_intervals
+from src.components._2_video_crop import crop_tool
 
 
 BATCH_SIZE = 20

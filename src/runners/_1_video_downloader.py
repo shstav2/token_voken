@@ -1,9 +1,9 @@
 import numpy as np
 import logging
 
-from common.status import status_video_downloaded
-from components._1_data_loader import load_intervals, load_videos
-from components._2_video_downloader import youtube_downloader
+from src.common.status import status_video_downloaded
+from src.common.data_loader import load_intervals, load_videos
+from src.components._1_video_downloader import youtube_downloader
 
 CHUNK_SIZE = 5
 
