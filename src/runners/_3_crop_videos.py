@@ -31,10 +31,11 @@ def interval_video_status_and_crop(df_intervals):
     pending_count = df_intervals_pending.shape[0]
     logger.info(f'Crop {pending_count} interval videos...:')
     number_of_batches = math.ceil(pending_count / BATCH_SIZE)
-    for i, chunk in enumerate(np.array_split(df_intervals_pending, number_of_batches), 1):
-        logger.info(f'\tDownloading videos batch #{i} sized {chunk.shape}...:')
-        for _, row in chunk.iterrows():
-            crop_tool(row)
+    if 0 < pending_count:
+        for i, chunk in enumerate(np.array_split(df_intervals_pending, number_of_batches), 1):
+            logger.info(f'\tDownloading videos batch #{i} sized {chunk.shape}...:')
+            for _, row in chunk.iterrows():
+                crop_tool(row)
 
 def run():
     # Interval video mp4 file

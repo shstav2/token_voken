@@ -2,7 +2,9 @@
 import os
 import pandas as pd
 
-from src.common.constants import PATS_SPEAKER_VIZ_DIR, VIDEO_FRAMES_DIR_NAME, ALL_FACES_IMAGE_DIR_NAME
+from src.common.constants import PATS_SPEAKER_VIZ_DIR, \
+    VIDEO_FRAMES_DIR_NAME, ALL_FACES_IMAGE_DIR_NAME, \
+    FRAME_EXTENSION
 
 # Data/PATS_DATA/
 # └── Videos
@@ -17,7 +19,6 @@ from src.common.constants import PATS_SPEAKER_VIZ_DIR, VIDEO_FRAMES_DIR_NAME, AL
 #         │   |   └── 00002.jpg
 #         │   └── Faces
 #         │   └── FacesAll
-
 
 
 # ------- Utils
@@ -74,9 +75,15 @@ def resolve_interval_frames_dir(df_intervals, interval_id, create=False):
         os.makedirs(inetrval_frames_dir)
     return inetrval_frames_dir
 
+def resolve_interval_frame_path(df_intervals, interval_id, frame_id):
+    inetrval_frames_dir = resolve_interval_frames_dir(df_intervals, interval_id)
+    single_frame_path = os.path.join(inetrval_frames_dir, f"{frame_id:05d}.{FRAME_EXTENSION}")
+    return single_frame_path
+
 
 # ------- 5) Faces
 
+# Videos/oliver/0Rnq1NpHdmw/101462/FacesAll
 def resolve_interval_all_faces_dir(df_intervals, interval_id, create=False):
     interval_video_path = resolve_interval_dir(df_intervals, interval_id)
     interval_face_annot_dir = os.path.join(interval_video_path, ALL_FACES_IMAGE_DIR_NAME)
@@ -84,7 +91,7 @@ def resolve_interval_all_faces_dir(df_intervals, interval_id, create=False):
         os.makedirs(interval_face_annot_dir)
     return interval_face_annot_dir
 
-
+# Videos/oliver/0Rnq1NpHdmw/101462/FacesAll/00012
 def resolve_single_frame_faces_dir(df_intervals, interval_id, frame_id, create=False):
     face_annot_dir = resolve_interval_all_faces_dir(df_intervals, interval_id)
     single_frame_face_annot_dir = os.path.join(face_annot_dir, f"{frame_id:05d}")
@@ -92,11 +99,16 @@ def resolve_single_frame_faces_dir(df_intervals, interval_id, frame_id, create=F
         os.makedirs(single_frame_face_annot_dir)
     return single_frame_face_annot_dir
 
-
+# Videos/oliver/0Rnq1NpHdmw/101462/FacesAll/00012/face_0.jpg
 def resolve_detected_face_path(df_intervals, interval_id, frame_id, face_id, create):
     single_frame_faces_dir = resolve_single_frame_faces_dir(df_intervals, interval_id, frame_id, create)
-    detected_face_frame_path = os.path.join(single_frame_faces_dir, f'{frame_id}_face_{face_id}.png')
+    detected_face_frame_path = os.path.join(single_frame_faces_dir, f'face_{face_id}.{FRAME_EXTENSION}')
     return detected_face_frame_path
+
+# Videos/oliver/0Rnq1NpHdmw/101462/FacesAll/00012/annotated_faces.jpg
+def resolve_annot_faces_path(df_intervals, interval_id, frame_id):
+    single_frame_face_annot_dir = resolve_single_frame_faces_dir(df_intervals, interval_id, frame_id)
+    return os.path.join(single_frame_face_annot_dir, f'annotated_faces.{FRAME_EXTENSION}')
 
 
 
@@ -126,13 +138,3 @@ def resolve_224_voken_path(df_intervals, interval_id, frame_id):
     detected_face_frame_path = os.path.join(single_frame_face_annot_dir, f'{frame_id:05d}.{FRAME_EXTENSION}').format(frame_id)
     return detected_face_frame_path
 
-def resolve_frame_face_annot_dir(df_intervals, interval_id, frame_id, create=False):
-    face_annot_dir = resolve_interval_face_annot_224_dir(df_intervals, interval_id)
-    single_frame_face_annot_dir = os.path.join(face_annot_dir, f"{frame_id:05d}")
-    if create and not os.path.exists(single_frame_face_annot_dir):
-        os.makedirs(single_frame_face_annot_dir)
-    return single_frame_face_annot_dir
-
-def resolve_annot_faces_path(df_intervals, interval_id, frame_id):
-    single_frame_face_annot_dir = resolve_frame_face_annot_dir(df_intervals, interval_id, frame_id)
-    return os.path.join(single_frame_face_annot_dir, 'annotated_faces.png')

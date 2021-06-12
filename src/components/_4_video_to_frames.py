@@ -10,7 +10,7 @@ logging.basicConfig(format='%(asctime)s | %(levelname)s : %(message)s',
                      level=logging.INFO, stream=sys.stdout)
 
 
-def video_to_frames_and_delete(interval_video_path, interval_frames_dir, override=False, delete=False):
+def video_to_frames_and_delete(interval_video_path, interval_frames_dir, override=False):
     video_has_frames = os.path.exists(interval_frames_dir) and os.path.getsize(interval_frames_dir) > 0
     if video_has_frames:
         if override:
@@ -21,8 +21,6 @@ def video_to_frames_and_delete(interval_video_path, interval_frames_dir, overrid
         else:
             raise RuntimeError(f'{interval_frames_dir} - not empty')
     video_to_frames(interval_video_path, interval_frames_dir)
-    if delete:
-        delete_video(interval_video_path)
 
 
 def video_to_frames(interval_video_path, interval_frames_dir):
@@ -32,7 +30,3 @@ def video_to_frames(interval_video_path, interval_frames_dir):
         f'-q:v 2 -qmin 2 -qmax 2 "{interval_frames_dir}/$filename%05d.{FRAME_EXTENSION}"'
     run_command(command)
 
-
-def delete_video(interval_video_path):
-    if os.path.exists(interval_video_path):
-        os.remove(interval_video_path)

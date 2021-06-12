@@ -1,13 +1,12 @@
+import math
 import numpy as np
 import logging
 
-from src.common.status import status_interval_video_frames_dir
+from src.common.status import status_detected_faces_dir_exist
 from src.components._1_data_loader import load_valid_intervals
-from src.components._4_video_to_frames import video_to_frames
-from src.common.path_resolvers import resolve_interval_video_path, resolve_interval_frames_dir
+from src.components._5_frames_to_faces import create_face_images
 
-
-NUMBER_OF_BATCHES = 43
+BATCH_SIZE = 10
 
 
 logging.basicConfig(
@@ -21,23 +20,25 @@ def detect_faces_in_frames(df_intervals):
     # Interval faces
     logging.info('-------- Frames ➜ Faces -----------')
     df_intervals['status_interval_faces_dir'] = df_intervals['interval_id'].apply(lambda interval_id:\
-        status_interval_video_frames_dir(df_intervals, interval_id))
+        status_detected_faces_dir_exist(df_intervals, interval_id))
     logger.info('[Status] Interval video frames:\n' \
-                f"{df_intervals['status_interval_frames_dir'].value_counts()}")
-    # Extract frames from video
-    logger.info('Extract interval frames...:')
-    df_intervals_pending = df_intervals[~df_intervals['status_interval_frames_dir']]
+                f"{df_intervals['status_interval_faces_dir'].value_counts()}")
+
+    # Extract faces
+    df_intervals_pending = df_intervals[~df_intervals['status_interval_faces_dir']]
     df_intervals_pending.sort_values(by=['video_id', 'interval_id'], inplace=True)
-    for i, chunk in enumerate(np.array_split(df_intervals_pending, NUMBER_OF_BATCHES), 1):
+    pending_count = df_intervals_pending.shape[0]
+    number_of_batches = math.ceil(pending_count / BATCH_SIZE)
+    logger.info(f'Extract faces from frames for {pending_count} intervals...:')
+    for i, chunk in enumerate(np.array_split(df_intervals_pending, number_of_batches), 1):
         logger.info(f'\tExtract interval video frame, batch #{i} sized {chunk.shape}...:')
         for _, row in chunk.iterrows():
             interval_id = row['interval_id']
-            interval_video_path = resolve_interval_video_path(df_intervals, interval_id)
-            interval_frames_dir = resolve_interval_frames_dir(df_intervals, interval_id)
-            video_to_frames(interval_video_path, interval_frames_dir)
+            create_face_images(df_intervals, interval_id)
+
 
 def run():
-    # Interval video into jpg frames
+    # Detect faces in frames
     df_intervals = load_valid_intervals()
     detect_faces_in_frames(df_intervals)
 
