@@ -80,8 +80,8 @@ def resolve_interval_frames_dir(interval_id, create=False):
         os.makedirs(inetrval_frames_dir)
     return inetrval_frames_dir
 
-def resolve_interval_frame_path(interval_id, frame_id):
-    inetrval_frames_dir = resolve_interval_frames_dir(interval_id)
+def resolve_interval_frame_path(interval_id, frame_id, create=False):
+    inetrval_frames_dir = resolve_interval_frames_dir(interval_id, create)
     single_frame_path = os.path.join(inetrval_frames_dir, f"{frame_id:05d}.{FRAME_EXTENSION}")
     return single_frame_path
 
@@ -111,8 +111,8 @@ def resolve_detected_face_path(interval_id, frame_id, face_id, create=False):
     return detected_face_frame_path
 
 # [FacesAll] Videos/oliver/0Rnq1NpHdmw/101462/FacesAll/00012/annotated_faces.jpg
-def resolve_annot_faces_path(interval_id, frame_id):
-    single_frame_face_annot_dir = resolve_single_frame_faces_dir(interval_id, frame_id)
+def resolve_annot_faces_path(interval_id, frame_id, create=False):
+    single_frame_face_annot_dir = resolve_single_frame_faces_dir(interval_id, frame_id, create)
     return os.path.join(single_frame_face_annot_dir, f'annotated_faces.{FRAME_EXTENSION}')
 
 # Videos/oliver/0Rnq1NpHdmw/101462/Faces

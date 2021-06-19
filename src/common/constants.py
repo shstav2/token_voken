@@ -25,6 +25,8 @@ PROJECT_TOKEN_VOKEN = pathlib.Path(__file__).parent.parent.parent.absolute()
 INTERVALS_PATH = os.path.join(PROJECT_TOKEN_VOKEN, 'resources/df_intervals_oliver.csv')
 
 
+
+
 # Sys Path Sources
 PROJECT_FECNET = '/Users/staveshemesh/Projects/shstav2/FECNet'
 # PROJECT_TOKEN_VOKEN = '/Users/staveshemesh/Projects/shstav2/token_voken'
@@ -35,6 +37,9 @@ VIDEO_ID_LEN = 11
 FRAME_RATE = 15
 
 FRAME_EXTENSION = 'jpg'
+
+FACE_IMAGE_SIZE = 224
+
 # COLS_VIEW = [
 #     'speaker', 'interval_id',
 #     'duration', 'start_time_string', 'end_time_string',
