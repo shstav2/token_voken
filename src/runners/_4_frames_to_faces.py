@@ -2,7 +2,7 @@ import math
 import numpy as np
 import logging
 
-from src.common.status import status_detected_faces_dir_exist
+from src.monitoring.status import status_detected_faces_dir_exist
 from src.common.data_loader import load_valid_intervals
 from src.components._4_frames_to_faces import create_face_images
 
@@ -21,12 +21,12 @@ def detect_faces_in_frames(df_intervals):
     logging.info('-------- Frames ➜ Faces -----------')
     df_intervals['status_interval_faces_dir'] = df_intervals['interval_id'].apply(lambda interval_id:\
         status_detected_faces_dir_exist(df_intervals, interval_id))
-    logger.info('[Status] Interval video frames:\n' \
+    logger.info('[Status] Interval detected faces:\n' \
                 f"{df_intervals['status_interval_faces_dir'].value_counts()}")
 
     # Extract faces
     df_intervals_pending = df_intervals[~df_intervals['status_interval_faces_dir']].copy()
-    df_intervals_pending.sort_values(by=['video_id', 'interval_id'], inplace=True)
+    df_intervals_pending.sort_values(by=['video_id', 'interval_id'], ascending=False, inplace=True)
     pending_count = df_intervals_pending.shape[0]
     number_of_batches = math.ceil(pending_count / BATCH_SIZE)
     logger.info(f'Extract faces from frames for {pending_count} intervals...:')

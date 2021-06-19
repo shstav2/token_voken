@@ -1,5 +1,7 @@
 import os
 import logging
+import shutil
+
 from tqdm import tqdm
 
 import torch
@@ -9,7 +11,7 @@ from facenet_pytorch import MTCNN, extract_face
 from src.common.constants import FRAME_EXTENSION
 from src.common.debug import one_percent_chance
 from src.common.path_resolvers import resolve_interval_frames_dir, resolve_detected_face_path, \
-    resolve_interval_frame_path, resolve_annot_faces_path
+    resolve_interval_frame_path, resolve_annot_faces_path, resolve_frame_face_path
 
 logging.basicConfig(
     format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
@@ -17,9 +19,10 @@ logging.basicConfig(
     level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
+DEVICE_ID = '1'
 
 def get_model():
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    device = torch.device(f"cuda:{DEVICE_ID}" if torch.cuda.is_available() else "cpu")
     mtcnn = MTCNN(select_largest=False, thresholds=[0.9, 0.9, 0.9], device=device)
     logger.info(f'Init ({device}) MTCNN {mtcnn}..')
     return mtcnn
@@ -54,6 +57,15 @@ def save_faces(df_intervals, interval_id, frame_id):
 
     annotated_faces_path = resolve_annot_faces_path(df_intervals, interval_id, frame_id)
     img_draw.save(annotated_faces_path)
+
+    # [FacesAll] Videos/oliver/0Rnq1NpHdmw/101462/FacesAll/00012/face_0.jpg
+    face_id = 0
+    face_0_path = resolve_detected_face_path(df_intervals, interval_id, frame_id, face_id)
+    # Videos/oliver/0Rnq1NpHdmw/101462/Faces/00012.jpg
+    frame_face_path = resolve_frame_face_path(df_intervals, interval_id, frame_id, create=True)
+    shutil.copyfile(face_0_path, frame_face_path)
+
     if one_percent_chance():
         logger.info(f'Extract faces {annotated_faces_path}..')
+        logger.info(f'Copy {face_0_path} → {frame_face_path}.')
 

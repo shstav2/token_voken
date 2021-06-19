@@ -1,7 +1,7 @@
 import numpy as np
 import logging
 
-from src.common.status import status_video_downloaded
+from src.monitoring.status import status_video_downloaded
 from src.common.data_loader import load_intervals, load_videos
 from src.components._1_video_downloader import youtube_downloader
 
