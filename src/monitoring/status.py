@@ -31,22 +31,22 @@ def status_video_downloaded(video_id):
 
 # ------- Step 2 Cropped Interval Videos (mp4)
 
-def status_interval_video_downloaded(df_intervals, interval_id, debug=False):
-    video_path = resolve_interval_video_path(df_intervals, interval_id)
+def status_interval_video_downloaded(interval_id, debug=False):
+    video_path = resolve_interval_video_path(interval_id)
     return exists_and_has_content(video_path, VIDEO_FILE_SIZE_THRESHOLD, debug=debug)
 
 
 # ------- Step 3 Interval Videos → Frames(jpg)
 
-def status_interval_video_frames_dir(df_intervals, interval_id, debug=False):
-    interval_frames_dir = resolve_interval_frames_dir(df_intervals, interval_id, create=False)
+def status_interval_video_frames_dir(interval_id, debug=False):
+    interval_frames_dir = resolve_interval_frames_dir(interval_id, create=False)
     return exists_and_has_content(interval_frames_dir, FRAMES_DIR_SIZE_THRESHOLD, debug=debug)
 
 
 # ------- Step 5 Frames → Faces
 
-def status_detected_faces_dir_exist(df_intervals, interval_id, debug=False):
-    interval_faces_dir = resolve_interval_all_faces_dir(df_intervals, interval_id, create=False)
+def status_detected_faces_dir_exist(interval_id, debug=False):
+    interval_faces_dir = resolve_interval_all_faces_dir(interval_id, create=False)
     return exists_and_has_content(interval_faces_dir, FRAMES_DIR_SIZE_THRESHOLD, debug=debug)
 
 

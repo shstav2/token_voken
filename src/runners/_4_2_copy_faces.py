@@ -18,14 +18,14 @@ logger = logging.getLogger(__name__)
 def copy_face_frame(df_intervals):
     face_id = 0
     for interval_id in df_intervals['interval_id']:
-        interval_all_faces_dir = resolve_interval_all_faces_dir(df_intervals, interval_id)
+        interval_all_faces_dir = resolve_interval_all_faces_dir(interval_id)
         frames = sorted(os.listdir(interval_all_faces_dir))
         for frame in frames:
             frame_id = int(frame)
             # [FacesAll] Videos/oliver/0Rnq1NpHdmw/101462/FacesAll/00012/face_0.jpg
-            face_0_path = resolve_detected_face_path(df_intervals, interval_id, frame_id, face_id)
+            face_0_path = resolve_detected_face_path(interval_id, frame_id, face_id)
             # Videos/oliver/0Rnq1NpHdmw/101462/Faces/00012.jpg
-            frame_face_path = resolve_frame_face_path(df_intervals, interval_id, frame_id, create=True)
+            frame_face_path = resolve_frame_face_path(interval_id, frame_id, create=True)
             shutil.copyfile(face_0_path, frame_face_path)
             if one_percent_chance():
                 logger.info(f'Copy {face_0_path} → {frame_face_path}.')

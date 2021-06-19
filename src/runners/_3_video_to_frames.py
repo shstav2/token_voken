@@ -20,8 +20,7 @@ logger = logging.getLogger(__name__)
 def extract_interval_video_to_frames(df_intervals):
     # Interval video frames status
     logging.info('-------- Interval Video ➜ Frames -----------')
-    df_intervals['status_interval_frames_dir'] = df_intervals['interval_id'].apply(lambda interval_id:\
-        status_interval_video_frames_dir(df_intervals, interval_id))
+    df_intervals['status_interval_frames_dir'] = df_intervals['interval_id'].apply(status_interval_video_frames_dir)
     logger.info('[Status] Interval video frames:\n' \
                 f"{df_intervals['status_interval_frames_dir'].value_counts()}")
     # Extract frames from video
@@ -32,8 +31,8 @@ def extract_interval_video_to_frames(df_intervals):
         logger.info(f'\tExtract interval video frame, batch #{i} sized {chunk.shape}...:')
         for _, row in chunk.iterrows():
             interval_id = row['interval_id']
-            interval_video_path = resolve_interval_video_path(df_intervals, interval_id)
-            interval_frames_dir = resolve_interval_frames_dir(df_intervals, interval_id)
+            interval_video_path = resolve_interval_video_path(interval_id)
+            interval_frames_dir = resolve_interval_frames_dir(interval_id)
             if i == 1:
                 logger.info(f'\t{interval_video_path} → {interval_frames_dir}')
             video_to_frames(interval_video_path, interval_frames_dir)

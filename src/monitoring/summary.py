@@ -21,7 +21,7 @@ def status_summary_intervals(df_intervals):
     interval_ids = df_intervals['interval_id'].to_list()
     status_records = []
     for interval_id in interval_ids:
-        status = status_summary_interval(df_intervals, interval_id)
+        status = status_summary_interval(interval_id)
         status_records.append([interval_id] + status)
     df_status = pd.DataFrame(status_records,
         columns=['interval_id',
@@ -31,15 +31,14 @@ def status_summary_intervals(df_intervals):
     print_value_counts(df_status, logger)
     return df_status
 
-def status_summary_interval(df_intervals, interval_id, debug=False):
+def status_summary_interval(interval_id, debug=False):
     # status
-    status_video_file = status_interval_video_downloaded(df_intervals, interval_id, debug=debug)
-    status_frames_dir = status_interval_video_frames_dir(df_intervals, interval_id, debug=debug)
-    status_faces_dir = status_detected_faces_dir_exist(df_intervals, interval_id, debug=debug)
+    status_video_file = status_interval_video_downloaded(interval_id, debug=debug)
+    status_frames_dir = status_interval_video_frames_dir(interval_id, debug=debug)
+    status_faces_dir = status_detected_faces_dir_exist(interval_id, debug=debug)
     # validation
-    valid_faces_eq_frames = validate_faces_count_eq_frames_count(df_intervals, interval_id)
+    valid_faces_eq_frames = validate_faces_count_eq_frames_count(interval_id)
     return [
         status_video_file, status_frames_dir, status_faces_dir,
         valid_faces_eq_frames
     ]
-

@@ -2,7 +2,6 @@ import time
 import pandas as pd
 from IPython.display import Markdown, display
 
-from src.common.path_resolvers import resolve_224_voken_path
 
 LIST_BULLET = '  ◘ '
 TAB = '&nbsp;&nbsp;&nbsp;&nbsp;'

@@ -19,8 +19,7 @@ logger = logging.getLogger(__name__)
 def detect_faces_in_frames(df_intervals):
     # Interval faces
     logging.info('-------- Frames ➜ Faces -----------')
-    df_intervals['status_interval_faces_dir'] = df_intervals['interval_id'].apply(lambda interval_id:\
-        status_detected_faces_dir_exist(df_intervals, interval_id))
+    df_intervals['status_interval_faces_dir'] = df_intervals['interval_id'].apply(status_detected_faces_dir_exist)
     logger.info('[Status] Interval detected faces:\n' \
                 f"{df_intervals['status_interval_faces_dir'].value_counts()}")
 
@@ -34,7 +33,7 @@ def detect_faces_in_frames(df_intervals):
         logger.info(f'\tExtract interval video frame, batch #{i} sized {chunk.shape}...:')
         for _, row in chunk.iterrows():
             interval_id = row['interval_id']
-            create_face_images(df_intervals, interval_id)
+            create_face_images(interval_id)
 
 
 def run():
