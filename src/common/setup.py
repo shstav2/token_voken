@@ -1,5 +1,5 @@
 import sys
-from common.constants import PROJECT_FECNET, PROJECT_TOKEN_VOKEN
+from src.common.constants import PROJECT_FECNET
 
 
 def syspath_append_projects():

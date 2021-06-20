@@ -13,7 +13,7 @@ from src.common.constants import FRAME_EXTENSION, FACE_IMAGE_SIZE
 from src.common.debug import one_percent_chance
 from src.common.path_resolvers import resolve_interval_frames_dir, resolve_detected_face_path, \
     resolve_interval_frame_path, resolve_annot_faces_path, resolve_frame_face_path
-
+from src.monitoring.utils import create_empty_file
 
 logging.basicConfig(
     format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
@@ -60,8 +60,8 @@ def _save_faces(image, detection_result, interval_id, frame_id):
         frame_path = resolve_interval_frame_path(interval_id, frame_id)
         shutil.copyfile(frame_path, annotated_faces_path)
         face_0_path = resolve_detected_face_path(interval_id, frame_id, 0, create=True)
-        Path(face_0_path).touch()
-        logger.error(f'🛑 Could not extracst faces from {interval_id} frame {frame_id} {annotated_faces_path}.')
+        create_empty_file(face_0_path)
+        logger.error(f'🛑 Could not extract faces from {interval_id} frame {frame_id} {annotated_faces_path}.')
         return
 
     # Save actual face

@@ -2,7 +2,7 @@ import math
 import numpy as np
 import logging
 
-from src.monitoring.status import status_detected_faces_dir_exist
+from src.monitoring.status import status_detected_faces_dir
 from src.common.data_loader import load_valid_intervals
 from src.components._4_frames_to_faces import create_face_images
 
@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 def detect_faces_in_frames(df_intervals):
     # Interval faces
     logging.info('-------- Frames ➜ Faces -----------')
-    df_intervals['status_interval_faces_dir'] = df_intervals['interval_id'].apply(status_detected_faces_dir_exist)
+    df_intervals['status_interval_faces_dir'] = df_intervals['interval_id'].apply(status_detected_faces_dir)
     logger.info('[Status] Interval detected faces:\n' \
                 f"{df_intervals['status_interval_faces_dir'].value_counts()}")
 

@@ -45,3 +45,11 @@ def exists_and_has_content(file_or_directory_path, size_threshold_bytes, debug=F
         symbol = bool_to_symbol(path_exists_and_has_content)
         logger.info(f'\t[Status] {symbol} {file_or_directory_path} (size: {human_readable_size(path_size_bytes)})')
     return path_exists_and_has_content
+
+
+def is_empty_file(path):
+    return os.path.getsize(path) == 0
+
+
+def create_empty_file(path):
+    Path(path).touch()

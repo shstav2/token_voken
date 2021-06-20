@@ -3,7 +3,8 @@ import logging
 import pandas as pd
 
 from src.common.path_resolvers import resolve_video_file_path, \
-    resolve_interval_video_path, resolve_interval_frames_dir, resolve_interval_all_faces_dir
+    resolve_interval_video_path, resolve_interval_frames_dir, resolve_interval_all_faces_dir, \
+    resolve_interval_facial_embeddings_dir
 from src.monitoring.utils import exists_and_has_content
 
 logging.basicConfig(
@@ -19,35 +20,50 @@ VIDEO_FILE_SIZE_THRESHOLD = 9999
 SINGLE_FRAME_SIZE_APPROX_BYTES = 130 * 1000 # 130K
 FRAMES_DIR_SIZE_THRESHOLD =  3 * SINGLE_FRAME_SIZE_APPROX_BYTES
 # DETECTED_FACES_COUNTER_THRESHOLD_BYTES = 3 * IMAGE_SIZE_APPROX_BYTES
+# Embeddings
+SINGLE_EMBEDDING_FILE = 192
+FACIAL_EMBEDDINGS_DIR_SIZE_THRESHOLD = 10 * SINGLE_EMBEDDING_FILE
+
 FRAME_RATE = 15
 
 
-# ------- Step 1 Full Video (mp4)
+# ------- Step 1: Full Video (mp4)
 
 def status_video_downloaded(video_id):
     video_path = resolve_video_file_path(video_id)
     return os.path.exists(video_path)
 
 
-# ------- Step 2 Cropped Interval Videos (mp4)
+# ------- Step 2: Cropped Interval Videos (mp4)
 
 def status_interval_video_downloaded(interval_id, debug=False):
     video_path = resolve_interval_video_path(interval_id)
     return exists_and_has_content(video_path, VIDEO_FILE_SIZE_THRESHOLD, debug=debug)
 
 
-# ------- Step 3 Interval Videos → Frames(jpg)
+# ------- Step 3: Interval Videos → Frames (jpg)
 
+# [Frames] Videos/oliver/0Rnq1NpHdmw/101462/Frames
 def status_interval_video_frames_dir(interval_id, debug=False):
     interval_frames_dir = resolve_interval_frames_dir(interval_id, create=False)
     return exists_and_has_content(interval_frames_dir, FRAMES_DIR_SIZE_THRESHOLD, debug=debug)
 
 
-# ------- Step 5 Frames → Faces
+# ------- Step 4: Frames → Faces (224x224 jpg)
 
-def status_detected_faces_dir_exist(interval_id, debug=False):
+# [FacesAll] Videos/oliver/0Rnq1NpHdmw/101462/FacesAll/00012/
+def status_detected_faces_dir(interval_id, debug=False):
     interval_faces_dir = resolve_interval_all_faces_dir(interval_id, create=False)
     return exists_and_has_content(interval_faces_dir, FRAMES_DIR_SIZE_THRESHOLD, debug=debug)
+
+
+# ------- Step 5: Frames → Faces
+
+# [FECNet] Videos/oliver/0Rnq1NpHdmw/101462/FECNet
+def status_facial_embeddings_dir(interval_id, debug=False):
+    interval_facial_embeddings_dir = resolve_interval_facial_embeddings_dir(interval_id, create=False)
+    return exists_and_has_content(interval_facial_embeddings_dir, FACIAL_EMBEDDINGS_DIR_SIZE_THRESHOLD, debug=debug)
+
 
 
 

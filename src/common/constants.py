@@ -3,16 +3,17 @@ import pathlib
 from src.common.conf import STAV_ROOT
 
 
-# ------ PATS Related
 # Base
 PATS_DATA_ROOT = os.path.join(STAV_ROOT, 'PATS_DATA')
 SPEAKER_NAME = 'oliver'
 
 # Source Channels
-VIDEOS = 'Videos'
-VIDEO_FRAMES_DIR_NAME = 'Frames'
-ALL_FACES_IMAGE_DIR_NAME = 'FacesAll'
-FACES_IMAGE_DIR_NAME = 'Faces'
+VIDEOS =                     'Videos'    # 105810.mp4
+VIDEO_FRAMES_DIR_NAME =      'Frames'    # 00029.jpg
+ALL_FACES_IMAGE_DIR_NAME =   'FacesAll'  # face_0.jpg
+FACES_IMAGE_DIR_NAME =       'Faces'     # 00029.jpg (224x224)
+FECNET_EMBEDDING_DIR_NAME =  'FECNet'    #
+
 # Tree
 PATS_SPEAKER_VIZ_DIR = os.path.join(PATS_DATA_ROOT, f'{VIDEOS}/{SPEAKER_NAME}')
 
@@ -20,25 +21,19 @@ PATS_SPEAKER_VIZ_DIR = os.path.join(PATS_DATA_ROOT, f'{VIDEOS}/{SPEAKER_NAME}')
 # PATS_SPEAKER_DATA_DIR = os.path.join(PATS_DATA_ROOT, f'Processed/{SPEAKER_NAME}/data')
 # PATS_SPEAKER_INTERVAL_DIR = os.path.join(PATS_SPEAKER_DATA_DIR, 'processed', SPEAKER_NAME)
 
-# ------ Data files
+# Projects
 PROJECT_TOKEN_VOKEN = pathlib.Path(__file__).parent.parent.parent.absolute()
+PROJECT_FECNET = '/home/stav/Projects/FECNet'
+
+# Resources
 INTERVALS_PATH = os.path.join(PROJECT_TOKEN_VOKEN, 'resources/df_intervals_oliver.csv')
-
-
-
-
-# Sys Path Sources
-PROJECT_FECNET = '/Users/staveshemesh/Projects/shstav2/FECNet'
-# PROJECT_TOKEN_VOKEN = '/Users/staveshemesh/Projects/shstav2/token_voken'
 
 # Interval Parsing
 VIDEO_ID_LEN = 11
-
 FRAME_RATE = 15
-
 FRAME_EXTENSION = 'jpg'
-
 FACE_IMAGE_SIZE = 224
+EMBEDDING_EXTENSION = 'npy'
 
 # COLS_VIEW = [
 #     'speaker', 'interval_id',

@@ -2,7 +2,7 @@ from subprocess import call
 import logging
 import sys
 
-from common.display_utils import bool_to_symbol
+from src.common.display_utils import bool_to_symbol
 
 logging.basicConfig(format='%(asctime)s | %(levelname)s : %(message)s',
                      level=logging.INFO, stream=sys.stdout)
