@@ -45,19 +45,21 @@ def get_model():
 VISN_MODEL = get_model()
 
 def extract_and_save_interval_facial_embeddings(interval_id):
-    print('INTERVAL: ', interval_id)
     faces_dir = resolve_interval_faces_dir(interval_id)
+    logger.info(f'Extract embeddings for interval {interval_id} from {faces_dir}..')
     interval_face_filenames = sorted(os.listdir(faces_dir))
     batch_tensor_imgs, batch_frame_ids = [], []
     for i, face_filename in enumerate(tqdm(interval_face_filenames)):
         img_path = os.path.join(faces_dir, face_filename)
+        frame_id = int(face_filename.split(".")[0])
         if is_empty_file(img_path):
-            create_empty_file(img_path)
-            logger.error(f'🛑 Could not extract embeddings for {interval_id} frame {frame_id} {img_path}.')
-            break
+            embedding_path = resolve_interval_facial_embedding_path(interval_id, frame_id, create=True)
+            create_empty_file(embedding_path)
+            logger.error(f'🛑 Could not extract embeddings for {interval_id} frame {img_path}.\n'\
+                    f'Creating empty file {embedding_path}.')
+            continue
         img_tensor = _get_tensor_image(img_path)
         batch_tensor_imgs.append(img_tensor)
-        frame_id = int(face_filename.split(".")[0])
         batch_frame_ids.append(frame_id)
         if len(batch_tensor_imgs) == BATCH_SIZE:
             batch_img_keys = _model_forward_on_img_batch(batch_tensor_imgs, device)
