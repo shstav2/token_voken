@@ -1,6 +1,8 @@
+import os
 import time
 import pandas as pd
-from IPython.display import Markdown, display
+from IPython.display import Markdown, display, Image
+from PIL import Image as PImage
 
 
 LIST_BULLET = '  ◘ '
@@ -57,3 +59,11 @@ def display_df_info(df_intervals):
     print(f'{LIST_BULLET}Total Duration: {total_duration_string} ({int(total_duration):,} seconds)')
     all_youtube = df_intervals['video_link'].str.contains('youtube').all()
     print(f'{LIST_BULLET}All are Youtube videos: {all_youtube}')
+
+def display_faces(path):
+    for file in os.listdir(path):
+        abs_path = os.path.join(path, file)
+        display(Image(abs_path))
+        im = PImage.open(abs_path)
+        width, height = im.size
+        printmd(f'**({width} × {height}) {abs_path}**')

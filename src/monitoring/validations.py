@@ -45,3 +45,8 @@ def validate_embeddings_count_eq_frames_count(interval_id):
     # Videos/oliver/0Rnq1NpHdmw/101462/FECNet
     interval_faces_dir = resolve_interval_facial_embeddings_dir(interval_id)
     return validate_dirs_have_the_same_filenames(interval_id, interval_frames_dir, interval_faces_dir)
+
+
+# check all faces are oliver's
+# check the (number of frames == frame rate * seconds)
+# check frame filenames are a full range (0..105)

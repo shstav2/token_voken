@@ -3,18 +3,16 @@ import logging
 import numpy as np
 from tqdm import tqdm
 import torch
-from torchvision import transforms
-from torchvision.datasets.folder import default_loader
 
 from models.FECNet import FECNet
 from src.common.path_resolvers import resolve_interval_faces_dir, \
     resolve_interval_facial_embedding_path
 from src.common.debug import one_percent_chance
+from src.img_utils.reader import get_tensor_image
 from src.monitoring.utils import is_empty_file, create_empty_file
 
 device = 'cuda:0'
 BATCH_SIZE = 64
-IMG_TRANSFORM = transforms.Compose([transforms.ToTensor()])
 
 logging.basicConfig(
     format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
@@ -58,7 +56,7 @@ def extract_and_save_interval_facial_embeddings(interval_id):
             logger.error(f'🛑 Could not extract embeddings for {interval_id} frame {img_path}.\n'\
                     f'Creating empty file {embedding_path}.')
             continue
-        img_tensor = _get_tensor_image(img_path)
+        img_tensor = get_tensor_image(img_path)
         batch_tensor_imgs.append(img_tensor)
         batch_frame_ids.append(frame_id)
         if len(batch_tensor_imgs) == BATCH_SIZE:
@@ -69,10 +67,6 @@ def extract_and_save_interval_facial_embeddings(interval_id):
         batch_img_keys = _model_forward_on_img_batch(batch_tensor_imgs, device)
         _save_embeddings(interval_id, batch_img_keys, batch_frame_ids)
 
-def _get_tensor_image(img_path):
-    pil_img = default_loader(img_path)
-    img_tensor = IMG_TRANSFORM(pil_img)
-    return img_tensor
 
 def _model_forward_on_img_batch(batch_tensor_imgs, device):
     visn_input = torch.stack(batch_tensor_imgs).to(device)

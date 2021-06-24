@@ -35,13 +35,5 @@ FRAME_EXTENSION = 'jpg'
 FACE_IMAGE_SIZE = 224
 EMBEDDING_EXTENSION = 'npy'
 
-# COLS_VIEW = [
-#     'speaker', 'interval_id',
-#     'duration', 'start_time_string', 'end_time_string',
-#     'video_link'
-# ]
-# COLS_SMALL_FRAME_SIZE = [
-#     'video_id', 'interval_id',
-#     'duration', 'start_time_string', 'end_time_string',
-#     'frames_dir_content_size', 'interval_frames_dir'
-# ]
+
+OLIVER_FACE_PATH = '/home/stav/Data/Sample/oliver/face.jpg'
