@@ -18,8 +18,14 @@ CAPTION_STYLE = {
 
 # ------- 1) Common
 
+WRN = '⚠️'
+ERR = '🛑'
+V = '✅'
+X = '❌'
+IMP = '❗'
+
 def bool_to_symbol(bool_val):
-    return '✅ ' if bool_val else '❌'
+    return V if bool_val else X
 
 
 # ------- 2) Console

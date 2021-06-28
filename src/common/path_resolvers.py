@@ -5,7 +5,7 @@ import pandas as pd
 from src.common.constants import PATS_SPEAKER_VIZ_DIR, \
     VIDEO_FRAMES_DIR_NAME, ALL_FACES_IMAGE_DIR_NAME, \
     FACES_IMAGE_DIR_NAME, FRAME_EXTENSION, FECNET_EMBEDDING_DIR_NAME, \
-    EMBEDDING_EXTENSION
+    RESNET_EMBEDDING_DIR_NAME, EMBEDDING_EXTENSION
 from src.data.interval_to_video_mapping import INTERVAL_TO_VIDEO
 
 # Data/PATS_DATA/
@@ -100,7 +100,7 @@ def resolve_interval_frame_path(interval_id, frame_id, create=False):
     return single_frame_path
 
 
-# ------- 4) Faces
+# ------- 4) FacesAll
 
 # [FacesAll] Videos/oliver/0Rnq1NpHdmw/101462/FacesAll
 def resolve_interval_all_faces_dir(interval_id, create=False):
@@ -129,7 +129,35 @@ def resolve_annot_faces_path(interval_id, frame_id, create=False):
     single_frame_face_annot_dir = resolve_single_frame_faces_dir(interval_id, frame_id, create)
     return os.path.join(single_frame_face_annot_dir, f'annotated_faces.{FRAME_EXTENSION}')
 
-# Videos/oliver/0Rnq1NpHdmw/101462/Faces
+
+# ------- 5) ResNet Face Image Embeddings
+
+# [ResNet] Videos/oliver/0Rnq1NpHdmw/101462/ResNet
+def resolve_interval_resnet_embeddings_dir(interval_id, create=False):
+    interval_video_path = resolve_interval_dir(interval_id)
+    interval_face_embeddings_dir = os.path.join(interval_video_path, RESNET_EMBEDDING_DIR_NAME)
+    if create and not os.path.exists(interval_face_embeddings_dir):
+        os.makedirs(interval_face_embeddings_dir)
+    return interval_face_embeddings_dir
+
+# [ResNet] Videos/oliver/0Rnq1NpHdmw/101462/ResNet/00012
+def resolve_single_frame_resnet_faces_dir(interval_id, frame_id, create=False):
+    face_annot_dir = resolve_interval_resnet_embeddings_dir(interval_id, create)
+    single_frame_resnet_faces_dir = os.path.join(face_annot_dir, f"{frame_id:05d}")
+    if create and not os.path.exists(single_frame_resnet_faces_dir):
+        os.makedirs(single_frame_resnet_faces_dir)
+    return single_frame_resnet_faces_dir
+
+# [ResNet] Videos/oliver/0Rnq1NpHdmw/101462/ResNet/00012/face_0.npy
+def resolve_face_resnet_embedding_path(interval_id, frame_id, face_id, create=False):
+    single_frame_resnet_faces_dir = resolve_single_frame_resnet_faces_dir(interval_id, frame_id, create)
+    face_resnet_embedding_path = os.path.join(single_frame_resnet_faces_dir, f'face_{face_id}.{EMBEDDING_EXTENSION}')
+    return face_resnet_embedding_path
+
+
+# ------- 6) Selected Face
+
+# [Faces] Videos/oliver/0Rnq1NpHdmw/101462/Faces
 def resolve_interval_faces_dir(interval_id, create=False):
     interval_video_path = resolve_interval_dir(interval_id)
     interval_faces_dir = os.path.join(interval_video_path, FACES_IMAGE_DIR_NAME)
@@ -137,14 +165,14 @@ def resolve_interval_faces_dir(interval_id, create=False):
         os.makedirs(interval_faces_dir)
     return interval_faces_dir
 
-# Videos/oliver/0Rnq1NpHdmw/101462/Faces/00012.jpg
+# [Faces] Videos/oliver/0Rnq1NpHdmw/101462/Faces/00012.jpg
 def resolve_frame_face_path(interval_id, frame_id, create=False):
     frame_faces_dir = resolve_interval_faces_dir(interval_id, create)
     frame_face_path = os.path.join(frame_faces_dir, f"{frame_id:05d}.{FRAME_EXTENSION}")
     return frame_face_path
 
 
-# ------- 5) Facial Embeddings
+# ------- 7) FECNet Facial Embeddings
 
 # [FECNet] Videos/oliver/0Rnq1NpHdmw/101462/FECNet
 def resolve_interval_facial_embeddings_dir(interval_id, create=False):

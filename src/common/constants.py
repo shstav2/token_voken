@@ -12,7 +12,8 @@ VIDEOS =                     'Videos'    # 105810.mp4
 VIDEO_FRAMES_DIR_NAME =      'Frames'    # 00029.jpg
 ALL_FACES_IMAGE_DIR_NAME =   'FacesAll'  # face_0.jpg
 FACES_IMAGE_DIR_NAME =       'Faces'     # 00029.jpg (224x224)
-FECNET_EMBEDDING_DIR_NAME =  'FECNet'    #
+RESNET_EMBEDDING_DIR_NAME =  'ResNet'    # 512 vector
+FECNET_EMBEDDING_DIR_NAME =  'FECNet'    # 8 vector
 
 # Tree
 PATS_SPEAKER_VIZ_DIR = os.path.join(PATS_DATA_ROOT, f'{VIDEOS}/{SPEAKER_NAME}')
@@ -37,3 +38,4 @@ EMBEDDING_EXTENSION = 'npy'
 
 
 OLIVER_FACE_PATH = '/home/stav/Data/Sample/oliver/face.jpg'
+OLIVER_FACE_RESNET_EMBEDDING_PATH = '/home/stav/Data/Sample/oliver/face.npy'
