@@ -52,4 +52,5 @@ def is_empty_file(path):
 
 
 def create_empty_file(path):
+    print('TOUCH ', path)
     Path(path).touch()

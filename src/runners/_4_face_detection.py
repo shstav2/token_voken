@@ -2,9 +2,9 @@ import math
 import numpy as np
 import logging
 
-from src.monitoring.status import status_detected_faces_dir
 from src.common.data_loader import load_valid_intervals
-from src.components._4_frames_to_faces import create_face_images
+from src.monitoring.status import status_detected_faces_dir
+from src.components._4_face_detection import interval_extract_faces
 
 BATCH_SIZE = 10
 
@@ -33,7 +33,7 @@ def detect_faces_in_frames(df_intervals):
         logger.info(f'\tExtract interval video frame, batch #{i} sized {chunk.shape}...:')
         for _, row in chunk.iterrows():
             interval_id = row['interval_id']
-            create_face_images(interval_id)
+            interval_extract_faces(interval_id)
 
 
 def run():

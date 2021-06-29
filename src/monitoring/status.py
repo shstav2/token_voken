@@ -4,7 +4,7 @@ import pandas as pd
 
 from src.common.path_resolvers import resolve_video_file_path, \
     resolve_interval_video_path, resolve_interval_frames_dir, resolve_interval_all_faces_dir, \
-    resolve_interval_facial_embeddings_dir
+    resolve_interval_facial_embeddings_dir, resolve_interval_resnet_embeddings_dir
 from src.monitoring.utils import exists_and_has_content
 
 logging.basicConfig(
@@ -57,10 +57,18 @@ def status_detected_faces_dir(interval_id, debug=False):
     return exists_and_has_content(interval_faces_dir, FRAMES_DIR_SIZE_THRESHOLD, debug=debug)
 
 
-# ------- Step 5: Frames → Faces
+# ------- Step 5: Frames → ResNet Embeddings (512 dim)
+
+# [ResNet] Videos/oliver/0Rnq1NpHdmw/101462/ResNet
+def status_facial_resnet_embeddings_dir(interval_id, debug=False):
+    interval_resnet_dir = resolve_interval_resnet_embeddings_dir(interval_id, create=False)
+    return exists_and_has_content(interval_resnet_dir, FACIAL_EMBEDDINGS_DIR_SIZE_THRESHOLD, debug=debug)
+
+
+# ------- Step 7: Frames → FECNet Embeddings (16 dim)
 
 # [FECNet] Videos/oliver/0Rnq1NpHdmw/101462/FECNet
-def status_facial_embeddings_dir(interval_id, debug=False):
+def status_facial_fecnet_embeddings_dir(interval_id, debug=False):
     interval_facial_embeddings_dir = resolve_interval_facial_embeddings_dir(interval_id, create=False)
     return exists_and_has_content(interval_facial_embeddings_dir, FACIAL_EMBEDDINGS_DIR_SIZE_THRESHOLD, debug=debug)
 
