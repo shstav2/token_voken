@@ -1,11 +1,10 @@
 import os
 import logging
-import pandas as pd
 
 from src.common.path_resolvers import resolve_video_file_path, \
     resolve_interval_video_path, resolve_interval_frames_dir, resolve_interval_all_faces_dir, \
     resolve_interval_facial_embeddings_dir, resolve_interval_resnet_embeddings_dir
-from src.monitoring.utils import exists_and_has_content
+from src.common.file_utils import exists_and_has_content
 
 logging.basicConfig(
     format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',

@@ -23,6 +23,7 @@ ERR = '🛑'
 V = '✅'
 X = '❌'
 IMP = '❗'
+SML = '🙂'
 
 def bool_to_symbol(bool_val):
     return V if bool_val else X

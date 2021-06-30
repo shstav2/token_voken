@@ -5,7 +5,7 @@ import pandas as pd
 from src.common.constants import PATS_SPEAKER_VIZ_DIR, \
     VIDEO_FRAMES_DIR_NAME, ALL_FACES_IMAGE_DIR_NAME, \
     FACES_IMAGE_DIR_NAME, FRAME_EXTENSION, FECNET_EMBEDDING_DIR_NAME, \
-    RESNET_EMBEDDING_DIR_NAME, EMBEDDING_EXTENSION
+    RESNET_EMBEDDING_DIR_NAME, EMBEDDING_EXTENSION, PATS_DATA_ROOT, LOCAL_PATS_DATA_ROOT
 from src.data.interval_to_video_mapping import INTERVAL_TO_VIDEO
 
 # Data/PATS_DATA/
@@ -157,13 +157,19 @@ def resolve_face_resnet_embedding_path(interval_id, frame_id, face_id, create=Fa
 
 # ------- 6) Selected Face
 
-# [Faces] Videos/oliver/0Rnq1NpHdmw/101462/Faces
+# [Faces] /home/stav/Data/PATS_DATA/Videos/oliver/0Rnq1NpHdmw/101462/Faces
 def resolve_interval_faces_dir(interval_id, create=False):
     interval_video_path = resolve_interval_dir(interval_id)
     interval_faces_dir = os.path.join(interval_video_path, FACES_IMAGE_DIR_NAME)
     if create and not os.path.exists(interval_faces_dir):
         os.makedirs(interval_faces_dir)
     return interval_faces_dir
+
+# [Faces] [L] /Users/staveshemesh/Data/Videos/oliver/0Rnq1NpHdmw/101462/Faces
+def resolve_interval_local_faces_dir(interval_id):
+    interval_remote_faces_dir = resolve_interval_faces_dir(interval_id)
+    interval_local_faces_dir = interval_remote_faces_dir.replace(PATS_DATA_ROOT, LOCAL_PATS_DATA_ROOT)
+    return interval_local_faces_dir
 
 # [Faces] Videos/oliver/0Rnq1NpHdmw/101462/Faces/00012.jpg
 def resolve_frame_face_path(interval_id, frame_id, create=False):

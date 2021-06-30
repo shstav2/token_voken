@@ -9,7 +9,7 @@ from src.common.debug import one_percent_chance
 from src.common.path_resolvers import resolve_interval_all_faces_dir, \
     resolve_face_resnet_embedding_path
 from src.common.display_utils import ERR, WRN
-from src.monitoring.utils import create_empty_file
+from src.common.file_utils import create_empty_file
 from src.vision.data_loader import get_data_loader, is_empty
 from src.vision.models.resnet import get_resnet_model
 

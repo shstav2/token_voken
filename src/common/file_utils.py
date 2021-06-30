@@ -1,6 +1,7 @@
 import os
-import logging
+import glob
 from pathlib import Path
+import logging
 
 from src.common.debug import one_percent_chance
 from src.common.display_utils import bool_to_symbol
@@ -54,3 +55,7 @@ def is_empty_file(path):
 def create_empty_file(path):
     print('TOUCH ', path)
     Path(path).touch()
+
+
+def listdir_nohidden(path):
+    return glob.glob(os.path.join(path, '*'))

@@ -1,10 +1,10 @@
 import os
 import pathlib
-from src.common.conf import STAV_ROOT
-
+from src.common.conf import STAV_ROOT, STAV_LOCAL_ROOT
 
 # Base
 PATS_DATA_ROOT = os.path.join(STAV_ROOT, 'PATS_DATA')
+LOCAL_PATS_DATA_ROOT = STAV_LOCAL_ROOT
 SPEAKER_NAME = 'oliver'
 
 # Source Channels

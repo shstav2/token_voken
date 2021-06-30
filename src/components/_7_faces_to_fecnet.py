@@ -9,7 +9,7 @@ from src.common.path_resolvers import resolve_interval_faces_dir, \
     resolve_interval_facial_embedding_path
 from src.common.debug import one_percent_chance
 from src.img_utils.reader import get_tensor_image
-from src.monitoring.utils import is_empty_file, create_empty_file
+from src.common.file_utils import is_empty_file, create_empty_file
 
 device = 'cuda:0'
 BATCH_SIZE = 64
