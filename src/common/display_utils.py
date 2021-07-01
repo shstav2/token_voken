@@ -24,6 +24,9 @@ V = '✅'
 X = '❌'
 IMP = '❗'
 SML = '🙂'
+ARR_R = '➡️'
+QUE = '❓'
+
 
 def bool_to_symbol(bool_val):
     return V if bool_val else X

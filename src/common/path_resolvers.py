@@ -195,6 +195,12 @@ def resolve_interval_facial_embedding_path(interval_id, frame_id, create=False):
     return face_embedding_path
 
 
+# ------- 8) Raw PATS Text
+
+# [FECNet] Videos/oliver/0Rnq1NpHdmw/101462/FECNet/00012.npy
+def resolve_interval_raw_text():
+
+
 
 def resolve_speaker_intervals_text_dir():
     # '/Users/staveshemesh/Projects/PATS_DATA/Processed/oliver/data/', 'processed/oliver'
@@ -205,14 +211,5 @@ def resolve_interval_text_path(interval_id):
     interval_text_path = os.path.join(speaker_intervals_texts, f'{interval_id}.h5')
     return interval_text_path
 
-def read_text(interval_id, debug=False):
-    interval_text_path = resolve_interval_text_path(interval_id)
-    if debug:
-        print('resolve_interval_text_path: ', interval_text_path)
-    df_token_frames_interval = pd.read_hdf(interval_text_path)
-    df_token_frames_interval['start_frame'] = df_token_frames_interval['start_frame'].astype(int)
-    df_token_frames_interval['end_frame'] = df_token_frames_interval['end_frame'].astype(int)
-    df_token_frames_interval['frames_count'] = df_token_frames_interval['end_frame'] - df_token_frames_interval['start_frame']
-    return df_token_frames_interval
 
 

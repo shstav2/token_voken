@@ -8,12 +8,13 @@ LOCAL_PATS_DATA_ROOT = STAV_LOCAL_ROOT
 SPEAKER_NAME = 'oliver'
 
 # Source Channels
-VIDEOS =                     'Videos'    # 105810.mp4
-VIDEO_FRAMES_DIR_NAME =      'Frames'    # 00029.jpg
-ALL_FACES_IMAGE_DIR_NAME =   'FacesAll'  # face_0.jpg
-FACES_IMAGE_DIR_NAME =       'Faces'     # 00029.jpg (224x224)
+VIDEOS                    =  'Videos'    # 105810.mp4
+VIDEO_FRAMES_DIR_NAME     =  'Frames'    # 00029.jpg
+ALL_FACES_IMAGE_DIR_NAME  =  'FacesAll'  # face_0.jpg
+FACES_IMAGE_DIR_NAME      =  'Faces'     # 00029.jpg (224x224)
 RESNET_EMBEDDING_DIR_NAME =  'ResNet'    # 512 vector
 FECNET_EMBEDDING_DIR_NAME =  'FECNet'    # 8 vector
+DIR_NAME_TEXT_PATS        =  'TextPATS'
 
 # Tree
 PATS_SPEAKER_VIZ_DIR = os.path.join(PATS_DATA_ROOT, f'{VIDEOS}/{SPEAKER_NAME}')

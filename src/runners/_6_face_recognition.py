@@ -40,26 +40,7 @@ def fix_interval(interval_id, frames):
 #     df_intervals = load_valid_intervals()
 #     find_and_fix_face_recognition_errors(df_intervals)
 #
-#
-INTERVALS_CORRECT_RECOGNITION = [
-    '101462',
-    '101463',
-    '102744', # V checked manually
-    '102749',
-    '102825', # V checked manually
-    '102826',
-    '103850',
-    '104200',
-    '104201',
-    '104698',
-    '101053',
-    '101057',
-    '101814',
-    '103294',
-    '103295',
-    '104005',
-    '102063'
-]
+
 
 INTERVALS_CORRECT_RECOGNITION_AFTER_FIXES = [
     '101834',  # 1  fix
