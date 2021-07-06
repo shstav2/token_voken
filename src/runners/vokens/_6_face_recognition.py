@@ -1,8 +1,7 @@
 import logging
 from tqdm import tqdm
 
-from src.common.data_loader import load_valid_intervals
-from src.components._6_face_recognition import detect_face_recognition_errors, _copy_recognized_face
+from src.components.vokens._6_face_recognition import detect_face_recognition_errors, _copy_recognized_face
 
 logging.basicConfig(
     format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',

@@ -3,7 +3,7 @@ from tqdm import tqdm
 
 from src.common.data_loader import load_valid_intervals
 from src.monitoring.status import status_facial_resnet_embeddings_dir
-from src.components._5_faces_to_resnet import create_resnet_embeddings
+from src.components.vokens._5_faces_to_resnet import create_resnet_embeddings
 
 
 logging.basicConfig(

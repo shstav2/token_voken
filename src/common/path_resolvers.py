@@ -1,11 +1,14 @@
 # coding=utf-8
 import os
-import pandas as pd
 
-from src.common.constants import PATS_SPEAKER_VIZ_DIR, \
-    VIDEO_FRAMES_DIR_NAME, ALL_FACES_IMAGE_DIR_NAME, \
-    FACES_IMAGE_DIR_NAME, FRAME_EXTENSION, FECNET_EMBEDDING_DIR_NAME, \
-    RESNET_EMBEDDING_DIR_NAME, EMBEDDING_EXTENSION, PATS_DATA_ROOT, LOCAL_PATS_DATA_ROOT
+from src.common.constants import \
+    PATS_SPEAKER_VIZ_DIR, PATS_DATA_ROOT, LOCAL_PATS_DATA_ROOT, \
+    VIDEO_FRAMES_DIR_NAME,\
+    ALL_FACES_IMAGE_DIR_NAME, FACES_IMAGE_DIR_NAME, \
+    RESNET_EMBEDDING_DIR_NAME, FECNET_EMBEDDING_DIR_NAME, \
+    TEXT_DIR_NAME, \
+    TEXT_RAW_FILENAME, \
+    FRAME_EXTENSION, EMBEDDING_EXTENSION, TEXT_EXTENSION
 from src.data.interval_to_video_mapping import INTERVAL_TO_VIDEO
 
 # Data/PATS_DATA/
@@ -43,16 +46,16 @@ def get_interval_row(df_intervals, interval_id):
     row = df_intervals[df_intervals['interval_id'] == interval_id].iloc[0]
     return row
 
-# def get_video_id(df_intervals, interval_id):
-#     row = get_interval_row(df_intervals, interval_id)
-#     return row['video_id']
-
 def get_duration(df_intervals, interval_id):
     row = get_interval_row(df_intervals, interval_id)
     return row['delta_time']
 
 def get_frame_count(interval_id):
     return read_text(interval_id).iloc[-1].end_frame
+
+
+def localize_path(remote_path):
+    return remote_path.replace(PATS_DATA_ROOT, LOCAL_PATS_DATA_ROOT)
 
 
 # ------- 1) Full Video (mp4)
@@ -165,10 +168,10 @@ def resolve_interval_faces_dir(interval_id, create=False):
         os.makedirs(interval_faces_dir)
     return interval_faces_dir
 
-# [Faces] [L] /Users/staveshemesh/Data/Videos/oliver/0Rnq1NpHdmw/101462/Faces
+# [Faces] [Local] /Users/staveshemesh/Data/Videos/oliver/0Rnq1NpHdmw/101462/Faces
 def resolve_interval_local_faces_dir(interval_id):
     interval_remote_faces_dir = resolve_interval_faces_dir(interval_id)
-    interval_local_faces_dir = interval_remote_faces_dir.replace(PATS_DATA_ROOT, LOCAL_PATS_DATA_ROOT)
+    interval_local_faces_dir = localize_path(interval_remote_faces_dir)
     return interval_local_faces_dir
 
 # [Faces] Videos/oliver/0Rnq1NpHdmw/101462/Faces/00012.jpg
@@ -195,21 +198,32 @@ def resolve_interval_facial_embedding_path(interval_id, frame_id, create=False):
     return face_embedding_path
 
 
-# ------- 8) Raw PATS Text
+# ------- 1) Raw PATS Text
 
-# [FECNet] Videos/oliver/0Rnq1NpHdmw/101462/FECNet/00012.npy
-def resolve_interval_raw_text():
+# [Text] Videos/oliver/0Rnq1NpHdmw/101462/Text/
+def resolve_interval_text_dir(interval_id, create=False):
+    interval_path = resolve_interval_dir(interval_id)
+    text_dir = os.path.join(interval_path, TEXT_DIR_NAME)
+    if create and not os.path.exists(text_dir):
+        os.makedirs(text_dir)
+    return text_dir
 
+# [Text] [Local] Videos/oliver/0Rnq1NpHdmw/101462/Text/
+def resolve_interval_text_dir(interval_id, create=False):
+    interval_path = resolve_interval_dir(interval_id)
+    text_dir = os.path.join(interval_path, TEXT_DIR_NAME)
+    if create and not os.path.exists(text_dir):
+        os.makedirs(text_dir)
+    return text_dir
 
+# [Text/Raw] Videos/oliver/0Rnq1NpHdmw/101462/Text/Raw.csv
+def resolve_interval_raw_text_path(interval_id, create=False):
+    interval_text_dir = resolve_interval_text_dir(interval_id, create)
+    return os.path.join(interval_text_dir, f'{TEXT_RAW_FILENAME}.{TEXT_EXTENSION}')
 
-def resolve_speaker_intervals_text_dir():
-    # '/Users/staveshemesh/Projects/PATS_DATA/Processed/oliver/data/', 'processed/oliver'
-    return os.path.join(PATS_SPEAKER_DATA_DIR, 'processed', SPEAKER_NAME)
-
-def resolve_interval_text_path(interval_id):
-    speaker_intervals_texts = resolve_speaker_intervals_text_dir()
-    interval_text_path = os.path.join(speaker_intervals_texts, f'{interval_id}.h5')
-    return interval_text_path
-
-
+# [Text/Raw] [Local] Videos/oliver/0Rnq1NpHdmw/101462/Text/Raw.csv
+def resolve_interval_local_raw_text_path(interval_id, create=False):
+    interval_remote_faces_dir = resolve_interval_raw_text_path(interval_id, create)
+    interval_local_faces_dir = localize_path(interval_remote_faces_dir)
+    return interval_local_faces_dir
 

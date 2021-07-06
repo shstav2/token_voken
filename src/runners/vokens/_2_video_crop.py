@@ -4,7 +4,7 @@ import logging
 
 from src.monitoring.status import status_interval_video_downloaded
 from src.common.data_loader import load_valid_intervals
-from src.components._2_video_crop import crop_tool
+from src.components.vokens._2_video_crop import crop_tool
 
 
 BATCH_SIZE = 20

@@ -4,7 +4,7 @@ import logging
 
 from src.common.data_loader import load_valid_intervals
 from src.monitoring.status import status_detected_faces_dir
-from src.components._4_face_detection import interval_extract_faces
+from src.components.vokens._4_face_detection import interval_extract_faces
 
 BATCH_SIZE = 10
 

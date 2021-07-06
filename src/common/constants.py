@@ -14,7 +14,18 @@ ALL_FACES_IMAGE_DIR_NAME  =  'FacesAll'  # face_0.jpg
 FACES_IMAGE_DIR_NAME      =  'Faces'     # 00029.jpg (224x224)
 RESNET_EMBEDDING_DIR_NAME =  'ResNet'    # 512 vector
 FECNET_EMBEDDING_DIR_NAME =  'FECNet'    # 8 vector
-DIR_NAME_TEXT_PATS        =  'TextPATS'
+TEXT_DIR_NAME             =  'Text'
+TEXT_RAW_FILENAME         =  'Raw'
+
+# Interval Parsing
+FRAME_EXTENSION = 'jpg'
+EMBEDDING_EXTENSION = 'npy'
+TEXT_EXTENSION = 'csv'
+
+# Magic Numbers
+VIDEO_ID_LEN = 11
+FRAME_RATE = 15
+FACE_IMAGE_SIZE = 224
 
 # Tree
 PATS_SPEAKER_VIZ_DIR = os.path.join(PATS_DATA_ROOT, f'{VIDEOS}/{SPEAKER_NAME}')
@@ -30,12 +41,7 @@ PROJECT_FECNET = '/home/stav/Projects/FECNet'
 # Resources
 INTERVALS_PATH = os.path.join(PROJECT_TOKEN_VOKEN, 'resources/df_intervals_oliver.csv')
 
-# Interval Parsing
-VIDEO_ID_LEN = 11
-FRAME_RATE = 15
-FRAME_EXTENSION = 'jpg'
-FACE_IMAGE_SIZE = 224
-EMBEDDING_EXTENSION = 'npy'
+
 
 
 OLIVER_FACE_PATH = '/home/stav/Data/Sample/oliver/face.jpg'

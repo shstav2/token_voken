@@ -4,7 +4,7 @@ import logging
 from src.monitoring.status import status_interval_video_frames_dir
 from src.common.data_loader import load_valid_intervals
 from src.common.path_resolvers import resolve_interval_video_path, resolve_interval_frames_dir
-from src.components._3_video_to_frames import video_to_frames
+from src.components.vokens._3_video_to_frames import video_to_frames
 
 
 NUMBER_OF_BATCHES = 43
