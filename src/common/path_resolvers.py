@@ -6,8 +6,7 @@ from src.common.constants import \
     VIDEO_FRAMES_DIR_NAME,\
     ALL_FACES_IMAGE_DIR_NAME, FACES_IMAGE_DIR_NAME, \
     RESNET_EMBEDDING_DIR_NAME, FECNET_EMBEDDING_DIR_NAME, \
-    TEXT_DIR_NAME, \
-    TEXT_RAW_FILENAME, \
+    TEXT_DIR_NAME, TEXT_RAW_FILENAME, TEXT_TOKENS_FILENAME, \
     FRAME_EXTENSION, EMBEDDING_EXTENSION, TEXT_EXTENSION
 from src.data.interval_to_video_mapping import INTERVAL_TO_VIDEO
 
@@ -198,7 +197,7 @@ def resolve_interval_facial_embedding_path(interval_id, frame_id, create=False):
     return face_embedding_path
 
 
-# ------- 1) Raw PATS Text
+# ------- 1) Raw PATS Text (Words)
 
 # [Text] Videos/oliver/0Rnq1NpHdmw/101462/Text/
 def resolve_interval_text_dir(interval_id, create=False):
@@ -227,3 +226,9 @@ def resolve_interval_local_raw_text_path(interval_id, create=False):
     interval_local_faces_dir = localize_path(interval_remote_faces_dir)
     return interval_local_faces_dir
 
+# ------- 2) Raw PATS Text
+
+# [Text/Tokens] Videos/oliver/0Rnq1NpHdmw/101462/Text/Tokens.csv
+def resolve_interval_text_tokenized_path(interval_id, create=False):
+    interval_text_dir = resolve_interval_text_dir(interval_id, create)
+    return os.path.join(interval_text_dir, f'{TEXT_TOKENS_FILENAME}.{TEXT_EXTENSION}')

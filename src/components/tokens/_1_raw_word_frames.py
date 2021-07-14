@@ -3,6 +3,7 @@ import logging
 import pandas as pd
 
 from src.common.debug import one_percent_chance
+from src.common.file_utils import save_csv
 from src.common.path_resolvers import resolve_interval_local_raw_text_path
 from src.common.display_utils import ARR_R
 
@@ -49,11 +50,16 @@ def extract_interval_text(interval_id):
 
 def save_df_words(df_words, interval_id):
     raw_text_path = resolve_interval_local_raw_text_path(interval_id)
-    text_dir = os.path.dirname(raw_text_path)
-    if not os.path.exists(text_dir):
-        os.mkdir(text_dir)
-    df_words.to_csv(raw_text_path, index=False, header=True)
-    if one_percent_chance():
-        cols = df_words.columns.tolist()
-        logger.info(f'{TAG} Saving {cols} {df_words.shape[0]:,} {ARR_R}  {raw_text_path}')
+    save_csv(df_words, raw_text_path)
+
+# def save_df_words(df_words, interval_id):
+#     raw_text_path = resolve_interval_local_raw_text_path(interval_id)
+#     text_dir = os.path.dirname(raw_text_path)
+#     if not os.path.exists(text_dir):
+#         os.mkdir(text_dir)
+#     df_words.to_csv(raw_text_path, index=False, header=True)
+#     if one_percent_chance():
+#         cols = df_words.columns.tolist()
+#         logger.info(f'{TAG} Saving {cols} {df_words.shape[0]:,} {ARR_R}  {raw_text_path}')
+#
 

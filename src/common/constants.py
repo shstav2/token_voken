@@ -15,7 +15,8 @@ FACES_IMAGE_DIR_NAME      =  'Faces'     # 00029.jpg (224x224)
 RESNET_EMBEDDING_DIR_NAME =  'ResNet'    # 512 vector
 FECNET_EMBEDDING_DIR_NAME =  'FECNet'    # 8 vector
 TEXT_DIR_NAME             =  'Text'
-TEXT_RAW_FILENAME         =  'Raw'
+TEXT_RAW_FILENAME         =  'Raw'       # DataFrame [word|start_frame|end_frame|frames_count]
+TEXT_TOKENS_FILENAME      =  'Tokens'    # DataFrame
 
 # Interval Parsing
 FRAME_EXTENSION = 'jpg'

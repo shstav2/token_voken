@@ -4,7 +4,8 @@ from pathlib import Path
 import logging
 
 from src.common.debug import one_percent_chance
-from src.common.display_utils import bool_to_symbol
+from src.common.display_utils import bool_to_symbol, ARR_R, SVE
+
 
 logging.basicConfig(
     format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
@@ -52,10 +53,21 @@ def is_empty_file(path):
     return os.path.getsize(path) == 0
 
 
+def listdir_nohidden(path):
+    return glob.glob(os.path.join(path, '*'))
+
+
 def create_empty_file(path):
     print('TOUCH ', path)
     Path(path).touch()
 
 
-def listdir_nohidden(path):
-    return glob.glob(os.path.join(path, '*'))
+def save_csv(df, path):
+    directory = os.path.dirname(path)
+    if not os.path.exists(directory):
+        os.mkdir(directory)
+    df.to_csv(path, index=False, header=True)
+    if one_percent_chance():
+        logger.info(f'{SVE} Saving {df.shape[0]:,} rows  {ARR_R}  {path}'\
+                    f'\n\t{df.head(n=2)}')
+
