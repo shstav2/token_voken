@@ -7,7 +7,8 @@ from src.common.constants import \
     ALL_FACES_IMAGE_DIR_NAME, FACES_IMAGE_DIR_NAME, \
     RESNET_EMBEDDING_DIR_NAME, FECNET_EMBEDDING_DIR_NAME, \
     TEXT_DIR_NAME, TEXT_RAW_FILENAME, TEXT_TOKENS_FILENAME, \
-    FRAME_EXTENSION, EMBEDDING_EXTENSION, TEXT_EXTENSION
+    FRAME_EXTENSION, EMBEDDING_EXTENSION, TEXT_EXTENSION, \
+    DATASETS_VOKENIZATION_V1, TOKEN_VOKEN_EXTENSTION
 from src.data.interval_to_video_mapping import INTERVAL_TO_VIDEO
 
 # Data/PATS_DATA/
@@ -232,3 +233,19 @@ def resolve_interval_local_raw_text_path(interval_id, create=False):
 def resolve_interval_text_tokenized_path(interval_id, create=False):
     interval_text_dir = resolve_interval_text_dir(interval_id, create)
     return os.path.join(interval_text_dir, f'{TEXT_TOKENS_FILENAME}.{TEXT_EXTENSION}')
+
+
+# -------- Token-Voken Dataset
+
+# [Dataset/Dataframe]
+def resolve_dataset_dataframe():
+    return os.path.join(DATASETS_VOKENIZATION_V1, f'tokens.{TOKEN_VOKEN_EXTENSTION}')
+
+# [Dataset/Tokens] /home/stav/Data/Vokenization/Datasets/Oliver_V1/tokens.hdf
+def resolve_dataset_tokens_path():
+    return os.path.join(DATASETS_VOKENIZATION_V1, f'tokens.{TOKEN_VOKEN_EXTENSTION}')
+
+# [Dataset/Vokens] /home/stav/Data/Vokenization/Datasets/Oliver_V1/vokens.hdf
+def resolve_dataset_vokens_path():
+    return os.path.join(DATASETS_VOKENIZATION_V1, f'vokens.{TOKEN_VOKEN_EXTENSTION}')
+

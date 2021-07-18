@@ -19,9 +19,17 @@ TEXT_RAW_FILENAME         =  'Raw'       # DataFrame [word|start_frame|end_frame
 TEXT_TOKENS_FILENAME      =  'Tokens'    # DataFrame
 
 # Interval Parsing
-FRAME_EXTENSION = 'jpg'
-EMBEDDING_EXTENSION = 'npy'
-TEXT_EXTENSION = 'csv'
+FRAME_EXTENSION           = 'jpg'
+EMBEDDING_EXTENSION       = 'npy'
+TEXT_EXTENSION            = 'csv'
+TOKEN_VOKEN_EXTENSTION    = 'hdf'
+
+
+# Vokenization Datasets
+# /home/stav/Data/Vokenization/Datasets/Oliver_V1
+DATASETS_VOKENIZATION    = os.path.join(STAV_ROOT, 'Vokenization/Datasets')
+DATASETS_VOKENIZATION_V1 = os.path.join(DATASETS_VOKENIZATION, 'Oliver_V1')
+
 
 # Magic Numbers
 VIDEO_ID_LEN = 11
@@ -47,3 +55,6 @@ INTERVALS_PATH = os.path.join(PROJECT_TOKEN_VOKEN, 'resources/df_intervals_olive
 
 OLIVER_FACE_PATH = '/home/stav/Data/Sample/oliver/face.jpg'
 OLIVER_FACE_RESNET_EMBEDDING_PATH = '/home/stav/Data/Sample/oliver/face.npy'
+
+
+
