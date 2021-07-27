@@ -5,14 +5,16 @@ from tqdm import tqdm
 import torch
 
 from models.FECNet import FECNet
-from src.common.path_resolvers import resolve_interval_faces_dir, \
-    resolve_interval_facial_embedding_path
+from src.common.path_resolvers import resolve_interval_faces_dir, resolve_interval_facial_embedding_path
+from src.common.file_utils import is_empty_file, create_empty_file, listdir_nohidden
 from src.common.debug import one_percent_chance
-from src.img_utils.reader import get_tensor_image
-from src.common.file_utils import is_empty_file, create_empty_file
+from src.vision.data_loader import get_tensor_image
+
 
 device = 'cuda:0'
 BATCH_SIZE = 64
+
+
 
 logging.basicConfig(
     format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
@@ -45,10 +47,10 @@ VISN_MODEL = get_model()
 def extract_and_save_interval_facial_embeddings(interval_id):
     faces_dir = resolve_interval_faces_dir(interval_id)
     logger.info(f'Extract embeddings for interval {interval_id} from {faces_dir}..')
-    interval_face_filenames = sorted(os.listdir(faces_dir))
+    interval_face_filenames = sorted(listdir_nohidden(faces_dir))
     batch_tensor_imgs, batch_frame_ids = [], []
-    for i, face_filename in enumerate(tqdm(interval_face_filenames)):
-        img_path = os.path.join(faces_dir, face_filename)
+    for i, img_path in enumerate(tqdm(interval_face_filenames)):
+        face_filename = os.path.basename(img_path)
         frame_id = int(face_filename.split(".")[0])
         if is_empty_file(img_path):
             embedding_path = resolve_interval_facial_embedding_path(interval_id, frame_id, create=True)

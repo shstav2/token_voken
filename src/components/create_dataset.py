@@ -12,6 +12,7 @@ COL_BERT_TOKEN_ID       = 'token_id'
 COL_WORD_FRAME_SELECTED = 'selected_frame'
 COL_VOKEN_ID            = 'voken_id'
 COL_VOKEN_PATH          = 'voken_path'
+COL_VOKEN               = 'voken'
 
 
 def read_sorted_intervals():
@@ -59,26 +60,74 @@ df_token_voken = get_token_voken(df_intervals)
 
 # >>> df_token_voken.shape
 # (81712, 10)
+VERSION = None
+VERSIONED_DATASET_DIR = f'/home/stav/Data/Vokenization/Datasets/Oliver_{VERSION}'
 
-df_token_voken.to_csv('/home/stav/Data/Vokenization/Datasets/Oliver_V1/df_token_voken.csv')
-df_token_voken.to_pickle('/home/stav/Data/Vokenization/Datasets/Oliver_V1/df_token_voken_pkl.csv')
+df_token_voken.to_csv(os.path.join(VERSIONED_DATASET_DIR, 'df_token_voken.csv'))
+df_token_voken.to_pickle(os.path.join(VERSIONED_DATASET_DIR, 'df_token_voken_pkl.csv'))
 
+create_token_ids_hdf(df_token_voken)
+create_voken_ids_hdf(df_token_voken)
 
 
 def create_token_ids_hdf(df_token_voken):
     token_ids = df_token_voken[COL_BERT_TOKEN_ID].tolist()
     # resolve_dataset_tokens_path
-    with h5py.File('/home/stav/Data/Vokenization/Datasets/Oliver_V1/tokens.hdf5', 'w') as hf:
+    with h5py.File(os.path.join(VERSIONED_DATASET_DIR, 'tokens.hdf5'), 'w') as hf:
         hf.create_dataset('tokens', data=token_ids)
 
 
 def create_voken_ids_hdf(df_token_voken):
     # vokens.hdf5 - voken idex
     voken_ids = df_token_voken[COL_VOKEN_ID].tolist()
-    with h5py.File('/home/stav/Data/Vokenization/Datasets/Oliver_V1/vokens.hdf5', 'w') as hf:
+    with h5py.File(os.path.join(VERSIONED_DATASET_DIR, 'vokens.hdf5'), 'w') as hf:
         hf.create_dataset('vokens', data=voken_ids)
     # vokens.hdf5 - voken idex
     vokens = df_token_voken['voken'].tolist()
     np_vokens = np.stack(vokens)
-    np.save('/home/stav/Data/Vokenization/Datasets/Oliver_V1/vokens.npy', np_vokens)
+    np.save(os.path.join(VERSIONED_DATASET_DIR, 'vokens.npy'), np_vokens)
+
+# CHECK VOKENS ARE THE SAME IN ALL FILES:
+# ========================================
+"""
+import numpy as np
+import pandas as pd
+from src.common.path_resolvers import resolve_interval_facial_embedding_path
+# ---- np array
+vokens_path = '/home/stav/Data/Vokenization/Datasets/Oliver_V1/vokens.npy'
+vokens = np.load(vokens_path)
+# ---- dataframe
+token_voken_path = '/home/stav/Data/Vokenization/Datasets/Oliver_V1/df_token_voken.csv'
+df_token_voken = pd.read_csv(token_voken_path)
+sample = df_token_voken.sample().iloc[0]
+voken_str = sample[COL_VOKEN]
+voken_str = voken_str.replace('\n', '').replace('[', '').replace(']', '')
+voken_df = np.fromstring(voken_str, sep=' ')
+# ---- FECNet - '/home/stav/Data/PATS_DATA/Videos/oliver/iAgKHSNqxa8/214675/FECNet/00111.npy'
+fecnet_path = resolve_interval_facial_embedding_path(str(sample.interval_id), sample.selected_frame)
+voken_fecnet = np.load(fecnet_path)
+np.isclose(voken_fecnet, voken_df)
+np.isclose(voken_fecnet, vokens[sample.voken_id - 1])
+"""
+
+# CHECK VOKENS ARE THE SAME IN ALL FILES:
+# ========================================
+"""
+vokens_v1_path = '/home/stav/Data/Vokenization/Datasets/Oliver_V1/vokens.npy'
+vokens_v1 = np.load(vokens_v1_path)
+vokens_v2_path = '/home/stav/Data/Vokenization/Datasets/Oliver_V2/vokens.npy'
+vokens_v2 = np.load(vokens_v2_path)
+>>> np.array_equal(vokens_v1, vokens_v2)
+True
+>>> (vokens_v1 == vokens_v2).all(axis=1).sum()
+76873
+>>> vokens_v1.shape[0] - _
+4839
+"""
+
+"""
+df_token_voken[df_token_voken['interval_id'] == int(interval_id)]
+vokens[78460]
+np.load(resolve_interval_facial_embedding_path(interval_id, 38))
+"""
 
