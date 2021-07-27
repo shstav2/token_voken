@@ -82,4 +82,3 @@ def create_voken_ids_hdf(df_token_voken):
     np_vokens = np.stack(vokens)
     np.save('/home/stav/Data/Vokenization/Datasets/Oliver_V1/vokens.npy', np_vokens)
 
-
