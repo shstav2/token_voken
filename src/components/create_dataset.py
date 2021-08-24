@@ -51,7 +51,7 @@ def get_token_voken(df_intervals):
     df_token_voken = pd.concat(all_df_tokens)
     df_token_voken[COL_VOKEN_PATH] = df_token_voken['video_id'] + '_' + df_token_voken['interval_id'] + '_'\
                                  + df_token_voken[COL_WORD_FRAME_SELECTED].astype(str)
-    df_token_voken[COL_VOKEN_ID] = range(1, len(df_token_voken) + 1)
+    df_token_voken[COL_VOKEN_ID] = range(0, len(df_token_voken))
     return df_token_voken
 
 
@@ -60,7 +60,7 @@ df_token_voken = get_token_voken(df_intervals)
 
 # >>> df_token_voken.shape
 # (81712, 10)
-VERSION = None
+VERSION = 'V3'
 VERSIONED_DATASET_DIR = f'/home/stav/Data/Vokenization/Datasets/Oliver_{VERSION}'
 
 df_token_voken.to_csv(os.path.join(VERSIONED_DATASET_DIR, 'df_token_voken.csv'))
@@ -122,7 +122,7 @@ True
 >>> (vokens_v1 == vokens_v2).all(axis=1).sum()
 76873
 >>> vokens_v1.shape[0] - _
-4839
+4839 # 6%
 """
 
 """
