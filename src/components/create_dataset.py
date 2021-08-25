@@ -8,6 +8,7 @@ from src.common.data_loader import load_valid_intervals
 from src.common.path_resolvers import resolve_interval_text_tokenized_path, \
     resolve_interval_facial_embedding_path, resolve_interval_facial_embeddings_dir
 
+
 COL_BERT_TOKEN_ID       = 'token_id'
 COL_WORD_FRAME_SELECTED = 'selected_frame'
 COL_VOKEN_ID            = 'voken_id'
@@ -55,6 +56,34 @@ def get_token_voken(df_intervals):
     return df_token_voken
 
 
+def create_token_ids_hdf(data_dir, df_token_voken):
+    token_ids = df_token_voken[COL_BERT_TOKEN_ID].tolist()
+    # resolve_dataset_tokens_path
+    with h5py.File(os.path.join(data_dir, 'tokens.hdf5'), 'w') as hf:
+        hf.create_dataset('tokens', data=token_ids)
+
+
+def create_voken_ids_hdf(data_dir, df_token_voken):
+    # vokens.hdf5 - voken idex
+    voken_ids = df_token_voken[COL_VOKEN_ID].tolist()
+    with h5py.File(os.path.join(data_dir, 'vokens.hdf5'), 'w') as hf:
+        hf.create_dataset('vokens', data=voken_ids)
+    # vokens.hdf5 - voken idex
+    vokens = df_token_voken['voken'].tolist()
+    np_vokens = np.stack(vokens)
+    np.save(os.path.join(data_dir, 'vokens.npy'), np_vokens)
+
+
+def save_dataset(data_dir, df_token_voken):
+    if not os.path.exists(data_dir):
+        print(f'Creating data directory {data_dir}..')
+        os.mkdir(data_dir)
+    df_token_voken.to_csv(os.path.join(data_dir, 'df_token_voken.csv'))
+    df_token_voken.to_pickle(os.path.join(data_dir, 'df_token_voken_pkl.csv'))
+    create_token_ids_hdf(data_dir, df_token_voken)
+    create_voken_ids_hdf(data_dir, df_token_voken)
+
+
 df_intervals = read_sorted_intervals()
 df_token_voken = get_token_voken(df_intervals)
 
@@ -62,30 +91,21 @@ df_token_voken = get_token_voken(df_intervals)
 # (81712, 10)
 VERSION = 'V3'
 VERSIONED_DATASET_DIR = f'/home/stav/Data/Vokenization/Datasets/Oliver_{VERSION}'
-
-df_token_voken.to_csv(os.path.join(VERSIONED_DATASET_DIR, 'df_token_voken.csv'))
-df_token_voken.to_pickle(os.path.join(VERSIONED_DATASET_DIR, 'df_token_voken_pkl.csv'))
-
-create_token_ids_hdf(df_token_voken)
-create_voken_ids_hdf(df_token_voken)
+TRAIN_DIR             = os.path.join(VERSIONED_DATASET_DIR, 'train')
+TEST_DIR              = os.path.join(VERSIONED_DATASET_DIR, 'test')
 
 
-def create_token_ids_hdf(df_token_voken):
-    token_ids = df_token_voken[COL_BERT_TOKEN_ID].tolist()
-    # resolve_dataset_tokens_path
-    with h5py.File(os.path.join(VERSIONED_DATASET_DIR, 'tokens.hdf5'), 'w') as hf:
-        hf.create_dataset('tokens', data=token_ids)
+save_dataset(VERSIONED_DATASET_DIR, df_token_voken)
+
+df_train = df_token_voken[df_token_voken[COL_VOKEN_ID] <= 64712].copy()
+df_valid = df_token_voken[64712 < df_token_voken[COL_VOKEN_ID]].copy()
 
 
-def create_voken_ids_hdf(df_token_voken):
-    # vokens.hdf5 - voken idex
-    voken_ids = df_token_voken[COL_VOKEN_ID].tolist()
-    with h5py.File(os.path.join(VERSIONED_DATASET_DIR, 'vokens.hdf5'), 'w') as hf:
-        hf.create_dataset('vokens', data=voken_ids)
-    # vokens.hdf5 - voken idex
-    vokens = df_token_voken['voken'].tolist()
-    np_vokens = np.stack(vokens)
-    np.save(os.path.join(VERSIONED_DATASET_DIR, 'vokens.npy'), np_vokens)
+save_dataset(TRAIN_DIR, df_train)
+save_dataset(TEST_DIR, df_valid)
+
+
+
 
 # CHECK VOKENS ARE THE SAME IN ALL FILES:
 # ========================================
