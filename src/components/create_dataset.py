@@ -74,6 +74,19 @@ def create_voken_ids_hdf(data_dir, df_token_voken):
     np.save(os.path.join(data_dir, 'vokens.npy'), np_vokens)
 
 
+"""
+TODO: creates too many files.
+Only need:
+V1/
+    df_token_voken.csv (82K token-voken pairs with metadata)
+    vokens.npy         (82K voken embeddings)
+    train/
+        tokens.hd5     (65K bert token ids)
+        vokens.hd5     (0-65K voken ids)
+    test/
+        tokens.hd5     (17K bert token ids)
+        vokens.hd5     (65K-82K voken ids)
+"""
 def save_dataset(data_dir, df_token_voken):
     if not os.path.exists(data_dir):
         print(f'Creating data directory {data_dir}..')
@@ -87,9 +100,12 @@ def save_dataset(data_dir, df_token_voken):
 df_intervals = read_sorted_intervals()
 df_token_voken = get_token_voken(df_intervals)
 
+# Only train/test split
+df_token_voken = pd.read_pickle('/home/stav/Data/Vokenization/Datasets/Oliver_V3/df_token_voken_pkl.csv')
+
 # >>> df_token_voken.shape
 # (81712, 10)
-VERSION = 'V3'
+VERSION = None
 VERSIONED_DATASET_DIR = f'/home/stav/Data/Vokenization/Datasets/Oliver_{VERSION}'
 TRAIN_DIR             = os.path.join(VERSIONED_DATASET_DIR, 'train')
 TEST_DIR              = os.path.join(VERSIONED_DATASET_DIR, 'test')
