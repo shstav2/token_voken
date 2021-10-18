@@ -15,7 +15,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-PATS = '/Users/staveshemesh/Projects/PATS_DATA/Processed/oliver/data/processed/oliver'
+SPEAKER_NAME = 'noah'
+SPEAKER_PATS_DIR = '/Users/staveshemesh/Projects/PATS_DATA/Processed/oliver/data/processed/oliver'
+PATS = os.path.join(SPEAKER_PATS_DIR, SPEAKER_NAME)
 
 
 interval_id = '216509'
