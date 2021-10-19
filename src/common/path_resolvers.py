@@ -2,6 +2,7 @@
 import os
 
 from src.common.constants import \
+    SPEAKER_NAME, \
     PATS_SPEAKER_VIZ_DIR, PATS_DATA_ROOT, LOCAL_PATS_DATA_ROOT, \
     VIDEO_FRAMES_DIR_NAME,\
     ALL_FACES_IMAGE_DIR_NAME, FACES_IMAGE_DIR_NAME, \
@@ -9,7 +10,7 @@ from src.common.constants import \
     TEXT_DIR_NAME, TEXT_RAW_FILENAME, TEXT_TOKENS_FILENAME, \
     FRAME_EXTENSION, EMBEDDING_EXTENSION, TEXT_EXTENSION, \
     DATASETS_VOKENIZATION_V1, TOKEN_VOKEN_EXTENSTION
-from src.data.interval_to_video_mapping import INTERVAL_TO_VIDEO
+from src.data.interval_to_video.all import INTERVAL_TO_VIDEO
 
 # Data/PATS_DATA/
 # └── Videos
@@ -40,7 +41,7 @@ from src.data.interval_to_video_mapping import INTERVAL_TO_VIDEO
 # ------- Utils
 
 def get_video_id(interval_id):
-    return INTERVAL_TO_VIDEO[interval_id]
+    return INTERVAL_TO_VIDEO[SPEAKER_NAME][interval_id]
 
 def get_interval_row(df_intervals, interval_id):
     row = df_intervals[df_intervals['interval_id'] == interval_id].iloc[0]

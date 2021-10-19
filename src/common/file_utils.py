@@ -65,7 +65,7 @@ def create_empty_file(path):
 def save_csv(df, path):
     directory = os.path.dirname(path)
     if not os.path.exists(directory):
-        os.mkdir(directory)
+        os.makedirs(directory)
     df.to_csv(path, index=False, header=True)
     if one_percent_chance():
         logger.info(f'{SVE} Saving {df.shape[0]:,} rows  {ARR_R}  {path}'\

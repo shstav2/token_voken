@@ -2,10 +2,12 @@ import os
 import logging
 import pandas as pd
 
+from src.common.constants import SPEAKER_NAME
 from src.common.debug import one_percent_chance
 from src.common.file_utils import save_csv
-from src.common.path_resolvers import resolve_interval_local_raw_text_path
-from src.common.display_utils import ARR_R
+from src.common.path_resolvers import resolve_interval_raw_text_path, resolve_interval_local_raw_text_path
+from src.common.display_utils import ARR_R, ERR
+from src.data.interval_to_video.noah import INTERVAL_TO_VIDEO_NOAH
 
 
 logging.basicConfig(
@@ -15,12 +17,11 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-SPEAKER_NAME = 'noah'
-SPEAKER_PATS_DIR = '/Users/staveshemesh/Projects/PATS_DATA/Processed/oliver/data/processed/oliver'
+SPEAKER_PATS_DIR = '/home/stav/Data/PATS_DATA/ZIP/pats/data/processed'
 PATS = os.path.join(SPEAKER_PATS_DIR, SPEAKER_NAME)
 
 
-interval_id = '216509'
+interval_id = 'cmu0000033572'
 
 COL_WORD_INPUT          = 'Word'
 COL_WORD_OUTPUT         = 'word'
@@ -32,6 +33,19 @@ COL_WORD_FRAMES_COUNT   = 'frames_count'
 
 
 TAG = '[Text|Raw]'
+
+
+interval_ids = list(INTERVAL_TO_VIDEO_NOAH.keys())
+
+def save_all_intervals(interval_ids):
+    missing_interval_ids = []
+    for interval_id in interval_ids:
+        try:
+            save_raw_text(interval_id)
+        except Exception as e:
+            print(f'{ERR} Interval id: {interval_id}, error: {e}')
+            missing_interval_ids.append(interval_id)
+    return missing_interval_ids
 
 
 def save_raw_text(interval_id):
@@ -51,7 +65,7 @@ def extract_interval_text(interval_id):
 
 
 def save_df_words(df_words, interval_id):
-    raw_text_path = resolve_interval_local_raw_text_path(interval_id)
+    raw_text_path = resolve_interval_raw_text_path(interval_id)
     save_csv(df_words, raw_text_path)
 
 # def save_df_words(df_words, interval_id):
