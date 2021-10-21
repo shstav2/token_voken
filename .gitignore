@@ -1,6 +1,7 @@
 notebooks/pretrained/
 .ipynb_checkpoints
 data/
+!src/data
 .DS_STORE
 .idea/
 __pycache__/
