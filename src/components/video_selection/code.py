@@ -1,5 +1,13 @@
 import time
+from tqdm import tqdm
+import pandas as pd
+
+tqdm.pandas()
+
 from src.components.video_selection.cols import COL_DURATION
+from src.data.interval_to_video.noah import INTERVAL_TO_VIDEO_NOAH
+from src.common.path_resolvers import resolve_interval_raw_text_path
+from src.common.constants import FRAME_RATE, SPEAKER_NAME
 
 
 LIST_BULLET = '  ◘ '
