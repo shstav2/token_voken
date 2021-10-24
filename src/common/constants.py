@@ -47,14 +47,8 @@ PATS_SPEAKER_VIZ_DIR = os.path.join(PATS_DATA_ROOT, f'{VIDEOS}/{SPEAKER_NAME}')
 PROJECT_TOKEN_VOKEN = pathlib.Path(__file__).parent.parent.parent.absolute()
 PROJECT_FECNET = '/home/stav/Projects/FECNet'
 
-# Resources
-INTERVALS_PATH = os.path.join(PROJECT_TOKEN_VOKEN, 'resources/df_intervals_oliver.csv')
-
-
-
 
 OLIVER_FACE_PATH = '/home/stav/Data/Sample/oliver/face.jpg'
 OLIVER_FACE_RESNET_EMBEDDING_PATH = '/home/stav/Data/Sample/oliver/face.npy'
 
-
-
+DF_INTERVALS_NOAH = '/home/stav/Data/PATS_DATA/df_intervals_noah.csv'

@@ -4,7 +4,7 @@ from src.common.path_resolvers import resolve_video_dir_path, resolve_video_file
 from src.common.commands import run_command
 
 
-YOUTUBE_DOWNLOAD_COMMAND = 'youtube-dl -f bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio -o {output_path} {link}'
+YOUTUBE_DOWNLOAD_COMMAND = 'youtube-dl -f bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio -o {output_path} {link} --no-check-certificate'
 
 def youtube_downloader(video_id):
     link = f'https://www.youtube.com/watch?v={video_id}'

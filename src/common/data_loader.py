@@ -1,13 +1,11 @@
 import pandas as pd
-from src.common.constants import INTERVALS_PATH
-
 import logging
 logger = logging.getLogger(__name__)
 
 
-def load_intervals():
-    logger.info(f'Loading intervals from {INTERVALS_PATH}..')
-    df_intervals = pd.read_csv(INTERVALS_PATH, dtype={'interval_id': object})
+def load_intervals(path):
+    logger.info(f'Loading intervals from {path}..')
+    df_intervals = pd.read_csv(path, dtype={'interval_id': object})
     return df_intervals
 
 
@@ -16,6 +14,6 @@ def load_videos(df_intervals):
     return df_videos
 
 
-def load_valid_intervals():
-    df_intervals = load_intervals()
+def load_valid_intervals(path):
+    df_intervals = load_intervals(path)
     return df_intervals[df_intervals['valid']].copy()
