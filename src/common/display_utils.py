@@ -27,6 +27,7 @@ SML = '🙂'
 ARR_R = '➡️'
 QUE = '❓'
 SVE = '💾'
+DEL = '🗑️'
 
 
 def bool_to_symbol(bool_val):

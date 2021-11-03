@@ -4,6 +4,7 @@ import logging
 from src.monitoring.status import status_interval_video_frames_dir
 from src.common.data_loader import load_valid_intervals
 from src.common.path_resolvers import resolve_interval_video_path, resolve_interval_frames_dir
+from src.common.constants import DF_INTERVALS_NOAH
 from src.components.vokens._3_video_to_frames import video_to_frames
 
 
@@ -39,7 +40,7 @@ def extract_interval_video_to_frames(df_intervals):
 
 def run():
     # Interval video into jpg frames
-    df_intervals = load_valid_intervals()
+    df_intervals = load_valid_intervals(DF_INTERVALS_NOAH)
     extract_interval_video_to_frames(df_intervals)
 
 

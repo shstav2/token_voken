@@ -4,7 +4,7 @@ from pathlib import Path
 import logging
 
 from src.common.debug import one_percent_chance
-from src.common.display_utils import bool_to_symbol, ARR_R, SVE
+from src.common.display_utils import bool_to_symbol, ARR_R, SVE, DEL
 
 
 logging.basicConfig(
@@ -71,3 +71,8 @@ def save_csv(df, path):
         logger.info(f'{SVE} Saving {df.shape[0]:,} rows  {ARR_R}  {path}'\
                     f'\n\t{df.head(n=2)}')
 
+
+def delete_file(path):
+    path_exists = os.path.exists(path)
+    path_size_bytes = get_total_size(path) if path_exists else -1
+    logger.info(f'{DEL} Delete file {path} ({path_size_bytes}).')
