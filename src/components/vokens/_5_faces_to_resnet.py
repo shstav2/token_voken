@@ -21,7 +21,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-device = 'cuda:1'
+device = 'cuda:3'
 resnet_model = get_resnet_model(device)
 
 EMPTY_EMBEDDING = np.nan

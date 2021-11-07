@@ -2,6 +2,7 @@ import logging
 from tqdm import tqdm
 
 from src.common.data_loader import load_valid_intervals
+from src.common.constants import DF_INTERVALS_NOAH
 from src.monitoring.status import status_facial_resnet_embeddings_dir
 from src.components.vokens._5_faces_to_resnet import create_resnet_embeddings
 
@@ -28,7 +29,7 @@ def extract_facial_embeddings(df_intervals):
 
 
 def run():
-    df_intervals = load_valid_intervals()
+    df_intervals = load_valid_intervals(DF_INTERVALS_NOAH)
     extract_facial_embeddings(df_intervals)
 
 

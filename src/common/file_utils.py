@@ -53,6 +53,7 @@ def is_empty_file(path):
     return os.path.getsize(path) == 0
 
 
+# returns full path of each file
 def listdir_nohidden(path):
     return glob.glob(os.path.join(path, '*'))
 
@@ -75,4 +76,5 @@ def save_csv(df, path):
 def delete_file(path):
     path_exists = os.path.exists(path)
     path_size_bytes = get_total_size(path) if path_exists else -1
-    logger.info(f'{DEL} Delete file {path} ({path_size_bytes}).')
+    os.remove(path)
+    logger.info(f'{DEL}  Delete file {path} ({human_readable_size(path_size_bytes)}).')

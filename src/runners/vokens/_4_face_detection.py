@@ -30,7 +30,7 @@ def detect_faces_in_frames(df_intervals):
     df_intervals_pending.sort_values(by=['video_id', 'interval_id'], ascending=False, inplace=True)
     pending_count = df_intervals_pending.shape[0]
     logger.info(f'Extract faces from frames for {pending_count} intervals...:')
-    interval_ids = df_intervals_pending['interval_id'].tolist()
+    interval_ids = df_intervals_pending['interval_id'].tolist()[1000:]
     for interval_id in interval_ids:
         interval_extract_faces(interval_id)
 
