@@ -6,8 +6,6 @@ from src.common.constants import DF_INTERVALS_NOAH
 from src.monitoring.status import status_detected_faces_dir, status_interval_video_frames_dir
 from src.components.vokens._4_face_detection import interval_extract_faces
 
-BATCH_SIZE = 10
-
 
 logging.basicConfig(
     format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
@@ -30,7 +28,7 @@ def detect_faces_in_frames(df_intervals):
     df_intervals_pending.sort_values(by=['video_id', 'interval_id'], ascending=False, inplace=True)
     pending_count = df_intervals_pending.shape[0]
     logger.info(f'Extract faces from frames for {pending_count} intervals...:')
-    interval_ids = df_intervals_pending['interval_id'].tolist()[1000:]
+    interval_ids = df_intervals_pending['interval_id'].tolist()
     for interval_id in interval_ids:
         interval_extract_faces(interval_id)
 
