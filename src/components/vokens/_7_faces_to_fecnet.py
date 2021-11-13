@@ -3,7 +3,6 @@ import logging
 import numpy as np
 from tqdm import tqdm
 import torch
-
 from models.FECNet import FECNet
 from src.common.path_resolvers import resolve_interval_faces_dir, resolve_interval_facial_embedding_path
 from src.common.file_utils import is_empty_file, create_empty_file, listdir_nohidden
@@ -15,12 +14,12 @@ device = 'cuda:0'
 BATCH_SIZE = 64
 
 
-
 logging.basicConfig(
     format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
     datefmt='%H:%M:%S',
     level=logging.DEBUG)
 logger = logging.getLogger(__name__)
+
 
 class VisnFECNetModel(torch.nn.Module):
     def __init__(self, device):

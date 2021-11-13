@@ -2,10 +2,10 @@ import os
 import logging
 import shutil
 import operator
-
 import numpy as np
 from tqdm import tqdm
 
+from src.common.constants import SPEAKER_NAME
 from src.common.debug import one_percent_chance
 from src.common.display_utils import V, WRN, ERR, IMP, ARR_R, QUE
 from src.common.file_utils import listdir_nohidden
@@ -22,8 +22,21 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-OLIVER_FACE_RESNET_EMBEDDING_PATH = '/home/stav/Data/Sample/oliver/face.npy'
-e_base = np.load(OLIVER_FACE_RESNET_EMBEDDING_PATH)
+# cp /home/stav/Data/PATS_DATA/Videos/noah/-ZFTCUZt6sc/cmu0000041270/FacesAll/00267/face_0.jpg  /home/stav/Data/Sample/noah
+# cp /home/stav/Data/PATS_DATA/Videos/noah/-ZFTCUZt6sc/cmu0000041270/ResNet/00267/face_0.npy    /home/stav/Data/Sample/noah
+FACE_RESNET_EMBEDDING_PATH = {
+    'oliver': '/home/stav/Data/Sample/oliver/face.npy',
+    'noah':   '/home/stav/Data/Sample/noah/face.npy'
+}
+
+
+def load_anchor_embedding():
+    anchor_embedding_path = FACE_RESNET_EMBEDDING_PATH[SPEAKER_NAME]
+    resnet_embedding = np.load(anchor_embedding_path)
+    return resnet_embedding
+
+
+e_base = load_anchor_embedding()
 
 TAG = '[FaceRecognition]'
 

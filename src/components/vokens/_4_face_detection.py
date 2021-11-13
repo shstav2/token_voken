@@ -8,8 +8,9 @@ from facenet_pytorch import extract_face
 
 from src.common.constants import FRAME_EXTENSION, FACE_IMAGE_SIZE
 from src.common.path_resolvers import resolve_interval_frames_dir, resolve_detected_face_path, \
-    resolve_interval_frame_path, resolve_annot_faces_path
+    resolve_interval_frame_path, resolve_annot_faces_path, resolve_frame_face_path
 from src.common.file_utils import create_empty_file
+from src.common.debug import one_percent_chance
 from src.vision.models.mtcnn import get_mtcnn_model
 
 
@@ -20,7 +21,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-DEVICE_ID = '1'
+DEVICE_ID = '0'
 mtcnn = get_mtcnn_model(DEVICE_ID)
 
 def interval_extract_faces(interval_id):
@@ -66,12 +67,13 @@ def _save_faces(image, detection_result, interval_id, frame_id):
         extract_face(image, box, image_size=FACE_IMAGE_SIZE, margin=70, save_path=detected_face_path)
     img_draw.save(annotated_faces_path)
 
-# def _copy_first_face(interval_id, frame_id):
-#     # [FacesAll] Videos/oliver/0Rnq1NpHdmw/101462/FacesAll/00012/face_0.jpg
-#     face_id = 0
-#     face_0_path = resolve_detected_face_path(interval_id, frame_id, face_id)
-#     # Videos/oliver/0Rnq1NpHdmw/101462/Faces/00012.jpg
-#     frame_face_path = resolve_frame_face_path(interval_id, frame_id, create=True)
-#     shutil.copyfile(face_0_path, frame_face_path)
-#     if one_percent_chance():
-#         logger.info(f'Face Detection {interval_id} frame {frame_id} {face_0_path} → {frame_face_path}.')
+
+def _copy_first_face(interval_id, frame_id):
+    # [FacesAll] Videos/oliver/0Rnq1NpHdmw/101462/FacesAll/00012/face_0.jpg
+    face_id = 0
+    face_0_path = resolve_detected_face_path(interval_id, frame_id, face_id)
+    # Videos/oliver/0Rnq1NpHdmw/101462/Faces/00012.jpg
+    frame_face_path = resolve_frame_face_path(interval_id, frame_id, create=True)
+    shutil.copyfile(face_0_path, frame_face_path)
+    if one_percent_chance():
+        logger.info(f'Face Detection {interval_id} frame {frame_id} {face_0_path} → {frame_face_path}.')
