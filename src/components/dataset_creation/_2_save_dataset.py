@@ -15,7 +15,7 @@ TODO: creates too many files.
 Only need:
 Oliver_V1/
     df_token_voken.csv (82K token-voken pairs with metadata)
-    vokens.npy         (82K voken embeddings)
+    vokens.npy         (82K voken embeddings)          --- MUST (voken_feats = np.load(args.voken_feat_dir=vokens.npy))
     train/
         tokens.hd5     (65K bert token ids)
         vokens.hd5     (0-65K voken ids)
@@ -32,6 +32,10 @@ def save_dataset(data_dir, df_token_voken, df_train, df_test):
         os.mkdir(data_dir)
     df_token_voken.to_csv(os.path.join(data_dir, 'df_token_voken.csv'))
     df_token_voken.to_pickle(os.path.join(data_dir, 'df_token_voken_pkl.csv'))
+    vokens = df_token_voken['voken'].tolist()
+    np_vokens = np.stack(vokens)
+    np.save(os.path.join(data_dir, 'vokens.npy'), np_vokens)
+    # save train/test
     train_dir = os.path.join(data_dir, 'train')
     test_dir = os.path.join(data_dir, 'test')
     save_h5_files(train_dir, df_train)

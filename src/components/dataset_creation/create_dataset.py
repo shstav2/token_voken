@@ -43,3 +43,12 @@ vokens[78460]
 np.load(resolve_interval_facial_embedding_path(interval_id, 38))
 """
 
+
+"""
+import numpy as np
+import pandas as pd
+path = '/home/stav/Data/Vokenization/Datasets/Noah_V1/df_token_voken_pkl.csv'
+df_token_voken = pd.read_pickle(path) 
+vokens = df_token_voken['voken'].tolist()
+np_vokens = np.stack(vokens)
+"""
