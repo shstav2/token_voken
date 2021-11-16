@@ -1,6 +1,7 @@
 import os
 import h5py
 import numpy as np
+from src.common.constants import EMBEDDING_DIM
 
 
 COL_BERT_TOKEN_ID       = 'token_id'
@@ -22,7 +23,7 @@ Oliver_V1/
     test/
         tokens.hd5     (17K bert token ids)
         vokens.hd5     (65K-82K voken ids)
-Noah_V1/
+Noah_V1/ (162,625)
     df_token_voken.csv (162K token-voken pairs with metadata)
     vokens.npy         (162K voken embeddings)
 """
@@ -33,7 +34,9 @@ def save_dataset(data_dir, df_token_voken, df_train, df_test):
     df_token_voken.to_csv(os.path.join(data_dir, 'df_token_voken.csv'))
     df_token_voken.to_pickle(os.path.join(data_dir, 'df_token_voken_pkl.csv'))
     vokens = df_token_voken['voken'].tolist()
-    np_vokens = np.stack(vokens)
+    # replace nan with np.zeros
+    vokens_padded = [voken if voken is not None else np.zeros(EMBEDDING_DIM) for voken in vokens]
+    np_vokens = np.stack(vokens_padded)
     np.save(os.path.join(data_dir, 'vokens.npy'), np_vokens)
     # save train/test
     train_dir = os.path.join(data_dir, 'train')
