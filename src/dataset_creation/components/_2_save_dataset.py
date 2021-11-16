@@ -2,6 +2,7 @@ import os
 import h5py
 import numpy as np
 from src.common.constants import EMBEDDING_DIM
+from src.common.file_utils import ls_alh
 
 
 COL_BERT_TOKEN_ID       = 'token_id'
@@ -27,10 +28,29 @@ Noah_V1/ (162,625)
     df_token_voken.csv (162K token-voken pairs with metadata)
     vokens.npy         (162K voken embeddings)
 """
+
+
 def save_dataset(data_dir, df_token_voken, df_train, df_test):
-    if not os.path.exists(data_dir):
-        print(f'Creating data directory {data_dir}..')
-        os.mkdir(data_dir)
+    # save train/test
+    save_full_dataset(data_dir, df_token_voken)
+    train_dir = os.path.join(data_dir, 'train')
+    test_dir = os.path.join(data_dir, 'test')
+    save_h5_files(train_dir, df_train)
+    save_h5_files(test_dir, df_test)
+
+
+def save_full_dataset(data_dir, df_token_voken):
+    """
+    Creating data directory /home/stav/Data/Vokenization/Datasets/Oliver_V3_Noah_V1..
+        total 151M
+        -rw-rw-r-- 1 stav stav  70M Nov 16 17:57 df_token_voken.csv
+        -rw-rw-r-- 1 stav stav  52M Nov 16 17:57 df_token_voken_pkl.csv
+        -rw-rw-r-- 1 stav stav  30M Nov 16 17:57 vokens.npy
+    """
+    if os.path.exists(data_dir):
+        raise RuntimeError(f'Already exists: {data_dir}')
+    print(f'Creating data directory {data_dir}..')
+    os.mkdir(data_dir)
     df_token_voken.to_csv(os.path.join(data_dir, 'df_token_voken.csv'))
     df_token_voken.to_pickle(os.path.join(data_dir, 'df_token_voken_pkl.csv'))
     vokens = df_token_voken['voken'].tolist()
@@ -38,11 +58,7 @@ def save_dataset(data_dir, df_token_voken, df_train, df_test):
     vokens_padded = [voken if voken is not None else np.zeros(EMBEDDING_DIM) for voken in vokens]
     np_vokens = np.stack(vokens_padded)
     np.save(os.path.join(data_dir, 'vokens.npy'), np_vokens)
-    # save train/test
-    train_dir = os.path.join(data_dir, 'train')
-    test_dir = os.path.join(data_dir, 'test')
-    save_h5_files(train_dir, df_train)
-    save_h5_files(test_dir, df_test)
+    ls_alh(data_dir)
 
 
 def save_h5_files(data_dir, df_token_voken):

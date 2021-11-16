@@ -5,6 +5,7 @@ import logging
 
 from src.common.debug import one_percent_chance
 from src.common.display_utils import bool_to_symbol, ARR_R, SVE, DEL
+from src.common.commands import run_command_with_output
 
 
 logging.basicConfig(
@@ -56,6 +57,11 @@ def is_empty_file(path):
 # returns full path of each file
 def listdir_nohidden(path):
     return glob.glob(os.path.join(path, '*'))
+
+
+def ls_alh(path):
+    command = ['ls', '-alh', path]
+    run_command_with_output(command)
 
 
 def create_empty_file(path):

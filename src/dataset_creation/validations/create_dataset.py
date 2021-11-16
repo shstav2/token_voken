@@ -52,3 +52,15 @@ df_token_voken = pd.read_pickle(path)
 vokens = df_token_voken['voken'].tolist()
 np_vokens = np.stack(vokens)
 """
+
+
+"""
+Compare the dtype of oliver vokens to noah vokens
+-------------------------------------------------
+import numpy as np
+oliver_feat_path = '/home/stav/Data/Vokenization/Datasets/Oliver_V3/vokens.npy'
+noah_feat_path = '/home/stav/Data/Vokenization/Datasets/Noah_V1/vokens.npy'
+feat_oliver = np.load(oliver_feat_path)
+feat_noah = np.load(noah_feat_path)
+"""
+

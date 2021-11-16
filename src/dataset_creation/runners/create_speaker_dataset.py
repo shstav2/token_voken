@@ -1,6 +1,6 @@
 from src.common.constants import SPEAKER_NAME
-from src.components.dataset_creation._1_create_dataframe import read_sorted_intervals, get_token_voken, split_train_test
-from src.components.dataset_creation._2_save_dataset import save_dataset
+from src.dataset_creation import read_sorted_intervals, get_token_voken, split_train_test
+from src.dataset_creation import save_dataset
 
 # 1) Create dataframe and split train/test
 df_intervals = read_sorted_intervals()
