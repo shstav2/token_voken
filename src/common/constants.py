@@ -22,7 +22,7 @@ TEXT_TOKENS_FILENAME      =  'Tokens'    # DataFrame
 FRAME_EXTENSION           = 'jpg'
 EMBEDDING_EXTENSION       = 'npy'
 TEXT_EXTENSION            = 'csv'
-TOKEN_VOKEN_EXTENSTION    = 'hdf'
+TOKEN_VOKEN_EXTENSTION    = 'hdf5'
 
 
 # Vokenization Datasets
@@ -52,4 +52,5 @@ PROJECT_FECNET = '/home/stav/Projects/FECNet'
 OLIVER_FACE_PATH = '/home/stav/Data/Sample/oliver/face.jpg'
 OLIVER_FACE_RESNET_EMBEDDING_PATH = '/home/stav/Data/Sample/oliver/face.npy'
 
-DF_INTERVALS_NOAH = '/home/stav/Data/PATS_DATA/df_intervals_noah.csv'
+DF_INTERVALS_OLIVER  = os.path.join(PATS_DATA_ROOT, 'DataFrames/df_intervals_all.csv')
+DF_INTERVALS_NOAH    = os.path.join(PATS_DATA_ROOT, 'DataFrames/df_intervals_noah.csv')

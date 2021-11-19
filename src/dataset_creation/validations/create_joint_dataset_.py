@@ -19,10 +19,15 @@ DATASET_NOAH   = 'Noah_V1'
 new_dataset_name = f'{DATASET_OLIVER}_{DATASET_NOAH}'
 new_dataset_path = os.path.join(DATASETS_VOKENIZATION, new_dataset_name)
 
+# Input Paths
+oliver_feat_path = os.path.join(DATASETS_VOKENIZATION, DATASET_OLIVER, 'vokens.npy')
+noah_feat_path   = os.path.join(DATASETS_VOKENIZATION, DATASET_NOAH,   'vokens.npy')
+# /home/stav/Data/Vokenization/Datasets/Oliver_V3/df_token_voken_pkl.csv
+oliver_df_path   = os.path.join(DATASETS_VOKENIZATION, DATASET_OLIVER, 'df_token_voken_pkl.csv')
+noah_df_path     = os.path.join(DATASETS_VOKENIZATION, DATASET_NOAH,   'df_token_voken_pkl.csv')
 
-def get_speaker_token_voken():
-    df_token_voken_path = resolve_dataset_tokens_path()
-    df_speaker   = pd.read_pickle(noah_df_path)    # shape: (162,625  13)
+df_oliver = pd.read_pickle(oliver_df_path)  # shape: ( 81,712  13)
+df_noah   = pd.read_pickle(noah_df_path)    # shape: (162,625  13)
 
 df_oliver['speaker'] = 'oliver'
 df_noah['speaker']   = 'noah'

@@ -1,5 +1,6 @@
 import os
 import glob
+import h5py
 from pathlib import Path
 import logging
 
@@ -84,3 +85,11 @@ def delete_file(path):
     path_size_bytes = get_total_size(path) if path_exists else -1
     os.remove(path)
     logger.info(f'{DEL}  Delete file {path} ({human_readable_size(path_size_bytes)}).')
+
+
+def read_hdf(path, group_key):
+    with h5py.File(path, "r") as f:
+        # List all groups
+        print("All Keys: %s" % f.keys())
+        data = list(f[group_key])
+    return data

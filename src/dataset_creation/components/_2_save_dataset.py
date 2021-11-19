@@ -67,6 +67,7 @@ def save_h5_files(data_dir, df_token_voken):
         os.mkdir(data_dir)
     create_token_ids_hdf(data_dir, df_token_voken)
     create_voken_ids_hdf(data_dir, df_token_voken)
+    ls_alh(data_dir)
 
 
 def create_token_ids_hdf(data_dir, df_token_voken):

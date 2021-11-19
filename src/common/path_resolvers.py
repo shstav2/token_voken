@@ -8,8 +8,11 @@ from src.common.constants import \
     ALL_FACES_IMAGE_DIR_NAME, FACES_IMAGE_DIR_NAME, \
     RESNET_EMBEDDING_DIR_NAME, FECNET_EMBEDDING_DIR_NAME, \
     TEXT_DIR_NAME, TEXT_RAW_FILENAME, TEXT_TOKENS_FILENAME, \
+    \
     FRAME_EXTENSION, EMBEDDING_EXTENSION, TEXT_EXTENSION, \
-    DATASETS_VOKENIZATION_V1, TOKEN_VOKEN_EXTENSTION
+    TOKEN_VOKEN_EXTENSTION, \
+    \
+    DATASETS_VOKENIZATION
 from src.data.interval_to_video.all import INTERVAL_TO_VIDEO
 
 # Data/PATS_DATA/
@@ -239,14 +242,21 @@ def resolve_interval_text_tokenized_path(interval_id, create=False):
 # -------- Token-Voken Dataset
 
 # [Dataset/Dataframe]
-def resolve_dataset_dataframe():
-    return os.path.join(DATASETS_VOKENIZATION_V1, f'tokens.{TOKEN_VOKEN_EXTENSTION}')
+def resolve_dataset_dataframe(dataset_name):
+    return os.path.join(DATASETS_VOKENIZATION, dataset_name, f'')
 
-# [Dataset/Tokens] /home/stav/Data/Vokenization/Datasets/Oliver_V1/tokens.hdf
-def resolve_dataset_tokens_path():
-    return os.path.join(DATASETS_VOKENIZATION_V1, f'tokens.{TOKEN_VOKEN_EXTENSTION}')
+# [Dataset/Tokens] /home/stav/Data/Vokenization/Datasets/Oliver_V1/train
+def resolve_subset_data_dir(dataset_name, subset):
+    return os.path.join(DATASETS_VOKENIZATION, dataset_name, subset)
 
-# [Dataset/Vokens] /home/stav/Data/Vokenization/Datasets/Oliver_V1/vokens.hdf
-def resolve_dataset_vokens_path():
-    return os.path.join(DATASETS_VOKENIZATION_V1, f'vokens.{TOKEN_VOKEN_EXTENSTION}')
+# [Dataset/Tokens] /home/stav/Data/Vokenization/Datasets/Oliver_V1/train/tokens.hdf
+def resolve_dataset_tokens_path(dataset_name, subset):
+    # /home/stav/Data/Vokenization/Datasets/Oliver_V1/train
+    subset_path = resolve_subset_data_dir(dataset_name, subset)
+    return os.path.join(subset_path, f'tokens.{TOKEN_VOKEN_EXTENSTION}')
+
+# [Dataset/Vokens] /home/stav/Data/Vokenization/Datasets/Oliver_V1/train/vokens.hdf
+def resolve_dataset_vokens_path(dataset_name, subset):
+    subset_path = resolve_subset_data_dir(dataset_name, subset)
+    return os.path.join(subset_path, f'vokens.{TOKEN_VOKEN_EXTENSTION}')
 
