@@ -12,7 +12,8 @@ from src.common.constants import \
     FRAME_EXTENSION, EMBEDDING_EXTENSION, TEXT_EXTENSION, \
     TOKEN_VOKEN_EXTENSTION, \
     \
-    DATASETS_VOKENIZATION
+    DATASETS_VOKENIZATION, DF_TOKEN_VOKEN_FILENAME, \
+    TOKENS_DATA_FILENAME, VOKENS_DATA_FILENAME
 from src.data.interval_to_video.all import INTERVAL_TO_VIDEO
 
 # Data/PATS_DATA/
@@ -240,23 +241,45 @@ def resolve_interval_text_tokenized_path(interval_id, create=False):
 
 
 # -------- Token-Voken Dataset
+"""
+(base) stav@eimtest-ESC4000-G4:~/Data/Vokenization/Datasets/Oliver_V3_Noah_V1$ tree .
+./home/stav/Data/Vokenization/Datasets/Oliver_V3_Noah_V1
+├── df_token_voken.csv
+├── df_token_voken_pkl.csv
+├── test
+│   ├── tokens.hdf5
+│   └── vokens.hdf5
+├── train
+│   ├── tokens.hdf5
+│   └── vokens.hdf5
+└── vokens.npy
 
-# [Dataset/Dataframe]
+2 directories, 7 files
+"""
+
+# [Dataset] /home/stav/Data/Vokenization/Datasets/Oliver_V1
+def resolve_dataset_dir(dataset_name):
+    return os.path.join(DATASETS_VOKENIZATION, dataset_name)
+
+# [Dataset/Dataframe] /home/stav/Data/Vokenization/Datasets/Oliver_V1/df_token_voken_pkl.csv
 def resolve_dataset_dataframe(dataset_name):
-    return os.path.join(DATASETS_VOKENIZATION, dataset_name, f'')
+    dataset_dir = resolve_dataset_dir(dataset_name)
+    return os.path.join(dataset_dir, DF_TOKEN_VOKEN_FILENAME)
 
-# [Dataset/Tokens] /home/stav/Data/Vokenization/Datasets/Oliver_V1/train
+# [Dataset/Train] /home/stav/Data/Vokenization/Datasets/Oliver_V1/train
 def resolve_subset_data_dir(dataset_name, subset):
-    return os.path.join(DATASETS_VOKENIZATION, dataset_name, subset)
+    dataset_dir = resolve_dataset_dir(dataset_name)
+    return os.path.join(dataset_dir, subset)
 
-# [Dataset/Tokens] /home/stav/Data/Vokenization/Datasets/Oliver_V1/train/tokens.hdf
+# [Dataset/Train/Tokens] /home/stav/Data/Vokenization/Datasets/Oliver_V1/train/tokens.hdf
 def resolve_dataset_tokens_path(dataset_name, subset):
     # /home/stav/Data/Vokenization/Datasets/Oliver_V1/train
     subset_path = resolve_subset_data_dir(dataset_name, subset)
-    return os.path.join(subset_path, f'tokens.{TOKEN_VOKEN_EXTENSTION}')
+    return os.path.join(subset_path, TOKENS_DATA_FILENAME)
 
-# [Dataset/Vokens] /home/stav/Data/Vokenization/Datasets/Oliver_V1/train/vokens.hdf
+# [Dataset/Train/Vokens] /home/stav/Data/Vokenization/Datasets/Oliver_V1/train/vokens.hdf
 def resolve_dataset_vokens_path(dataset_name, subset):
+    # /home/stav/Data/Vokenization/Datasets/Oliver_V1/train
     subset_path = resolve_subset_data_dir(dataset_name, subset)
-    return os.path.join(subset_path, f'vokens.{TOKEN_VOKEN_EXTENSTION}')
+    return os.path.join(subset_path, VOKENS_DATA_FILENAME)
 

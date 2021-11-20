@@ -28,7 +28,9 @@ TOKEN_VOKEN_EXTENSTION    = 'hdf5'
 # Vokenization Datasets
 # /home/stav/Data/Vokenization/Datasets/Oliver_V1
 DATASETS_VOKENIZATION    = os.path.join(STAV_ROOT, 'Vokenization/Datasets')
-DATASETS_VOKENIZATION_V1 = os.path.join(DATASETS_VOKENIZATION, 'Oliver_V1')
+DF_TOKEN_VOKEN_FILENAME  = 'df_token_voken_pkl.csv'
+TOKENS_DATA_FILENAME     = 'tokens.hdf'
+VOKENS_DATA_FILENAME     = 'vokens.hdf'
 
 
 # Magic Numbers

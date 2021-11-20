@@ -10,31 +10,38 @@ from src.common.constants import DATASETS_VOKENIZATION
 
 COL_DATASET   = 'dataset'
 COL_VOKEN_ID  = 'voken_id'
+COL_SPEAKER   = 'speaker'
 
 # Input Datasets
 DATASET_OLIVER = 'Oliver_V3'
 DATASET_NOAH   = 'Noah_V1'
 
 # Output Dataset target path
-new_dataset_name = f'{DATASET_OLIVER}_{DATASET_NOAH}'
+new_dataset_name = f'{DATASET_OLIVER}_{DATASET_NOAH}_SHUFFLE_INTERVAL'
 new_dataset_path = os.path.join(DATASETS_VOKENIZATION, new_dataset_name)
 
 
 
-def get_speaker_token_voken():
-    df_token_voken_path = resolve_dataset_tokens_path()
-    df_speaker   = pd.read_pickle(noah_df_path)    # shape: (162,625  13)
-
-df_oliver['speaker'] = 'oliver'
-df_noah['speaker']   = 'noah'
-
+def get_speaker_df_token_voken(dataset_name):
+    # /home/stav/Data/Vokenization/Datasets/Oliver_V1/df_token_voken_pkl.csv
+    data_path = resolve_dataset_dataframe(dataset_name)
+    df_speaker = pd.read_pickle(data_path)
+    return df_speaker
 
 
-df_all = pd.concat([df_oliver, df_noah])
-df_all['speaker'].value_counts()
+def get_full_df_token_voken(dataset_oliver, dataset_noah):
+    df_oliver = get_speaker_df_token_voken(dataset_oliver)
+    df_noah   = get_speaker_df_token_voken(dataset_noah)
+    df_oliver[COL_SPEAKER] = 'oliver'
+    df_noah[COL_SPEAKER]   = 'noah'
+    df_all = pd.concat([df_oliver, df_noah])
+    return df_all
+
+
+
+df_all[COL_SPEAKER].value_counts()
 
 df_all[COL_VOKEN_ID] = range(0, len(df_all))
-
 
 save_full_dataset(new_dataset_path, df_all)
 
@@ -55,6 +62,8 @@ tokens_oliver_test_path  = '/home/stav/Data/Vokenization/Datasets/Oliver_V3/test
 tokens_noah_train_path = '/home/stav/Data/Vokenization/Datasets/Noah_V1/train/tokens.hdf5'
 tokens_noah_test_path  = '/home/stav/Data/Vokenization/Datasets/Noah_V1/test/tokens.hdf5'
 
+# /home/stav/Data/Vokenization/Datasets/Oliver_V1/train/tokens.hdf
+df_token_voken_path = resolve_dataset_tokens_path(dataset_name, subset)
 
 tokens_train_oliver = read_hdf(tokens_oliver_train_path, 'tokens')
 tokens_test_oliver  = read_hdf(tokens_oliver_test_path, 'tokens')
@@ -128,46 +137,9 @@ vokens_mix_train = read_hdf(vokens_mix_train_path, 'vokens')
 vokens_mix_test  = read_hdf(vokens_mix_test_path,  'vokens')
 
 
-# >>> df_all['voken_id'][:81712]
-# 0         0
-# 1         1
-# 2         2
-# 3         3
-# 4         4
-#       ...
-# 67    81707
-# 68    81708
-# 69    81709
-# 70    81710
-# 71    81711
-
-# >>> df_all['voken_id'][81712:]
-# 0          0
-# 1          1
-# 2          2
-# 3          3
-# 4          4
-#        ...
-# 47    162620
-# 48    162621
-# 49    162622
-# 50    162623
-# 51    162624
 
 """
 np_vokens_path = os.path.join(DATASETS_VOKENIZATION, 'Oliver_V3_Noah_V1', 'vokens.npy')
 np_vokens = np.load(np_vokens_path)
 np_vokens.shape # (244,337, 16) -> 81,712 (oliver )+ 162,625 (noah)
-"""
-
-"""
----------------
-oliver   train | 
----------------
-oliver   test  | 
----------------
-noah     train |
----------------
-noah     test  |
----------------
 """
