@@ -29,15 +29,29 @@ TOKEN_VOKEN_EXTENSTION    = 'hdf5'
 # /home/stav/Data/Vokenization/Datasets/Oliver_V1
 DATASETS_VOKENIZATION    = os.path.join(STAV_ROOT, 'Vokenization/Datasets')
 DF_TOKEN_VOKEN_FILENAME  = 'df_token_voken_pkl.csv'
-TOKENS_DATA_FILENAME     = 'tokens.hdf'
-VOKENS_DATA_FILENAME     = 'vokens.hdf'
-
+TOKENS_DATA_FILENAME     = 'tokens.hdf5'
+VOKENS_DATA_FILENAME     = 'vokens.hdf5'
+INDICES_FILENAME         = 'indices.txt'
 
 # Magic Numbers
 VIDEO_ID_LEN = 11
 FRAME_RATE = 15
 FACE_IMAGE_SIZE = 224
 EMBEDDING_DIM = 16
+BLOCK_SIZE = 126 # Set by vokenization as the size of each row in the batch
+
+
+# dataframe columns names
+COL_DATASET   = 'dataset'
+COL_VOKEN_ID  = 'voken_id'
+COL_SPEAKER   = 'speaker'
+
+# Train/Test split
+SPLIT_INDEX = {
+    'Oliver_V3':  64713,
+    'Noah_V1':   130232
+}
+
 
 # Tree
 PATS_SPEAKER_VIZ_DIR = os.path.join(PATS_DATA_ROOT, f'{VIDEOS}/{SPEAKER_NAME}')

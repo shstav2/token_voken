@@ -1,8 +1,10 @@
 import os
 import h5py
+import simplejson
 import numpy as np
-from src.common.constants import EMBEDDING_DIM
+from src.common.constants import EMBEDDING_DIM, INDICES_FILENAME
 from src.common.file_utils import ls_alh
+from src.common.display_utils import SVE
 
 
 COL_BERT_TOKEN_ID       = 'token_id'
@@ -37,6 +39,8 @@ def save_dataset(data_dir, df_token_voken, df_train, df_test):
     test_dir = os.path.join(data_dir, 'test')
     save_h5_files(train_dir, df_train)
     save_h5_files(test_dir, df_test)
+    print(f'{SVE}  FINAL:')
+    ls_alh(data_dir)
 
 
 def save_full_dataset(data_dir, df_token_voken):
@@ -86,4 +90,19 @@ def create_voken_ids_hdf(data_dir, df_token_voken):
     # vokens = df_token_voken[COL_VOKEN].tolist()
     # np_vokens = np.stack(vokens)
     # np.save(os.path.join(data_dir, 'vokens.npy'), np_vokens)
+
+
+def save_indices(indices_path, indices):
+    f = open(indices_path, 'w')
+    simplejson.dump(indices, f)
+    f.close()
+
+
+def save_metadata(data_dir, train_indices, test_indices):
+    metadata_dir = os.path.join(data_dir, 'metadata') # TODO: path resolvers
+    os.mkdir(metadata_dir)
+    train_indices_path = os.path.join(metadata_dir, f'train_{INDICES_FILENAME}')
+    save_indices(train_indices_path, train_indices)
+    test_indices_path = os.path.join(metadata_dir, f'test_{INDICES_FILENAME}')
+    save_indices(test_indices_path, test_indices)
 
