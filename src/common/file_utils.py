@@ -65,6 +65,11 @@ def ls_alh(path):
     run_command_with_output(command)
 
 
+def tree(path):
+    command = ['tree', path]
+    run_command_with_output(command)
+
+
 def create_empty_file(path):
     print('TOUCH ', path)
     Path(path).touch()

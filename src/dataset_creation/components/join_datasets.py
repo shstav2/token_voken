@@ -3,10 +3,8 @@ import math
 import pandas as pd
 from random import shuffle
 from src.common.path_resolvers import resolve_dataset_dataframe
-from src.common.constants import BLOCK_SIZE, \
-    COL_SPEAKER, COL_VOKEN_ID, COL_DATASET, \
-    SPLIT_INDEX
-
+from src.common.constants import SPLIT_INDEX, \
+    COL_SPEAKER, COL_VOKEN_ID, COL_DATASET
 
 
 def get_speaker_df_token_voken(dataset_name, speaker_name):
@@ -63,13 +61,13 @@ def get_df_all_train_test(dataset_oliver, dataset_noah):
     return df_all, df_train, df_test
 
 
-def shuffle_train_test(df_train, df_test):
-    df_train_shuffled, train_indices = shuffle_blocks(df_train, BLOCK_SIZE)
+def shuffle_train_test(df_train, df_test, block_size):
+    df_train_shuffled, train_indices = shuffle_blocks(df_train, block_size)
     print('Train:')
     print(df_train_shuffled[COL_SPEAKER].value_counts().astype('float32'))
     # noah     162,625
     # oliver    81,712
     print('Test:')
-    df_test_shuffled, test_indices = shuffle_blocks(df_test, BLOCK_SIZE)
+    df_test_shuffled, test_indices = shuffle_blocks(df_test, block_size)
     print(df_test_shuffled[COL_SPEAKER].value_counts().astype('float32'))
     return df_train_shuffled, train_indices, df_test_shuffled, test_indices

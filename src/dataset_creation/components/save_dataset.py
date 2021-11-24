@@ -2,8 +2,8 @@ import os
 import h5py
 import simplejson
 import numpy as np
-from src.common.constants import EMBEDDING_DIM, INDICES_FILENAME
-from src.common.file_utils import ls_alh
+from src.common.constants import EMBEDDING_DIM, INDICES_FILENAME, DF_TOKEN_VOKEN_FILENAME
+from src.common.file_utils import ls_alh, tree
 from src.common.display_utils import SVE
 
 
@@ -12,6 +12,7 @@ COL_WORD_FRAME_SELECTED = 'selected_frame'
 COL_VOKEN_ID            = 'voken_id'
 COL_VOKEN_PATH          = 'voken_path'
 COL_VOKEN               = 'voken'
+COL_DATASET             = 'dataset'
 
 
 """
@@ -32,15 +33,26 @@ Noah_V1/ (162,625)
 """
 
 
-def save_dataset(data_dir, df_token_voken, df_train, df_test):
-    # save train/test
+def save_dataset(data_dir, df_token_voken):
+    # 1) Save entire dataset
     save_full_dataset(data_dir, df_token_voken)
-    train_dir = os.path.join(data_dir, 'train')
-    test_dir = os.path.join(data_dir, 'test')
-    save_h5_files(train_dir, df_train)
-    save_h5_files(test_dir, df_test)
+
+    # 2) Save train/test
+    df_train = df_token_voken[df_token_voken[COL_DATASET] == 'train']
+    df_test  = df_token_voken[df_token_voken[COL_DATASET] == 'test']
+    assert (len(df_train) + len(df_test)) == len(df_token_voken)
+    save_subset(data_dir, 'train', df_train)
+    save_subset(data_dir, 'test',  df_test)
+
+    # 3) Show resulted dataset
     print(f'{SVE}  FINAL:')
     ls_alh(data_dir)
+    tree(data_dir)
+
+
+def save_subset(data_dir, subset_name, df_subset):
+    subset_dir = os.path.join(data_dir, subset_name)
+    save_h5_files(subset_dir, df_subset)
 
 
 def save_full_dataset(data_dir, df_token_voken):
@@ -55,8 +67,8 @@ def save_full_dataset(data_dir, df_token_voken):
         raise RuntimeError(f'Already exists: {data_dir}')
     print(f'Creating data directory {data_dir}..')
     os.mkdir(data_dir)
-    df_token_voken.to_csv(os.path.join(data_dir, 'df_token_voken.csv'))
-    df_token_voken.to_pickle(os.path.join(data_dir, 'df_token_voken_pkl.csv'))
+    df_token_voken.drop('voken', axis=1).to_csv(os.path.join(data_dir, 'df_token_voken_partial_cols.csv'))
+    df_token_voken.to_pickle(os.path.join(data_dir, DF_TOKEN_VOKEN_FILENAME))
     vokens = df_token_voken['voken'].tolist()
     # replace nan with np.zeros
     vokens_padded = [voken if voken is not None else np.zeros(EMBEDDING_DIM) for voken in vokens]
