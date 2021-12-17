@@ -2,17 +2,16 @@ import os
 import h5py
 import simplejson
 import numpy as np
-from src.common.constants import EMBEDDING_DIM, INDICES_FILENAME, DF_TOKEN_VOKEN_FILENAME
+from src.common.constants import EMBEDDING_DIM, INDICES_FILENAME, DF_TOKEN_VOKEN_FILENAME, \
+    COL_VOKEN_ID, COL_SET_TYPE
 from src.common.file_utils import ls_alh, tree
 from src.common.display_utils import SVE
 
 
 COL_BERT_TOKEN_ID       = 'token_id'
 COL_WORD_FRAME_SELECTED = 'selected_frame'
-COL_VOKEN_ID            = 'voken_id'
 COL_VOKEN_PATH          = 'voken_path'
 COL_VOKEN               = 'voken'
-COL_DATASET             = 'dataset'
 
 
 """
@@ -38,8 +37,8 @@ def save_dataset(data_dir, df_token_voken):
     save_full_dataset(data_dir, df_token_voken)
 
     # 2) Save train/test
-    df_train = df_token_voken[df_token_voken[COL_DATASET] == 'train']
-    df_test  = df_token_voken[df_token_voken[COL_DATASET] == 'test']
+    df_train = df_token_voken[df_token_voken[COL_SET_TYPE] == 'train']
+    df_test  = df_token_voken[df_token_voken[COL_SET_TYPE] == 'test']
     assert (len(df_train) + len(df_test)) == len(df_token_voken)
     save_subset(data_dir, 'train', df_train)
     save_subset(data_dir, 'test',  df_test)

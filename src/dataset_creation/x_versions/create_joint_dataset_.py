@@ -6,9 +6,8 @@ import os
 import numpy as np
 import pandas as pd
 from src.dataset_creation.components._2_save_dataset import save_full_dataset, save_h5_files
-from src.common.constants import DATASETS_VOKENIZATION
+from src.common.constants import DATASETS_VOKENIZATION, COL_SET_TYPE
 
-COL_DATASET   = 'dataset'
 COL_VOKEN_ID  = 'voken_id'
 
 # Input Datasets
@@ -71,19 +70,19 @@ len(tokens_train_noah), len(tokens_test_noah)     # (130,232, 32,393) = 162,625
 
 
 split_index_oliver = 64713
-df_oliver[COL_DATASET] = None
-df_oliver.iloc[:split_index_oliver+1, df_oliver.columns.get_loc(COL_DATASET)] = 'train'
-df_oliver.iloc[split_index_oliver:, df_oliver.columns.get_loc(COL_DATASET)]   = 'test'
-df_oliver[COL_DATASET].value_counts()
+df_oliver[COL_SET_TYPE] = None
+df_oliver.iloc[:split_index_oliver+1, df_oliver.columns.get_loc(COL_SET_TYPE)] = 'train'
+df_oliver.iloc[split_index_oliver:, df_oliver.columns.get_loc(COL_SET_TYPE)]   = 'test'
+df_oliver[COL_SET_TYPE].value_counts()
 # train    64713
 # test     16999
 
 
 split_index_noah = 130232
-df_noah[COL_DATASET] = None
-df_noah.iloc[:split_index_noah+1, df_noah.columns.get_loc(COL_DATASET)] = 'train'
-df_noah.iloc[split_index_noah:, df_noah.columns.get_loc(COL_DATASET)]   = 'test'
-df_noah[COL_DATASET].value_counts()
+df_noah[COL_SET_TYPE] = None
+df_noah.iloc[:split_index_noah+1, df_noah.columns.get_loc(COL_SET_TYPE)] = 'train'
+df_noah.iloc[split_index_noah:, df_noah.columns.get_loc(COL_SET_TYPE)]   = 'test'
+df_noah[COL_SET_TYPE].value_counts()
 # train    130232
 # test      32393
 
@@ -91,7 +90,7 @@ df_noah[COL_DATASET].value_counts()
 
 df_all = pd.concat([df_oliver, df_noah])
 df_all['speaker'].value_counts()
-df_all[COL_DATASET].value_counts()
+df_all[COL_SET_TYPE].value_counts()
 
 df_all.shape   # (244,337, 15)
 save_full_dataset(new_dataset_path, df_all)
@@ -100,7 +99,7 @@ save_full_dataset(new_dataset_path, df_all)
 train
 """
 
-df_all_train = df_all[df_all[COL_DATASET] == 'train']
+df_all_train = df_all[df_all[COL_SET_TYPE] == 'train']
 df_all_train.shape # (194,945, 15)
 
 df_all_train['speaker'].value_counts()
@@ -114,7 +113,7 @@ save_h5_files(train_path, df_all_train)
 """
 test
 """
-df_all_test = df_all[df_all[COL_DATASET] == 'test']
+df_all_test = df_all[df_all[COL_SET_TYPE] == 'test']
 df_all_test.shape # (49,392, 15)
 
 df_all_test['speaker'].value_counts()

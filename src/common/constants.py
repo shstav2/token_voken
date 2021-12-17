@@ -42,9 +42,17 @@ BLOCK_SIZE = 126 # Set by vokenization as the size of each row in the batch
 
 
 # dataframe columns names
-COL_DATASET   = 'dataset'
-COL_VOKEN_ID  = 'voken_id'
-COL_SPEAKER   = 'speaker'
+COL_SPEAKER                   = 'speaker'
+COL_SET_TYPE                  = 'set_type'
+COL_VIDEO_ID                  = 'video_id'
+COL_INTERVAL_ID               = 'interval_id'
+COL_BERT_TOKEN_ID             = 'token_id'
+COL_WORD                      = 'word'
+COL_VOKEN                     = 'voken'
+COL_VOKEN_ID                  = 'voken_id'
+COL_WORD_FRAME_SELECTED       = 'selected_frame'
+COL_WORD_FRAME_SELECTED_FIXED = 'selected_frame_fix' # incase the selected frame id does not exist
+COL_VOKEN_PATH                = 'voken_path'
 
 # Train/Test split
 SPLIT_INDEX = {
@@ -54,11 +62,8 @@ SPLIT_INDEX = {
 
 
 # Tree
-PATS_SPEAKER_VIZ_DIR = os.path.join(PATS_DATA_ROOT, f'{VIDEOS}/{SPEAKER_NAME}')
+PATS_VIDEOS_DIR = os.path.join(PATS_DATA_ROOT, VIDEOS)
 
-# PATS_SPEAKER_DATASET_DIR = os.path.join(PATS_DATA_ROOT, f'Datasets/{SPEAKER_NAME}')
-# PATS_SPEAKER_DATA_DIR = os.path.join(PATS_DATA_ROOT, f'Processed/{SPEAKER_NAME}/data')
-# PATS_SPEAKER_INTERVAL_DIR = os.path.join(PATS_SPEAKER_DATA_DIR, 'processed', SPEAKER_NAME)
 
 # Projects
 PROJECT_TOKEN_VOKEN = pathlib.Path(__file__).parent.parent.parent.absolute()

@@ -4,7 +4,7 @@ import pandas as pd
 from random import shuffle
 from src.common.path_resolvers import resolve_dataset_dataframe
 from src.common.constants import SPLIT_INDEX, \
-    COL_SPEAKER, COL_VOKEN_ID, COL_DATASET
+    COL_SPEAKER, COL_VOKEN_ID, COL_SET_TYPE
 
 
 def get_speaker_df_token_voken(dataset_name, speaker_name):
@@ -49,15 +49,15 @@ def shuffle_blocks(df_all, block_size):
 
 def mark_train_test_split(df_speaker, dataset_name):
     split_index = SPLIT_INDEX[dataset_name]
-    df_speaker[COL_DATASET] = None
-    df_speaker.iloc[:split_index+1, df_speaker.columns.get_loc(COL_DATASET)] = 'train'
-    df_speaker.iloc[split_index:, df_speaker.columns.get_loc(COL_DATASET)]   = 'test'
+    df_speaker[COL_SET_TYPE] = None
+    df_speaker.iloc[:split_index+1, df_speaker.columns.get_loc(COL_SET_TYPE)] = 'train'
+    df_speaker.iloc[split_index:, df_speaker.columns.get_loc(COL_SET_TYPE)]   = 'test'
 
 
 def get_df_all_train_test(dataset_oliver, dataset_noah):
     df_all = get_full_df_token_voken(dataset_oliver, dataset_noah)
-    df_train = df_all[df_all[COL_DATASET] == 'train']
-    df_test  = df_all[df_all[COL_DATASET] == 'test']
+    df_train = df_all[df_all[COL_SET_TYPE] == 'train']
+    df_test  = df_all[df_all[COL_SET_TYPE] == 'test']
     return df_all, df_train, df_test
 
 

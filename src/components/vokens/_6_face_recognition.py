@@ -84,7 +84,7 @@ def detect_face_recognition_errors(interval_id):
     for i, frame in enumerate(frames):
         # Initialize values for face recognition (if needed)
         requires_face_recognition, face_filenames, frame_resnet_dir, frame_id, debug = \
-            requires_face_recognition_and_metadta(interval_id, frame)
+            requires_face_recognition_and_metadata(interval_id, frame)
         if not requires_face_recognition:
             continue
         # For each face, get distances from base image
@@ -99,7 +99,7 @@ def detect_face_recognition_errors(interval_id):
     return frame_to_recognized_face, interval_resnet_dir
 
 
-def requires_face_recognition_and_metadta(interval_id, frame_resnet_dir):
+def requires_face_recognition_and_metadata(interval_id, frame_resnet_dir):
     # [ResNet] Videos/oliver/0Rnq1NpHdmw/101462/ResNet/00012
     frame_id = int(os.path.basename(frame_resnet_dir))
     frame_resnet_dir = resolve_single_frame_resnet_faces_dir(interval_id, frame_id)

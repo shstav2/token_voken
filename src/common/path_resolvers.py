@@ -2,8 +2,7 @@
 import os
 
 from src.common.constants import \
-    SPEAKER_NAME, \
-    PATS_SPEAKER_VIZ_DIR, PATS_DATA_ROOT, LOCAL_PATS_DATA_ROOT, \
+    PATS_VIDEOS_DIR, PATS_DATA_ROOT, LOCAL_PATS_DATA_ROOT, \
     VIDEO_FRAMES_DIR_NAME,\
     ALL_FACES_IMAGE_DIR_NAME, FACES_IMAGE_DIR_NAME, \
     RESNET_EMBEDDING_DIR_NAME, FECNET_EMBEDDING_DIR_NAME, \
@@ -14,7 +13,7 @@ from src.common.constants import \
     \
     DATASETS_VOKENIZATION, DF_TOKEN_VOKEN_FILENAME, \
     TOKENS_DATA_FILENAME, VOKENS_DATA_FILENAME
-from src.data.interval_to_video.all import INTERVAL_TO_VIDEO
+from src.data.interval_to_video.all import INTERVAL_TO_VIDEO, video_id_to_speaker
 
 # Data/PATS_DATA/
 # └── Videos
@@ -45,7 +44,7 @@ from src.data.interval_to_video.all import INTERVAL_TO_VIDEO
 # ------- Utils
 
 def get_video_id(interval_id):
-    return INTERVAL_TO_VIDEO[SPEAKER_NAME][interval_id]
+    return INTERVAL_TO_VIDEO[interval_id]
 
 def get_interval_row(df_intervals, interval_id):
     row = df_intervals[df_intervals['interval_id'] == interval_id].iloc[0]
@@ -66,7 +65,8 @@ def localize_path(remote_path):
 # ------- 1) Full Video (mp4)
 
 def resolve_video_dir_path(video_id):
-    video_dir = os.path.join(PATS_SPEAKER_VIZ_DIR, video_id)
+    speaker_name = video_id_to_speaker(video_id)
+    video_dir = os.path.join(PATS_VIDEOS_DIR, speaker_name, video_id)
     return video_dir
 
 def resolve_video_file_path(video_id):
