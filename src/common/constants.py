@@ -27,11 +27,12 @@ TOKEN_VOKEN_EXTENSTION    = 'hdf5'
 
 # Vokenization Datasets
 # /home/stav/Data/Vokenization/Datasets/Oliver_V1
-DATASETS_VOKENIZATION    = os.path.join(STAV_ROOT, 'Vokenization/Datasets')
-DF_TOKEN_VOKEN_FILENAME  = 'df_token_voken_pkl.csv'
-TOKENS_DATA_FILENAME     = 'tokens.hdf5'
-VOKENS_DATA_FILENAME     = 'vokens.hdf5'
-INDICES_FILENAME         = 'indices.txt'
+DATASETS_VOKENIZATION        = os.path.join(STAV_ROOT, 'Vokenization/Datasets')
+DF_TOKEN_VOKEN_PKL_FILENAME  = 'df_token_voken_pkl.csv'
+DF_TOKEN_VOKEN_CSV_FILENAME  = 'df_token_voken_partial_cols.csv'
+TOKENS_DATA_FILENAME         = 'tokens.hdf5'
+VOKENS_DATA_FILENAME         = 'vokens.hdf5'
+INDICES_FILENAME             = 'indices.txt'
 
 # Magic Numbers
 VIDEO_ID_LEN = 11

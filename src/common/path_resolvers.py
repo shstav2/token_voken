@@ -11,7 +11,8 @@ from src.common.constants import \
     FRAME_EXTENSION, EMBEDDING_EXTENSION, TEXT_EXTENSION, \
     TOKEN_VOKEN_EXTENSTION, \
     \
-    DATASETS_VOKENIZATION, DF_TOKEN_VOKEN_FILENAME, \
+    DATASETS_VOKENIZATION, \
+    DF_TOKEN_VOKEN_CSV_FILENAME, DF_TOKEN_VOKEN_PKL_FILENAME, \
     TOKENS_DATA_FILENAME, VOKENS_DATA_FILENAME
 from src.data.interval_to_video.all import INTERVAL_TO_VIDEO, video_id_to_speaker
 
@@ -261,10 +262,15 @@ def resolve_interval_text_tokenized_path(interval_id, create=False):
 def resolve_dataset_dir(dataset_name):
     return os.path.join(DATASETS_VOKENIZATION, dataset_name)
 
-# [Dataset/Dataframe] /home/stav/Data/Vokenization/Datasets/Oliver_V1/df_token_voken_pkl.csv
-def resolve_dataset_dataframe(dataset_name):
+# [Dataset/Dataframe/pkl] /home/stav/Data/Vokenization/Datasets/Oliver_V1/df_token_voken_pkl.csv
+def resolve_dataset_pickle_dataframe(dataset_name):
     dataset_dir = resolve_dataset_dir(dataset_name)
-    return os.path.join(dataset_dir, DF_TOKEN_VOKEN_FILENAME)
+    return os.path.join(dataset_dir, DF_TOKEN_VOKEN_PKL_FILENAME)
+
+# [Dataset/Dataframe/csv] /home/stav/Data/Vokenization/Datasets/Oliver_V1/df_token_voken_partial_cols.csv
+def resolve_dataset_csv_dataframe(dataset_name):
+    dataset_dir = resolve_dataset_dir(dataset_name)
+    return os.path.join(dataset_dir, DF_TOKEN_VOKEN_CSV_FILENAME)
 
 # [Dataset/Train] /home/stav/Data/Vokenization/Datasets/Oliver_V1/train
 def resolve_subset_data_dir(dataset_name, subset):

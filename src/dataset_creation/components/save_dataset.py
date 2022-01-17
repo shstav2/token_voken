@@ -2,7 +2,8 @@ import os
 import h5py
 import simplejson
 import numpy as np
-from src.common.constants import EMBEDDING_DIM, INDICES_FILENAME, DF_TOKEN_VOKEN_FILENAME, \
+from src.common.constants import EMBEDDING_DIM, INDICES_FILENAME, \
+    DF_TOKEN_VOKEN_CSV_FILENAME, DF_TOKEN_VOKEN_PKL_FILENAME, \
     COL_VOKEN_ID, COL_SET_TYPE
 from src.common.file_utils import ls_alh, tree
 from src.common.display_utils import SVE
@@ -66,8 +67,8 @@ def save_full_dataset(data_dir, df_token_voken):
         raise RuntimeError(f'Already exists: {data_dir}')
     print(f'Creating data directory {data_dir}..')
     os.mkdir(data_dir)
-    df_token_voken.drop('voken', axis=1).to_csv(os.path.join(data_dir, 'df_token_voken_partial_cols.csv'))
-    df_token_voken.to_pickle(os.path.join(data_dir, DF_TOKEN_VOKEN_FILENAME))
+    df_token_voken.drop('voken', axis=1).to_csv(os.path.join(data_dir, DF_TOKEN_VOKEN_CSV_FILENAME))
+    df_token_voken.to_pickle(os.path.join(data_dir, DF_TOKEN_VOKEN_PKL_FILENAME))
     vokens = df_token_voken['voken'].tolist()
     # replace nan with np.zeros
     vokens_padded = [voken if voken is not None else np.zeros(EMBEDDING_DIM) for voken in vokens]

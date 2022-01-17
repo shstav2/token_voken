@@ -2,14 +2,14 @@ import os
 import math
 import pandas as pd
 from random import shuffle
-from src.common.path_resolvers import resolve_dataset_dataframe
+from src.common.path_resolvers import resolve_dataset_pickle_dataframe
 from src.common.constants import SPLIT_INDEX, \
     COL_SPEAKER, COL_VOKEN_ID, COL_SET_TYPE
 
 
 def get_speaker_df_token_voken(dataset_name, speaker_name):
     # /home/stav/Data/Vokenization/Datasets/Oliver_V1/df_token_voken_pkl.csv
-    data_path = resolve_dataset_dataframe(dataset_name)
+    data_path = resolve_dataset_pickle_dataframe(dataset_name)
     df_speaker = pd.read_pickle(data_path)
     df_speaker[COL_SPEAKER] = speaker_name
     mark_train_test_split(df_speaker, dataset_name)
