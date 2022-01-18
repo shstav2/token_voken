@@ -74,5 +74,9 @@ PROJECT_FECNET = '/home/stav/Projects/FECNet'
 OLIVER_FACE_PATH = '/home/stav/Data/Sample/oliver/face.jpg'
 OLIVER_FACE_RESNET_EMBEDDING_PATH = '/home/stav/Data/Sample/oliver/face.npy'
 
-DF_INTERVALS_OLIVER  = os.path.join(PATS_DATA_ROOT, 'DataFrames/df_intervals_all.csv')
-DF_INTERVALS_NOAH    = os.path.join(PATS_DATA_ROOT, 'DataFrames/df_intervals_noah.csv')
+DF_INTERVALS_OLIVER    = os.path.join(PATS_DATA_ROOT, 'DataFrames/df_intervals_all.csv')
+DF_INTERVALS_NOAH_V1   = os.path.join(PATS_DATA_ROOT, 'DataFrames/noah/df_intervals_noah_v1.csv') # 2,657 valid
+DF_INTERVALS_NOAH_V2   = os.path.join(PATS_DATA_ROOT, 'DataFrames/noah/df_intervals_noah_v2.csv') # 3,744 valid
+
+# set current context
+DF_INTERVALS_NOAH       = DF_INTERVALS_NOAH_V2
