@@ -1,14 +1,8 @@
-import math
-import numpy as np
 import logging
-
 from src.monitoring.status import status_interval_video_downloaded, status_video_downloaded
 from src.common.data_loader import load_valid_intervals
 from src.common.constants import DF_INTERVALS_NOAH
 from src.components.vokens._2_video_crop import crop_tool
-
-
-BATCH_SIZE = 20
 
 
 logging.basicConfig(
@@ -16,6 +10,9 @@ logging.basicConfig(
     datefmt='%H:%M:%S',
     level=logging.DEBUG)
 logger = logging.getLogger(__name__)
+
+
+LOG_EVERY = 3
 
 
 def interval_video_status_and_crop(df_intervals):
@@ -32,12 +29,11 @@ def interval_video_status_and_crop(df_intervals):
     df_intervals_pending.sort_values(by='video_id', inplace=True)
     pending_count = df_intervals_pending.shape[0]
     logger.info(f'!Crop {pending_count} interval videos...:')
-    number_of_batches = math.ceil(pending_count / BATCH_SIZE)
     if 0 < pending_count:
-        for i, chunk in enumerate(np.array_split(df_intervals_pending, number_of_batches), 1):
-            logger.info(f'\tDownloading videos batch #{i} sized {chunk.shape}...:')
-            for _, row in chunk.iterrows():
-                crop_tool(row)
+        for i, row in df_intervals_pending.iterrows():
+            if i % LOG_EVERY == 0:
+                logger.info(f'{i} / {pending_count} {row["interval_id"]}')
+            crop_tool(row)
 
 def run():
     # Interval video mp4 file
