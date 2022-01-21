@@ -4,7 +4,7 @@ import logging
 from src.common.path_resolvers import resolve_video_file_path, \
     resolve_interval_video_path, resolve_interval_frames_dir, resolve_interval_all_faces_dir, \
     resolve_interval_facial_embeddings_dir, resolve_interval_resnet_embeddings_dir, \
-    resolve_interval_raw_text_path
+    resolve_interval_raw_text_path, resolve_interval_text_tokenized_path
 from src.common.file_utils import exists_and_has_content
 
 logging.basicConfig(
@@ -74,12 +74,20 @@ def status_facial_fecnet_embeddings_dir(interval_id, debug=False):
 
 
 
-# ------- Step 1:
+# ------- Step 1: pats .h5 → raw words dataframe
 
 # [Text/Raw] Videos/oliver/0Rnq1NpHdmw/101462/Text/Raw.csv
 def status_text_raw_csv(interval_id):
     raw_text_csv_path = resolve_interval_raw_text_path(interval_id)
     return os.path.exists(raw_text_csv_path)
+
+
+# ------- Step 2: raw words dataframe  → bert tokens dataframe
+
+# [Text/Raw] Videos/oliver/0Rnq1NpHdmw/101462/Text/Raw.csv
+def status_text_tokens_csv(interval_id):
+    tokens_text_csv_path = resolve_interval_text_tokenized_path(interval_id)
+    return os.path.exists(tokens_text_csv_path)
 
 
 
