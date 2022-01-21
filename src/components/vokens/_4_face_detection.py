@@ -36,7 +36,7 @@ def interval_extract_faces(interval_id):
 def single_frame_extract_faces(interval_id, frame_id):
     image, detection_result = _detect_faces(interval_id, frame_id)
     _save_faces(image, detection_result, interval_id, frame_id)
-    # _copy_first_face(interval_id, frame_id)
+    _copy_first_face(interval_id, frame_id)
 
 def _detect_faces(interval_id, frame_id):
     frame_path = resolve_interval_frame_path(interval_id, frame_id)

@@ -3,7 +3,8 @@ import logging
 
 from src.common.path_resolvers import resolve_video_file_path, \
     resolve_interval_video_path, resolve_interval_frames_dir, resolve_interval_all_faces_dir, \
-    resolve_interval_facial_embeddings_dir, resolve_interval_resnet_embeddings_dir
+    resolve_interval_facial_embeddings_dir, resolve_interval_resnet_embeddings_dir, \
+    resolve_interval_raw_text_path
 from src.common.file_utils import exists_and_has_content
 
 logging.basicConfig(
@@ -71,6 +72,14 @@ def status_facial_fecnet_embeddings_dir(interval_id, debug=False):
     interval_facial_embeddings_dir = resolve_interval_facial_embeddings_dir(interval_id, create=False)
     return exists_and_has_content(interval_facial_embeddings_dir, FACIAL_EMBEDDINGS_DIR_SIZE_THRESHOLD, debug=debug)
 
+
+
+# ------- Step 1:
+
+# [Text/Raw] Videos/oliver/0Rnq1NpHdmw/101462/Text/Raw.csv
+def status_text_raw_csv(interval_id):
+    raw_text_csv_path = resolve_interval_raw_text_path(interval_id)
+    return os.path.exists(raw_text_csv_path)
 
 
 

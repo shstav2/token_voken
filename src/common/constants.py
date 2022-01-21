@@ -5,7 +5,7 @@ from src.common.conf import STAV_ROOT, STAV_LOCAL_ROOT
 # Base
 PATS_DATA_ROOT = os.path.join(STAV_ROOT, 'PATS_DATA')
 LOCAL_PATS_DATA_ROOT = STAV_LOCAL_ROOT
-SPEAKER_NAME = 'noah'
+SPEAKER_NAME = 'oliver'
 
 # Source Channels
 VIDEOS                    =  'Videos'    # 105810.mp4
@@ -74,9 +74,12 @@ PROJECT_FECNET = '/home/stav/Projects/FECNet'
 OLIVER_FACE_PATH = '/home/stav/Data/Sample/oliver/face.jpg'
 OLIVER_FACE_RESNET_EMBEDDING_PATH = '/home/stav/Data/Sample/oliver/face.npy'
 
-DF_INTERVALS_OLIVER    = os.path.join(PATS_DATA_ROOT, 'DataFrames/df_intervals_all.csv')
+# /home/stav/Data/PATS_DATA/DataFrames/original/cmu_intervals_df.csv
+DF_INTERVALS_ORG       = os.path.join(PATS_DATA_ROOT, 'DataFrames/original/cmu_intervals_df.csv')     # shape: (84,289,  8)
+DF_INTERVALS_OLIVER    = os.path.join(PATS_DATA_ROOT, 'DataFrames/oliver/df_intervals_oliver_v1.csv') # shape: (   572, 21)
 DF_INTERVALS_NOAH_V1   = os.path.join(PATS_DATA_ROOT, 'DataFrames/noah/df_intervals_noah_v1.csv') # 2,657 valid
 DF_INTERVALS_NOAH_V2   = os.path.join(PATS_DATA_ROOT, 'DataFrames/noah/df_intervals_noah_v2.csv') # 3,744 valid
+
 
 # set current context
 DF_INTERVALS_NOAH       = DF_INTERVALS_NOAH_V2

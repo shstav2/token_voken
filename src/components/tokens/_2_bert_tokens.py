@@ -78,7 +78,7 @@ class BertTokens:
         self.debug = one_percent_chance()
     def save_df_tokens(self):
         df_words, df_bert_tokens, df_words_and_tokens = self.get_df_tokens()
-        tokenized_text_path = resolve_interval_text_tokenized_path(self.interval_id)
+        tokenized_text_path = resolve_interval_text_tokenized_path(self.interval_id, create=True)
         save_csv(df_words_and_tokens, tokenized_text_path)
     def get_df_tokens(self):
         self._annotate_words()
