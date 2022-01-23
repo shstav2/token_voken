@@ -21,7 +21,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-DEVICE_ID = '0'
+DEVICE_ID = '1'
 mtcnn = get_mtcnn_model(DEVICE_ID)
 
 def interval_extract_faces(interval_id):
