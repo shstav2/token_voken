@@ -82,7 +82,10 @@ DF_INTERVALS_OLIVER_ALL  = os.path.join(PATS_DF_DIR, 'oliver/df_intervals_oliver
 DF_INTERVALS_OLIVER_V2   = os.path.join(PATS_DF_DIR, 'oliver/df_intervals_oliver_v2.csv') # shape: (4629, 20)     2,952 valid (1677 not)
 DF_INTERVALS_NOAH_V1     = os.path.join(PATS_DF_DIR, 'noah/df_intervals_noah_v1.csv')     # shape: (4367, 20)     2,657 valid (1715 not)
 DF_INTERVALS_NOAH_V2     = os.path.join(PATS_DF_DIR, 'noah/df_intervals_noah_v2.csv')     # shape: (4367, 20)     3,744 valid ( 623 not)
-
 # set current context
 DF_INTERVALS_NOAH        = DF_INTERVALS_NOAH_V2
 DF_INTERVALS_OLIVER      = DF_INTERVALS_OLIVER_V2
+
+
+VOKENS_VOCAB_ROOT_DIR    = '/home/stav/Data/Vokenization/Vokens'
+VOKENS_VOCAB_NOAH_V1_DIR = os.path.join(VOKENS_VOCAB_ROOT_DIR, 'Noah_V1')

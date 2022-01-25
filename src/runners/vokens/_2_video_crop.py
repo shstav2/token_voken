@@ -1,5 +1,5 @@
 import logging
-from src.monitoring.status import status_interval_video_downloaded, status_video_downloaded
+from src.monitoring.status import status_interval_video_downloaded, status_video_downloaded, status_detected_faces_dir
 from src.common.data_loader import load_valid_intervals
 from src.common.constants import DF_INTERVALS_NOAH
 from src.components.vokens._2_video_crop import crop_tool
@@ -23,8 +23,9 @@ def interval_video_status_and_crop(df_intervals):
                 f"{df_intervals['status_interval_video_file'].value_counts()}")
     # Crop videos in batches
     df_intervals['status_full_video_downloaded'] = df_intervals['video_id'].apply(status_video_downloaded)
+    df_intervals['status_interval_faces_dir'] = df_intervals['interval_id'].apply(status_detected_faces_dir)
     df_intervals_pending = df_intervals[
-        (df_intervals['status_full_video_downloaded'] & (~df_intervals['status_interval_video_file']))
+        (df_intervals['status_full_video_downloaded']) & (~df_intervals['status_interval_video_file']) & (~df_intervals['status_interval_faces_dir'])
     ]
     df_intervals_pending.sort_values(by='video_id', inplace=True)
     pending_count = df_intervals_pending.shape[0]
