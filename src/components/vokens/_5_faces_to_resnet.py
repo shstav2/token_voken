@@ -46,24 +46,30 @@ def create_resnet_embeddings(interval_id):
 
 
 def get_interval_faces_embeddings(data_dir, device, resnet_model):
+    # data_dir = '/home/stav/Data/PATS_DATA/Videos/noah/EDxCK4fi_sA/cmu0000040321/FacesAll'
     dataloader = get_data_loader(data_dir)
     frame_id_to_embeddings = defaultdict(dict)
     i = 0
     with torch.no_grad():
         for inputs, labels, paths in dataloader:
+            # inputs.shape: a single image    torch.Size([1, 3, 224, 224])
+            # labels:       the frame id      [0]
+            # paths:                          ['/home/stav/Data/PATS_DATA/Videos/noah/EDxCK4fi_sA/cmu0000040321/FacesAll/00000/face_2.jpg']
             assert len(paths) == len(labels) == 1
+            # path = '/home/stav/Data/PATS_DATA/Videos/noah/EDxCK4fi_sA/cmu0000040321/FacesAll/00000/face_0.jpg'
             path = paths[0]
             frame_id = labels[0].item()
             face_id = os.path.basename(path).split('.')[0].split('_')[-1]
             if not is_empty(inputs):
                 inputs = inputs.to(device)
-                img_embedding = resnet_model(inputs)
+                img_embedding = resnet_model(inputs) # a single face image
                 np_img_embedding = img_embedding.to('cpu').numpy().reshape(-1)
             else:
                 np_img_embedding = EMPTY_EMBEDDING
                 logger.error(f'{TAG} {ERR} Could not extract ResNet embeddings for {path}, default to null.')
             frame_id_to_embeddings[frame_id].update({face_id: np_img_embedding})
             i += 1
+    # {frame_id: {face_id: embedding, face_id: ...}}
     return frame_id_to_embeddings
 
 

@@ -9,13 +9,11 @@ from src.dataset_creation.components.save_dataset import save_dataset, save_meta
 pd.options.display.float_format = '{:,.0f}'.format
 
 
-
-BLOCK_SIZE_ALTERNATIVE = 21 # (= 126 / 2)
-
+BLOCK_SIZE_ALTERNATIVE = 63 # (= 126 / 2)
 
 # Input Datasets
-DATASET_OLIVER = 'Oliver_V3'
-DATASET_NOAH   = 'Noah_V1'
+DATASET_OLIVER = 'Oliver_V4'
+DATASET_NOAH   = 'Noah_V2'
 
 
 # Output Dataset target path
@@ -25,8 +23,10 @@ new_dataset_path = os.path.join(DATASETS_VOKENIZATION, new_dataset_name)
 
 df_all, df_train, df_test = get_df_all_train_test(DATASET_OLIVER, DATASET_NOAH)
 df_all[COL_SPEAKER].value_counts().astype('float32')
-# noah     162,625
-# oliver    81,712
+# Oliver_V3_Noah_V1      # Oliver_V4_Noah_V2
+# -----------------        -----------------
+# noah     162,625         258,654
+# oliver    81,712         129,045
 len(df_train), len(df_test)
 
 df_train_shuffled, train_indices, df_test_shuffled, test_indices = shuffle_train_test(df_train, df_test, BLOCK_SIZE_ALTERNATIVE)

@@ -12,7 +12,7 @@ def get_speaker_df_token_voken(dataset_name, speaker_name):
     data_path = resolve_dataset_pickle_dataframe(dataset_name)
     df_speaker = pd.read_pickle(data_path)
     df_speaker[COL_SPEAKER] = speaker_name
-    mark_train_test_split(df_speaker, dataset_name)
+    # mark_train_test_split(df_speaker, dataset_name)
     return df_speaker
 
 

@@ -4,7 +4,7 @@ import pandas as pd
 from tqdm import tqdm
 
 from src.common.data_loader import load_valid_intervals
-from src.common.constants import SPEAKER_NAME, DF_INTERVALS_NOAH, \
+from src.common.constants import \
     COL_VIDEO_ID, COL_VOKEN_ID, COL_VOKEN_PATH, COL_WORD_FRAME_SELECTED, \
     COL_WORD_FRAME_SELECTED_FIXED, COL_SET_TYPE, COL_SPEAKER
 from src.common.path_resolvers import resolve_interval_text_tokenized_path, \
@@ -12,8 +12,8 @@ from src.common.path_resolvers import resolve_interval_text_tokenized_path, \
 
 
 
-def read_sorted_intervals():
-    df_intervals = load_valid_intervals(DF_INTERVALS_NOAH)
+def read_sorted_intervals(intervals_path):
+    df_intervals = load_valid_intervals(intervals_path)
     df_intervals['start_time'] = pd.to_timedelta(df_intervals['start_time'])
     df_intervals['end_time']   = pd.to_timedelta(df_intervals['end_time'])
     df_intervals.sort_values(by=['video_id', 'start_time'], ascending=True, inplace=True)
@@ -45,7 +45,6 @@ def get_token_voken(df_intervals):
         df_tokens = pd.read_csv(bert_tokens_path)
         df_tokens['interval_id'] = interval_id
         df_tokens['video_id'] = video_id
-        df_tokens[COL_SPEAKER] = df_intervals[COL_SPEAKER]
         # todo: move to component
         face_embedding_dir = resolve_interval_facial_embeddings_dir(interval_id)
         last_frame, _ = max(os.listdir(face_embedding_dir)).split('.')
@@ -59,6 +58,7 @@ def get_token_voken(df_intervals):
     df_token_voken[COL_VOKEN_PATH] = df_token_voken['video_id'] + '_' + df_token_voken['interval_id'] + '_'\
                                  + df_token_voken[COL_WORD_FRAME_SELECTED].astype(str)
     df_token_voken[COL_VOKEN_ID] = range(0, len(df_token_voken))
+    df_tokens[COL_SPEAKER] = df_intervals.iloc[0][COL_SPEAKER]
     return df_token_voken
 
 
