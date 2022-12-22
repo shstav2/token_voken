@@ -39,7 +39,7 @@ def copy_first_face(interval_ids):
     # [FacesAll] Videos/oliver/0Rnq1NpHdmw/101462/FacesAll/00012/face_0.jpg
     # --->
     # [Faces]    Videos/oliver/0Rnq1NpHdmw/101462/Faces/00012.jpg
-    for interval_id in interval_ids[2392:]:
+#     for interval_id in interval_ids[2392:]:
     # /home/stav/Data/PATS_DATA/Videos/oliver/Nn_Zln_4pA8/104792/FacesAll
     dir_faces_all = resolve_interval_all_faces_dir(interval_id)
     # ['/home/stav/Data/PATS_DATA/Videos/oliver/Nn_Zln_4pA8/104792/FacesAll/00213',
