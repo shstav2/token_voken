@@ -7,19 +7,6 @@ import numpy as np
 # LFW functions taken from David Sandberg's FaceNet implementation
 def distance(embeddings1, embeddings2, distance_metric='euc'):
     return np.linalg.norm(embeddings1-embeddings2)
-#     if distance_metric == 'euc':
-#         # Euclidian distance
-#         diff = np.subtract(embeddings1, embeddings2)
-#         dist = np.sum(np.square(diff))
-#     elif distance_metric == 'cos':
-#         # Distance based on cosine similarity
-#         dot = np.sum(np.multiply(embeddings1, embeddings2))
-#         norm = np.linalg.norm(embeddings1) * np.linalg.norm(embeddings2)
-#         similarity = dot / norm
-#         dist = np.arccos(similarity) / math.pi
-#     else:
-#         raise 'Undefined distance metric %d' % distance_metric
-#     return dist
 
 
 # TODO: Generalize
@@ -27,6 +14,7 @@ def get_distances(e_base, frame_resnet_dir, face_filename):
     face_id = face_filename.split('.')[0].split('_')[1]
     # [ResNet] Videos/oliver/0Rnq1NpHdmw/101462/ResNet/00012/face_0.npy
     face_resnet_embedding_path = os.path.join(frame_resnet_dir, face_filename)
+    print(face_resnet_embedding_path) #TODO: tmp
     e = np.load(face_resnet_embedding_path)
     dist_euclidian = distance(e, e_base, distance_metric='euc')
     dist_cosine = distance(e, e_base, distance_metric='cos')

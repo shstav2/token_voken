@@ -10,7 +10,7 @@ from src.common.debug import one_percent_chance
 from src.vision.data_loader import get_tensor_image
 
 
-device = 'cuda:1'
+device = 'cuda:0'
 BATCH_SIZE = 64
 
 

@@ -1,0 +1,15 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+torch = "==1.4.0"
+transformers = "==3.3.0"
+spacy = "*"
+h5py = ">=2.10.0"
+seaborn = "*"
+facenet_pytorch = "*"
+

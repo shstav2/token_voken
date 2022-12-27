@@ -12,4 +12,4 @@ INTERVAL_TO_VIDEO = \
 def video_id_to_speaker(video_id):
     if video_id in INTERVAL_TO_VIDEO_OLIVER.values():
         return 'oliver'
-    return 'noah'
+    return 'seth'

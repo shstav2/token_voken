@@ -36,7 +36,9 @@ def load_anchor_embedding():
     return resnet_embedding
 
 
-e_base = load_anchor_embedding()
+#e_base = load_anchor_embedding()
+e_base = np.load('/home/stav/Data/PATS_DATA/Videos/oliver/Ifi9M7DRazI/214789/ResNet/00097/face_0.npy') #TODO: tmp
+
 
 TAG = '[FaceRecognition]'
 
@@ -93,8 +95,8 @@ def detect_face_recognition_errors(interval_id):
             distances.append(get_distances(e_base, frame_resnet_dir, face_filename))
         # Save recognized face id if it is not the default face (face_0)
         recognized_face_id = frame_face_recognition_and_some_logs(interval_id, frame_id, distances, frame_resnet_dir, debug)
-        if recognized_face_id != DEFAULT_FACE_ID:
-            frame_to_recognized_face[frame_id] = recognized_face_id
+    #    if recognized_face_id != DEFAULT_FACE_ID: #TODO: tmp
+        frame_to_recognized_face[frame_id] = recognized_face_id
     log_recognition_summary_for_interval(interval_id, frame_to_recognized_face)
     return frame_to_recognized_face, interval_resnet_dir
 

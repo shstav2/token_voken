@@ -9,7 +9,9 @@ from src.dataset_creation.components.save_dataset import save_dataset, save_meta
 pd.options.display.float_format = '{:,.0f}'.format
 
 
-BLOCK_SIZE_ALTERNATIVE = 63 # (= 126 / 2)
+
+BLOCK_SIZE_ALTERNATIVE = 21 # (= 126 / 2)
+
 
 # Input Datasets
 DATASET_OLIVER = 'Oliver_V4'

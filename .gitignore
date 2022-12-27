@@ -1,10 +1,8 @@
 notebooks/pretrained/
 .ipynb_checkpoints
 data/
-!src/data
 .DS_STORE
 .idea/
 __pycache__/
 .ipynb_checkpoints/
-.macenv/
- 
+pretrained/
