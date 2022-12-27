@@ -17,7 +17,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-SPEAKER_PATS_DIR = '/home/stav/Data/PATS_DATA/ZIP/pats/data/processed'
+SPEAKER_PATS_DIR = '/home/stav/Data/PATS_DATA/ZIP/ZIP/pats/data/processed'
 PATS = os.path.join(SPEAKER_PATS_DIR, SPEAKER_NAME)
 
 
