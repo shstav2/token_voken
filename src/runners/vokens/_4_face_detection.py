@@ -56,7 +56,7 @@ def run():
     df_intervals = load_valid_intervals(DF_INTERVALS_NOAH)
     detect_faces_in_frames(df_intervals)
     # cp FacesAll/00012/face_0.jpg -> /Faces/00012.jpg
-    #copy_first_face(df_intervals['interval_id'].tolist())
+    copy_first_face(df_intervals['interval_id'].tolist())
 
 
 

@@ -1,14 +1,15 @@
-from src.common.constants import DF_INTERVALS_OLIVER
+from src.common.constants import DF_INTERVALS_SETH
 from src.dataset_creation.components.create_dataframe import read_sorted_intervals, get_token_voken, split_train_test
 from src.dataset_creation.components.save_dataset import save_dataset
 
 
 # 1) Create dataframe and split train/test
-df_intervals = read_sorted_intervals(DF_INTERVALS_OLIVER)  # [noah] v1: (2652, 20), v2: (3735, 20) [oliver] v4: (2942, 20)
+df_intervals = read_sorted_intervals(DF_INTERVALS_SETH)  # [noah] v1: (2652, 20), v2: (3735, 20) [oliver] v4: (2942, 20)
 df_token_voken = get_token_voken(df_intervals)             # [noah] v2: (258,654, 15)              [oliver] v4: 129045
 # SPLIT_INDEX = 130231
 # SPLIT_INDEX = 206662 # noah v2
-SPLIT_INDEX = 102670 # oliver v4
+# SPLIT_INDEX = 102670 # oliver v4
+SPLIT_INDEX = 37395 # seth v1
 df_token_voken, df_train, df_test = split_train_test(df_token_voken, SPLIT_INDEX)
 """
 >>> df_token_voken, df_train, df_test = split_train_test(df_token_voken, SPLIT_INDEX)
