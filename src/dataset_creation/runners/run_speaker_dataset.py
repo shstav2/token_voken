@@ -9,7 +9,8 @@ df_token_voken = get_token_voken(df_intervals)             # [noah] v2: (258,654
 # SPLIT_INDEX = 130231
 # SPLIT_INDEX = 206662 # noah v2
 # SPLIT_INDEX = 102670 # oliver v4
-SPLIT_INDEX = 37395 # seth v1
+# SPLIT_INDEX = 37395 # seth v1
+SPLIT_INDEX = 67200 # seth v2
 df_token_voken, df_train, df_test = split_train_test(df_token_voken, SPLIT_INDEX)
 """
 >>> df_token_voken, df_train, df_test = split_train_test(df_token_voken, SPLIT_INDEX)

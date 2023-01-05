@@ -4,20 +4,17 @@ import simplejson
 import numpy as np
 from src.common.constants import EMBEDDING_DIM, INDICES_FILENAME, \
     DF_TOKEN_VOKEN_CSV_FILENAME, DF_TOKEN_VOKEN_PKL_FILENAME, \
-    COL_VOKEN_ID, COL_SET_TYPE
+    COL_VOKEN_ID, COL_SET_TYPE, COL_WORD_FRAME_SELECTED
 from src.common.file_utils import ls_alh, tree
 from src.common.display_utils import SVE
 
 
 COL_BERT_TOKEN_ID       = 'token_id'
-COL_WORD_FRAME_SELECTED = 'selected_frame'
 COL_VOKEN_PATH          = 'voken_path'
 COL_VOKEN               = 'voken'
 
 
 """
-TODO: creates too many files.
-Only need:
 Oliver_V1/
     df_token_voken.csv (82K token-voken pairs with metadata)
     vokens.npy         (82K voken embeddings)          --- MUST (voken_feats = np.load(args.voken_feat_dir=vokens.npy))
@@ -69,9 +66,11 @@ def save_full_dataset(data_dir, df_token_voken):
     os.mkdir(data_dir)
     df_token_voken.drop('voken', axis=1).to_csv(os.path.join(data_dir, DF_TOKEN_VOKEN_CSV_FILENAME))
     df_token_voken.to_pickle(os.path.join(data_dir, DF_TOKEN_VOKEN_PKL_FILENAME))
-    vokens = df_token_voken['voken'].tolist()
+    special_tokens_mask = df_token_voken[COL_WORD_FRAME_SELECTED] == -1
+    vokens = df_token_voken[~special_tokens_mask]['voken'].tolist()
     # replace nan with np.zeros
     vokens_padded = [voken if voken is not None else np.zeros(EMBEDDING_DIM) for voken in vokens]
+    assert len(vokens_padded) - 1 == df_token_voken[COL_VOKEN_ID].max()
     np_vokens = np.stack(vokens_padded)
     np.save(os.path.join(data_dir, 'vokens.npy'), np_vokens)
     ls_alh(data_dir)
