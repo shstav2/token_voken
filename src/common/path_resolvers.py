@@ -13,7 +13,8 @@ from src.common.constants import \
     \
     DATASETS_VOKENIZATION, \
     DF_TOKEN_VOKEN_CSV_FILENAME, DF_TOKEN_VOKEN_PKL_FILENAME, \
-    TOKENS_DATA_FILENAME, VOKENS_DATA_FILENAME
+    TOKENS_DATA_FILENAME, VOKENS_DATA_FILENAME, \
+    RAW_TEXT_FILENAME
 from src.data.interval_to_video.all import INTERVAL_TO_VIDEO, video_id_to_speaker
 
 # Data/PATS_DATA/
@@ -288,4 +289,10 @@ def resolve_dataset_vokens_path(dataset_name, subset):
     # /home/stav/Data/Vokenization/Datasets/Oliver_V1/train
     subset_path = resolve_subset_data_dir(dataset_name, subset)
     return os.path.join(subset_path, VOKENS_DATA_FILENAME)
+
+# [Dataset/Train/RawText] /home/stav/Data/Vokenization/Datasets/Oliver_V1/train/raw.txt
+def resolve_subset_raw_text_path(dataset_name, subset):
+    # /home/stav/Data/Vokenization/Datasets/Oliver_V1/train
+    subset_path = resolve_subset_data_dir(dataset_name, subset)
+    return os.path.join(subset_path, RAW_TEXT_FILENAME)
 

@@ -33,6 +33,7 @@ DF_TOKEN_VOKEN_CSV_FILENAME  = 'df_token_voken_partial_cols.csv'
 TOKENS_DATA_FILENAME         = 'tokens.hdf5'
 VOKENS_DATA_FILENAME         = 'vokens.hdf5'
 INDICES_FILENAME             = 'indices.txt'
+RAW_TEXT_FILENAME            = 'raw.txt'
 
 # Magic Numbers
 VIDEO_ID_LEN = 11

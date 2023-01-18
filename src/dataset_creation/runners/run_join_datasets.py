@@ -38,7 +38,17 @@ assert df_all_shuffled[COL_SET_TYPE].value_counts().equals(df_all[COL_SET_TYPE].
 
 df_all_shuffled[COL_VOKEN_ID] = range(0, len(df_all_shuffled))
 
+df_token_voken = df_all_shuffled
+special_tokens_mask = df_token_voken[COL_WORD_FRAME_SELECTED] == -1  # originated from padding
+df_token_voken[COL_VOKEN_PATH] = \
+    df_token_voken['video_id'] + '_' + df_token_voken['interval_id'] + '_' + df_token_voken[
+        COL_WORD_FRAME_SELECTED].astype(str)
+df_token_voken.loc[special_tokens_mask, COL_VOKEN_PATH] = ''
+# set voken id running index, and ignore index for special tokens
+df_token_voken[COL_VOKEN_ID] = VOKEN_IGNORE_ID
+df_token_voken.loc[~special_tokens_mask, COL_VOKEN_ID] = range(0, len(df_token_voken[~special_tokens_mask]))
 
+new_dataset_path = '/home/stav/Data/Vokenization/Datasets/O_V7_N_V2_S_V2_128'
 save_dataset(new_dataset_path, df_all_shuffled)
 save_metadata(new_dataset_path, train_indices, test_indices)
 
