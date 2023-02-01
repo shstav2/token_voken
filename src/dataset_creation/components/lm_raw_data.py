@@ -14,6 +14,9 @@ df_test  = df_token_voken[df_token_voken[COL_SET_TYPE] == 'test']
 train_intervals = df_train[COL_INTERVAL_ID].unique().tolist()
 test_intervals  = df_test[COL_INTERVAL_ID].unique().tolist()
 
+# train_intervals = map(str, train_intervals)
+# test_intervals  = map(str, test_intervals)
+
 assert not (set(train_intervals) & set(test_intervals))
 
 
