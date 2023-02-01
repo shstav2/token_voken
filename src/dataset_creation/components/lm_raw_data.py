@@ -1,10 +1,10 @@
 import os
 import pandas as pd
 from src.common.constants import DF_INTERVALS_SETH, COL_SET_TYPE, COL_INTERVAL_ID
-from src.common.path_resolvers import resolve_interval_raw_text_path, resolve_dataset_csv_dataframe, resolve_subset_raw_text_path
+from src.common.path_resolvers import resolve_interval_raw_text_path, resolve_dataset_csv_dataframe, resolve_subset_data_dir, resolve_subset_raw_text_path
 
 
-DATASET_NAME = 'O_V7_N_V2_S_V2_128'
+DATASET_NAME = 'Noah_V2'
 path_df = resolve_dataset_csv_dataframe(DATASET_NAME)
 df_token_voken = pd.read_csv(path_df)
 
@@ -46,3 +46,12 @@ with open(raw_text_train_path, 'w') as f:
 with open(raw_text_test_path, 'w') as f:
     full_text = '\n\n\n'.join(test_texts)
     f.write(full_text)
+
+
+train_data_dir = resolve_subset_data_dir(DATASET_NAME, 'train')
+test_data_dir  = resolve_subset_data_dir(DATASET_NAME, 'test')
+
+# From Vokenization run:
+#pyvok tokenization/tokenize_dataset.py /home/stav/Data/Vokenization/Datasets/Noah_V2/train raw.txt bert-base-uncased
+print(f"pyvok tokenization/tokenize_dataset.py {train_data_dir} raw.txt bert-base-uncased")
+print(f"pyvok tokenization/tokenize_dataset.py {test_data_dir} raw.txt bert-base-uncased")
